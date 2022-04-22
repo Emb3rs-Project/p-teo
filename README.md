@@ -43,7 +43,7 @@ The EMB3RS project has received funding from the European Union’s Horizon 2020
 
 ## Licenses
 
-•	The TEO been licensed under an ‘Apache License 2.0’ which is a permissive license whose main conditions require preservation of copy-right and license notices. Contributors provide an express grant of patent rights. Li-censed works, modifications, and larger works may be distributed under different terms and without source code.
+The TEO been licensed under an ‘Apache License 2.0’ which is a permissive license whose main conditions require preservation of copy-right and license notices. Contributors provide an express grant of patent rights. Li-censed works, modifications, and larger works may be distributed under different terms and without source code.
 
 
 ## References
