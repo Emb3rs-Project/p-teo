@@ -46,7 +46,10 @@ The EMB3RS project has received funding from the European Union’s Horizon 2020
 •	The PULP version of OSeMOSYS has been licensed under an ‘Apache License 2.0’ which is a permissive license whose main conditions require preservation of copy-right and license notices. Contributors provide an express grant of patent rights. Li-censed works, modifications, and larger works may be distributed under different terms and without source code.
 •	The input data file ‘Input_file_TEO.xlsx’ is licensed under a Creative Commons At-tribution 4.0 International License.
 
-##References
+## References
 
 [1]	M. Howells et al., “OSeMOSYS: The Open Source Energy Modeling System. An introduction to its ethos, structure and development.,” Energy Policy, vol. 39, no. 10, pp. 5850–5870, 2011, doi: 10.1016/j.enpol.2011.06.033.
+
 [2]	“OSeMOSYS - Home.” 2018, [Online]. Available: http://www.osemosys.org/.
+
+
