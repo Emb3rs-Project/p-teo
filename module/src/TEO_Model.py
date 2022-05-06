@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 import pulp
 import itertools
-from TEO_functions import *
-
+from .TEO_functions import *
+from .error_handling.module_runtime_exception import ModuleRuntimeException
 
 def buildmodel(sets_df, df, defaults_df, mcs_df, n):
 
@@ -15,8 +15,8 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
     # ----------------------------------------------------------------------------------------------------------------------
     #    SETS (CHANGED FOR NEW FORMAT)
     # ----------------------------------------------------------------------------------------------------------------------
-    # path_to_cplex = r'C:/Program Files/IBM/ILOG/CPLEX_Studio128/cplex/bin/x64_win64/cplex.exe'
-    # solver = pulp.CPLEX_CMD(path=path_to_cplex)
+    path_to_solver = r'C:\Program Files\Gurobi_9.5.1\win64\bin\gurobi_cl.exe'
+    solver = pulp.GUROBI_CMD(path=path_to_solver)
     YEAR = createTuple(sets_df["YEAR"], "YEAR")
     TECHNOLOGY = createTuple(sets_df["TECHNOLOGY"], "TECHNOLOGY")
     TIMESLICE = createTuple(sets_df["TIMESLICE"], "TIMESLICE")
@@ -68,6 +68,7 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
     FixedCost = createParameter(df, 'FixedCost')
     GIS_Losses = createParameter(df, 'GIS_Losses')
     InputActivityRatio = createParameter(df, 'InputActivityRatio')
+    MaximumBudget = createParameter(df, 'MaximumBudget')
     MinStorageCharge = createParameter(df, 'MinStorageCharge')
     ModelPeriodEmissionLimit = createParameter(df, 'ModelPeriodEmissionLimit')
     ModelPeriodExogenousEmission = createParameter(df, 'ModelPeriodExogenousEmission')
@@ -235,7 +236,7 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
            'RateOfProductionByTechnologyByMode': {'sets': [REGION, FUEL, TIMESLICE, MODE_OF_OPERATION, TECHNOLOGY, YEAR], 'lb': 0, 'ub': None, 'cat': 'Continuous', 'indices': ['r', 'f', 'l', 'm', 't', 'y']},
            'RateOfProductionByTechnology': {'sets': [REGION, FUEL, TIMESLICE, TECHNOLOGY, YEAR], 'lb': 0, 'ub': None, 'cat': 'Continuous', 'indices': ['r', 'f', 'l', 't', 'y']},
            'ProductionByTechnology': {'sets': [REGION, FUEL, TIMESLICE, TECHNOLOGY, YEAR], 'lb': 0, 'ub': None, 'cat': 'Continuous', 'indices': ['r', 'f', 'l', 't', 'y']},
-           'ProductionFromTechnology': {'sets': [REGION, TIMESLICE, TECHNOLOGY, YEAR], 'lb': 0, 'ub': None, 'cat': 'Continuous', 'indices': ['r', 'l', 't', 'y']},
+           #'ProductionFromTechnology': {'sets': [REGION, TIMESLICE, TECHNOLOGY, YEAR], 'lb': 0, 'ub': None, 'cat': 'Continuous', 'indices': ['r', 'l', 't', 'y']},
            'ProductionByTechnologyAnnual': {'sets': [REGION, FUEL, TECHNOLOGY, YEAR], 'lb': 0, 'ub': None, 'cat': 'Continuous', 'indices': ['r', 'f', 't', 'y']},
            'RateOfProduction': {'sets': [REGION, FUEL, TIMESLICE, YEAR], 'lb': 0, 'ub': None, 'cat': 'Continuous', 'indices': ['r', 'f', 'l', 'y']},
            'Production': {'sets': [REGION, FUEL, TIMESLICE, YEAR], 'lb': 0, 'ub': None, 'cat': 'Continuous', 'indices': ['r', 'f', 'l', 'y']},
@@ -347,7 +348,7 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
         RateOfProductionByTechnologyByMode = createVariable('RateOfProductionByTechnologyByMode', variables)
         RateOfProductionByTechnology = createVariable('RateOfProductionByTechnology', variables)
         ProductionByTechnology = createVariable('ProductionByTechnology', variables)
-        ProductionFromTechnology = createVariable('ProductionFromTechnology', variables)
+        #ProductionFromTechnology = createVariable('ProductionFromTechnology', variables)
         ProductionByTechnologyAnnual = createVariable('ProductionByTechnologyAnnual', variables)
         RateOfProduction = createVariable('RateOfProduction', variables)
         Production = createVariable('Production', variables)
@@ -462,11 +463,11 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
 
         for rfly in REGION_FUEL_TIMESLICE_YEAR:
             # EBa3_RateOfFuelProduction3
-            model += RateOfProduction.get(ci(rfly)) == pulp.lpSum([RateOfProductionByTechnology.get(ci([*rfly[0:3], t, rfly[3]])) for t in TECHNOLOGY]), ""
+            #model += RateOfProduction.get(ci(rfly)) == pulp.lpSum([RateOfProductionByTechnology.get(ci([*rfly[0:3], t, rfly[3]])) for t in TECHNOLOGY]), ""
             # EBa6_RateOfFuelUse3
             # model += RateOfUse.get(ci(rfly)) == pulp.lpSum([RateOfUseByTechnology.get(ci([*rfly[0:3], t, rfly[3]])) for t in TECHNOLOGY]), ""
             # EBa7_EnergyBalanceEachTS1
-            model += Production.get(ci(rfly)) == RateOfProduction.get(ci(rfly)) * YearSplit.get(ci(rfly[2:4])), ""
+            model += Production.get(ci(rfly)) == pulp.lpSum([RateOfProductionByTechnology.get(ci([*rfly[0:3], t, rfly[3]])) for t in TECHNOLOGY]) * YearSplit.get(ci(rfly[2:4])), ""
             # EBa8_EnergyBalanceEachTS2
             # model += Use.get(ci(rfly)) == RateOfUse.get(ci(rfly)) * YearSplit.get(ci(rfly[2:4])), ""
             model += Use.get(ci(rfly)) == pulp.lpSum([RateOfUseByTechnology.get(ci([*rfly[0:3], t, rfly[3]])) for t in TECHNOLOGY]) * YearSplit.get(ci(rfly[2:4])), ""
@@ -501,14 +502,14 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
 
         # ====  Accounting Technology Production/Use  ====
 
-        for rflty in REGION_FUEL_TIMESLICE_TECHNOLOGY_YEAR:
+        #for rflty in REGION_FUEL_TIMESLICE_TECHNOLOGY_YEAR:
             # Acc1_FuelProductionByTechnology
-            model += ProductionByTechnology.get(ci(rflty)) == pulp.lpSum([RateOfProductionByTechnologyByMode.get(ci([*rflty[0:3], m, *rflty[3:5]])) for m in MODE_OF_OPERATION if OutputActivityRatio.get(ci([*rflty[0:2], m, *rflty[3:5]]), dflt.get('OutputActivityRatio')) != 0]) * YearSplit.get(ci([rflty[2], rflty[4]])), ""
+            #model += ProductionByTechnology.get(ci(rflty)) == pulp.lpSum([RateOfProductionByTechnologyByMode.get(ci([*rflty[0:3], m, *rflty[3:5]])) for m in MODE_OF_OPERATION if OutputActivityRatio.get(ci([*rflty[0:2], m, *rflty[3:5]]), dflt.get('OutputActivityRatio')) != 0]) * YearSplit.get(ci([rflty[2], rflty[4]])), ""
             # Acc2_FuelUseByTechnology
-            model += UseByTechnology.get(ci(rflty)) == RateOfUseByTechnology.get(ci(rflty)) * YearSplit.get(ci([rflty[2], rflty[4]])), ""
-        for rlty in REGION_TIMESLICE_TECHNOLOGY_YEAR:
+            #model += UseByTechnology.get(ci(rflty)) == RateOfUseByTechnology.get(ci(rflty)) * YearSplit.get(ci([rflty[2], rflty[4]])), ""
+        #for rlty in REGION_TIMESLICE_TECHNOLOGY_YEAR:
             # Acc1_FuelProductionByTechnology
-            model += ProductionFromTechnology.get(ci(rlty)) == pulp.lpSum([ProductionByTechnology.get(ci([*rlty[0:1], f, *rlty[1:4]])) for f in FUEL]) , ""
+            #model += ProductionFromTechnology.get(ci(rlty)) == pulp.lpSum([ProductionByTechnology.get(ci([*rlty[0:1], f, *rlty[1:4]])) for f in FUEL]) , ""
 
         for rmty in REGION_MODE_OF_OPERATION_TECHNOLOGY_YEAR:
             # Acc3_AverageAnnualRateOfActivity
@@ -612,13 +613,13 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
             #if (StorageL2D.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageL2D')) == 0):
                 #model += StorageLosses.get(ci([*rsy[0:2], str(int(rsy[2])-1)])) ==  1.5374  * (8.76 / int(max(TIMESLICE))) * 0.0036 * (StorageUvalue.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageUvalue'))) * ((((StorageFlowTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageFlowTemperature'))) - (StorageReturnTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageReturnTemperature')))) * StorageLevelTimesliceStart.get(ci(rsly))) + (((StorageReturnTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageReturnTemperature'))) - (StorageAmbientTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageAmbientTemperature')))) * StorageUpperLimit.get(ci([*rsly[0:2], rsly[3]]))))  , ""
 
-            model += StorageLossesheating.get(ci(rsly)) == (StorageSurfaceArea.get(ci([*rsly[0:2], rsly[3]])) * 0.0036 * (8760 / int(max(TIMESLICE))) * (StorageUvalue.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageUvalue'))) * ((((StorageFlowTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageFlowTemperature'))) + (StorageReturnTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageReturnTemperature')))) / 2) - (StorageAmbientTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageAmbientTemperature')))) / 1000 * Storagetagheating.get(ci(rsly[0:2]), dflt.get('Storagetagheating'))) ,"" 
+            model += StorageLosses.get(ci(rsly)) == (StorageSurfaceArea.get(ci([*rsly[0:2], rsly[3]])) * 0.0036 * (8760 / int(max(TIMESLICE))) * (StorageUvalue.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageUvalue'))) * ((((StorageFlowTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageFlowTemperature'))) + (StorageReturnTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageReturnTemperature')))) / 2) - (StorageAmbientTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageAmbientTemperature')))) / 1000 * Storagetagheating.get(ci(rsly[0:2]), dflt.get('Storagetagheating'))) ,"" 
 
 
-            model += StorageLossescooling.get(ci(rsly)) == (StorageSurfaceArea.get(ci([*rsly[0:2], rsly[3]])) * 0.0036 * (8760 / int(max(TIMESLICE))) * (StorageUvalue.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageUvalue'))) * ((StorageAmbientTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageAmbientTemperature'))) - (((StorageFlowTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageFlowTemperature'))) + (StorageReturnTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageReturnTemperature')))) / 2)) / 1000 * Storagetagcooling.get(ci(rsly[0:2]), dflt.get('Storagetagcooling'))) ,""       
+            #model += StorageLossescooling.get(ci(rsly)) == (StorageSurfaceArea.get(ci([*rsly[0:2], rsly[3]])) * 0.0036 * (8760 / int(max(TIMESLICE))) * (StorageUvalue.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageUvalue'))) * ((StorageAmbientTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageAmbientTemperature'))) - (((StorageFlowTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageFlowTemperature'))) + (StorageReturnTemperature.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageReturnTemperature')))) / 2)) / 1000 * Storagetagcooling.get(ci(rsly[0:2]), dflt.get('Storagetagcooling'))) ,""       
 
 
-            model += StorageLosses.get(ci(rsly)) ==  StorageLossesheating.get(ci(rsly)) + StorageLossescooling.get(ci(rsly)), ""      
+            #model += StorageLosses.get(ci(rsly)) ==  StorageLossesheating.get(ci(rsly)) + StorageLossescooling.get(ci(rsly)), ""      
 
         for rsy in REGION_STORAGE_YEAR:
          #S5_and_S6_StorageLevelYearStart
@@ -663,11 +664,11 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
             #SC2_Upper_Limit
             model += StorageLevelTimesliceStart.get(ci(rsly)) <= StorageUpperLimit.get(ci([*rsly[0:2], rsly[3]])), "" 
 
-            #SC3_Charging_Upper_Limit
-            #model += StorageMaxChargeRate.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageMaxChargeRate')) >= StorageLevelTimesliceStart.get(ci(rsly)) - StorageLevelTimesliceStart.get(ci([*rsly[0:2], str(int(rsly[2])-1), rsly[3]])), ""
+#             #SC3_Charging_Upper_Limit
+#             model += StorageMaxChargeRate.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageMaxChargeRate')) >= StorageLevelTimesliceStart.get(ci(rsly)) - StorageLevelTimesliceStart.get(ci([*rsly[0:2], str(int(rsly[2])-1), rsly[3]])), ""
 
-            #SC4_Charging_Lower_Limit
-            #model += StorageMaxDischargeRate.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageMaxDischargeRate')) >= StorageLevelTimesliceStart.get(ci([*rsly[0:2], str(int(rsly[2])-1), rsly[3]])) - StorageLevelTimesliceStart.get(ci(rsly)), ""
+#             #SC4_Charging_Lower_Limit
+#             model += StorageMaxDischargeRate.get(ci([*rsly[0:2], rsly[3]]), dflt.get('StorageMaxDischargeRate')) >= StorageLevelTimesliceStart.get(ci([*rsly[0:2], str(int(rsly[2])-1), rsly[3]])) - StorageLevelTimesliceStart.get(ci(rsly)), ""
 
         # ====  Storage Investments  ====   
 
@@ -690,8 +691,6 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
             # SI10_TotalDiscountedCostByStorage
             model += TotalDiscountedStorageCost.get(ci(rsy)) == DiscountedCapitalInvestmentStorage.get(ci(rsy))-DiscountedSalvageValueStorage.get(ci(rsy)), ""
 
-
-
         # ====  Capital Costs  ====
 
         for rty in REGION_TECHNOLOGY_YEAR:
@@ -707,7 +706,6 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
              model += DiscountedSalvageValueByStorage.get(ci(rs)) ==  pulp.lpSum([DiscountedSalvageValueStorage.get(ci([*rs, y])) for y in YEAR]), ""
     #         # SI5.1_DiscountingCapitalInvestmentbyStorageBusinessModule
              model += DiscountedCapitalInvestmentByStorage.get(ci(rs)) ==  pulp.lpSum([DiscountedCapitalInvestmentStorage.get(ci([*rs, y])) for y in YEAR]), ""
-
 
         for rty in REGION_TECHNOLOGY_YEAR:
         # ====  Salvage Value  ====
@@ -747,7 +745,11 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
     #         # SV4.1_DiscountedSalvageValuebytechnologyBusinessModule
              model += DiscountedSalvageValueByTechnology.get(ci(rt)) ==  pulp.lpSum([DiscountedSalvageValue.get(ci([*rt, y])) for y in YEAR]), ""    
              # SV4.TotalDiscountedFixedOperatingCostBusinessModule
-             model += TotalDiscountedFixedOperatingCost.get(ci(rt)) ==  pulp.lpSum([DiscountedAnnualFixedOperatingCost.get(ci([*rt, y])) for y in YEAR]), ""    
+             model += TotalDiscountedFixedOperatingCost.get(ci(rt)) ==  pulp.lpSum([DiscountedAnnualFixedOperatingCost.get(ci([*rt, y])) for y in YEAR]), "" 
+        
+        for r in REGION:
+    # ====  Budget constraint ====
+            model += MaximumBudget.get((r), dflt.get('MaximumBudget')) >=  pulp.lpSum((DiscountedCapitalInvestmentByTechnology.get(ci([r, t])) - DiscountedSalvageValueByTechnology.get(ci([r, t]))) for t in TECHNOLOGY), ""
 
 
         # ====  Total Discounted Costs  ====
@@ -869,20 +871,20 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
         # ------------------------------------------------------------------------------------------------------------------
 
         # Write model to LP-file
-        model.writeLP(f"{modelName}_{i}.lp")
+        # model.writeLP(f"{modelName}_{i}.lp")
 
         # ------------------------------------------------------------------------------------------------------------------
         #    SOLVE
         # ------------------------------------------------------------------------------------------------------------------
-
-        model.solve()
+        model.solve(solver)
         logging.info(f"\t{dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\t"
                      f"Model is solved. Solution is: "
                      f"{pulp.LpStatus[model.status]}")
-
         # ------------------------------------------------------------------------------------------------------------------
         #    SAVE RESULTS
         # ------------------------------------------------------------------------------------------------------------------
+        
+        Results = {}
 
         if str(pulp.LpStatus[model.status]) == "Optimal":
             logging.info(f"\t{dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\t"
@@ -896,15 +898,19 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
 
             logging.info(f"\t{dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\t"
                          f"Results are saved temporarily.")
+            
+            Results = CreateResults(res_df)
         else:
-            print((f"Error: Optimisation status for Scenario_{i} is: {pulp.LpStatus[model.status]}"))
+            raise Exception (ModuleRuntimeException(
+              code= '1',                      # HELP MD
+              type="buildmodel.py",           # HELP MD
+              msg="The model is infeasible - Please check the Annual Emission limit and the Maximum Budget limit" # HELP End User
+                )
+                            )
+                             
 
         del model  # Delete model
 
         i += 1
-
-    Results = {}
-
-    Results = CreateResults(res_df)
 
     return Results

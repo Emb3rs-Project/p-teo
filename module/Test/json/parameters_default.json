@@ -17,7 +17,7 @@
 	},
 	{
 		"PARAM": "AnnualEmissionLimit",
-		"VALUE": 99999
+		"VALUE": 99999999999
 	},
 	{
 		"PARAM": "AnnualExogenousEmission",
@@ -101,7 +101,7 @@
 	},
 	{
 		"PARAM": "ModelPeriodEmissionLimit",
-		"VALUE": 99999999
+		"VALUE": 9999999999
 	},
 	{
 		"PARAM": "ModelPeriodExogenousEmission",
@@ -165,15 +165,15 @@
 	},
 	{
 		"PARAM": "StorageMaxCapacity",
-		"VALUE": 99999
+		"VALUE": 999999999
 	},
 	{
 		"PARAM": "StorageMaxChargeRate",
-		"VALUE": 99999
+		"VALUE": 999999999
 	},
 	{
 		"PARAM": "StorageMaxDischargeRate",
-		"VALUE": 99999
+		"VALUE": 999999999
 	},
 	{
 		"PARAM": "StorageLevelStart",
@@ -213,11 +213,11 @@
 	},
 	{
 		"PARAM": "TotalAnnualMaxCapacity",
-		"VALUE": 99999
+		"VALUE": 999999999
 	},
 	{
 		"PARAM": "TotalAnnualMaxCapacityInvestment",
-		"VALUE": 99999
+		"VALUE": 999999999
 	},
 	{
 		"PARAM": "TotalAnnualMinCapacity",
@@ -233,7 +233,7 @@
 	},
 	{
 		"PARAM": "TotalTechnologyAnnualActivityUpperLimit",
-		"VALUE": 99999
+		"VALUE": 9999999999
 	},
 	{
 		"PARAM": "TotalTechnologyModelPeriodActivityLowerLimit",
@@ -241,7 +241,7 @@
 	},
 	{
 		"PARAM": "TotalTechnologyModelPeriodActivityUpperLimit",
-		"VALUE": 99999
+		"VALUE": 9999999999
 	},
 	{
 		"PARAM": "TradeRoute",
@@ -254,6 +254,10 @@
 	{
 		"PARAM": "GIS_Losses",
 		"VALUE": 0
+	},
+	{
+		"PARAM": "MaximumBudget",
+		"VALUE": 9999999999
 	}
 
 ]

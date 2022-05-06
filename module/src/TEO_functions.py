@@ -210,11 +210,10 @@ def saveResultsTemporary(_model, _scenario_i, variables):
             return df
 
 
-def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology):
+def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
 
     #ProductionByTechnology
     df = ProductionByTechnology
-    #df = df.drop(['NAME', 'STORAGE'], axis = 1)
     df = df.loc[df['FUEL'] == 'dhnwatersupply']
     df = df.loc[df['VALUE'] != 0]
     df.reset_index(drop=True, inplace=True)
@@ -223,7 +222,6 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology):
 
     #UseByTechnology
     df1 = UseByTechnology
-    #df1 = df1.drop(['NAME', 'STORAGE'], axis = 1)
     df1 = df1.loc[df1['FUEL'] == 'dhnwaterdemand']
     df1 = df1.loc[df1['VALUE'] != 0]
     df2 = df1.loc[df1['YEAR'] == df1['YEAR'].max()]
@@ -232,25 +230,9 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology):
     #Creating a combined data frame
     df4 = df3.append(df2, ignore_index=False)
     df4 = df4.drop(['FUEL'], axis = 1)
+    df4
 
-   # #Changing to platform nomenclature - THIS MUST BE HASHED LATER 
-   #  Tech_list = df4['TECHNOLOGY'].tolist()
-   #  Assign = []
-   #  for x in Tech_list:
-   #      if "HEA" in x:
-   #          Assign.append('Sink1_HEX')
-   #      elif "HEB" in x:
-   #          Assign.append('Sink2_HEX')
-   #      elif "HEC" in x:
-   #          Assign.append('Sink3_HEX')
-   #      elif "WHRB" in x:
-   #          Assign.append('Source1_WHRB') 
-   #  df4['Assignment'] = Assign  
-   #  df4 = df4.drop(['TECHNOLOGY'], axis = 1)
-   #  df4 = df4[['VALUE', 'TIMESLICE', 'Assignment', 'YEAR']]
-   #  df4.rename(columns={'Assignment': 'TECHNOLOGY'}, inplace=True)
-
-   # Drop all grid specific
+    # Drop all grid specific
     Tech_list1 = df4['TECHNOLOGY'].tolist()
     Tech_list1d = []
 
@@ -258,14 +240,6 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology):
         if k not in Tech_list1d:
             Tech_list1d.append(k)
 
-    Tech_list1d
-    sinkcount = []
-    sourcecount = []
-    for w in Tech_list1d:
-        if 'source' in w:
-            sourcecount.append(w)
-        elif 'sink' in w:
-            sinkcount.append(w)
     Assign2 = []
     for x in Tech_list1:
         if ('grid') in x:
@@ -274,24 +248,26 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology):
             Assign2.append(1)   
     df4['Assignment1'] = Assign2
     df4 = df4.loc[df4['Assignment1'] != 0]
+    df4 = df4.drop(['Assignment1'], axis = 1)
+    df4
 
     #Source or Sink Aggregation
 
     Assign1 = []
     Assign1 = []
     for x in Tech_list1:
-        for i in range (1,6):
-            if (','.join(["source%d" % i ])) in x:
+        for i in range (1,50000):
+            if (','.join(["source%dstream" % i ])) in x:
                 Assign1.append(','.join(["source%d" % i ]))
-        for j in range (1,6):
-            if (','.join(["sink%d" % j ])) in x:
+        for j in range (1,50000):
+            if (','.join(["sink%dstream" % j ])) in x:
                 Assign1.append(','.join(["sink%d" % j ]))
-    
+
     df4['Assignment'] = Assign1
     df4
     df4 = df4.drop(['TECHNOLOGY'], axis = 1)
     df4 = df4[['VALUE', 'TIMESLICE', 'Assignment', 'YEAR']]
-
+    df4
     #Creating a Pivot Table
     table = pd.pivot_table(df4,index=['TIMESLICE'],columns=['Assignment'],values=['VALUE'],aggfunc=np.sum)
 
@@ -315,7 +291,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology):
     list2 = []
 
     for x in list1:
-        if "Sink" in x:
+        if "sink" in x:
             list2.append('sink')
         else:
             list2.append('source')
@@ -338,21 +314,121 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology):
     append_df2.insert(loc=0, column='ID', value=ID)
     append_df2.drop('Assignment', axis=1, inplace=True)
     append_df2 = append_df2.fillna(0)
+    value = 8784/tsmax
+    
+    ID = append_df2["ID"].tolist()
+    classification = append_df2["Classification"].tolist()
+    append_df2.drop('ID', axis=1, inplace=True)
+    append_df2.drop('Classification', axis=1, inplace=True)
+    append_df2=(append_df2/value).round(2)
+    append_df2.insert(0, 'classification', classification)
+    append_df2.insert(0, 'ID', ID)
+    append_df2
     return(append_df2)
 
 def CreateResults(res_df):
      
-    Names_NZ = ['Cost', 'AccumulatedNewCapacity', 'AccumulatedNewStorageCapacity', 'AnnualTechnologyEmission', 'ProductionByTechnology', 'StorageLevelTimesliceStart', 'UseByTechnology']
-    Results_NZ = pd.DataFrame()
-    for name_nz in Names_NZ:
+    Names_NZ = ['Cost', 'AccumulatedNewCapacity', 'AccumulatedNewStorageCapacity', 'AnnualTechnologyEmission', 'RateOfProductionByTechnology', 'StorageLevelTimesliceStart', 'RateOfUseByTechnology'] 
+    Results_NZ = pd.DataFrame() 
+    for name_nz in Names_NZ: 
         Results_NZ = Results_NZ.append((res_df[res_df['NAME'] == str(name_nz)]))
+    
+    ProductionByTechnology = Results_NZ[Results_NZ['NAME'] == str('RateOfProductionByTechnology')]
+    Tlist = ProductionByTechnology["TIMESLICE"].tolist()
+    Vlist = ProductionByTechnology["VALUE"].tolist()
+
+    Tlistint = []
+    for i in Tlist:
+        Tlistint.append(int(i))
+    Tlistint
+
+    tsmax = max(Tlistint)
+
+    Vlistcorrected = []
+    namecorrected = []
+    for i in Vlist:
+        correctedvalue = i/tsmax
+        Vlistcorrected.append(correctedvalue)
+        namecorrected.append('ProductionByTechnology')
+
+
+    ProductionByTechnology["correctedvalue"] = Vlistcorrected
+    ProductionByTechnology["correctedname"] = namecorrected
+    ProductionByTechnology.drop("VALUE", axis=1, inplace=True)
+    ProductionByTechnology.drop("NAME", axis=1, inplace=True)
+    ProductionByTechnology.rename(columns={"correctedvalue": "VALUE"}, inplace=True)
+    ProductionByTechnology.rename(columns={"correctedname": "NAME"}, inplace=True)
+    ProductionByTechnology = ProductionByTechnology[
+        [
+            "NAME",
+            "VALUE",
+            "SCENARIO",
+            "REGION",  
+            "REGION2",
+            "DAYTYPE",
+            "FUEL",
+            "EMISSION",
+            "DAILYTIMEBRACKET",
+            "SEASON",
+            "TIMESLICE",
+            "MODE_OF_OPERATION",
+            "STORAGE",
+            "TECHNOLOGY",
+            "YEAR",
+        ]
+    ]
+    Results_NZ = Results_NZ.loc[Results_NZ["NAME"] != "RateOfProductionByTechnology"]
+    Results_NZ = Results_NZ.append(ProductionByTechnology, ignore_index=True)
+
+
+    UseByTechnology = Results_NZ[Results_NZ['NAME'] == str('RateOfUseByTechnology')]
+    Tlist1 = UseByTechnology["TIMESLICE"].tolist()
+    Vlist1 = UseByTechnology["VALUE"].tolist()
+
+    Vlistcorrected1 = []
+    namecorrected1 = []
+    for i in Vlist1:
+        correctedvalue1 = i/tsmax
+        Vlistcorrected1.append(correctedvalue1)
+        namecorrected1.append('UseByTechnology')
+
+    UseByTechnology["correctedvalue"] = Vlistcorrected1
+    UseByTechnology["correctedname"] = namecorrected1
+    UseByTechnology.drop("VALUE", axis=1, inplace=True)
+    UseByTechnology.drop("NAME", axis=1, inplace=True)
+    UseByTechnology.rename(columns={"correctedvalue": "VALUE"}, inplace=True)
+    UseByTechnology.rename(columns={"correctedname": "NAME"}, inplace=True)
+    UseByTechnology
+    UseByTechnology = UseByTechnology[
+        [
+            "NAME",
+            "VALUE",
+            "SCENARIO",
+            "REGION",  
+            "REGION2",
+            "DAYTYPE",
+            "FUEL",
+            "EMISSION",
+            "DAILYTIMEBRACKET",
+            "SEASON",
+            "TIMESLICE",
+            "MODE_OF_OPERATION",
+            "STORAGE",
+            "TECHNOLOGY",
+            "YEAR",
+        ]
+    ]
+    Results_NZ = Results_NZ.append(UseByTechnology, ignore_index=True)
+    Results_NZ = Results_NZ.loc[Results_NZ["NAME"] != "RateOfUseByTechnology"]
+
     Results_NZ1 = Results_NZ.dropna(axis=1, how='all')
     Results_NZ1 = Results_NZ1.drop(['SCENARIO', 'REGION'], axis = 1)
     Results_NZ1 = Results_NZ1.loc[Results_NZ1['VALUE'] > 0.00000001]
    
+    Names_NZC = ['Cost', 'AccumulatedNewCapacity', 'AccumulatedNewStorageCapacity', 'AnnualTechnologyEmission', 'ProductionByTechnology', 'StorageLevelTimesliceStart', 'UseByTechnology'] 
 
     TEO_Results_NZ1 ={}
-    for name_nz1 in Names_NZ:
+    for name_nz1 in Names_NZC:
         TEO_Results_NZ1[name_nz1] = Results_NZ1[Results_NZ1['NAME'] == str(name_nz1)]
     
     
@@ -390,7 +466,7 @@ def CreateResults(res_df):
     
     del TEO_Results_NZ["UseByTechnology"]
     
-    ex_capacities1 = GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology)
+    ex_capacities1 = GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax)
     ex_capacities1
     
     ex_capacities = {'ex_capacities' : ex_capacities1}
