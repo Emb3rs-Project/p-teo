@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 import pulp
 import itertools
-from .TEO_functions import *
-from .error_handling.module_runtime_exception import ModuleRuntimeException
+from TEO_functions import *
+from error_handling.module_runtime_exception import ModuleRuntimeException
 
 def buildmodel(sets_df, df, defaults_df, mcs_df, n):
 
@@ -745,7 +745,7 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
     #         # SV4.1_DiscountedSalvageValuebytechnologyBusinessModule
              model += DiscountedSalvageValueByTechnology.get(ci(rt)) ==  pulp.lpSum([DiscountedSalvageValue.get(ci([*rt, y])) for y in YEAR]), ""    
              # SV4.TotalDiscountedFixedOperatingCostBusinessModule
-             model += TotalDiscountedFixedOperatingCost.get(ci(rt)) ==  pulp.lpSum([DiscountedAnnualFixedOperatingCost.get(ci([*rt, y])) for y in YEAR]), "" 
+             model += TotalDiscountedFixedOperatingCost.get(ci(rt)) ==  pulp.lpSum([DiscountedOperatingCost.get(ci([*rt, y])) for y in YEAR]), "" 
         
         for r in REGION:
     # ====  Budget constraint ====

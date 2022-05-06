@@ -231,43 +231,26 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
     df4 = df3.append(df2, ignore_index=False)
     df4 = df4.drop(['FUEL'], axis = 1)
     df4
-
-    # Drop all grid specific
-    Tech_list1 = df4['TECHNOLOGY'].tolist()
-    Tech_list1d = []
-
-    for k in Tech_list1:
-        if k not in Tech_list1d:
-            Tech_list1d.append(k)
-
-    Assign2 = []
-    for x in Tech_list1:
-        if ('grid') in x:
-            Assign2.append(0)
-        elif ('grid') not in x:
-            Assign2.append(1)   
-    df4['Assignment1'] = Assign2
-    df4 = df4.loc[df4['Assignment1'] != 0]
-    df4 = df4.drop(['Assignment1'], axis = 1)
-    df4
-
+    
     #Source or Sink Aggregation
-
+    Tech_list1 = df4['TECHNOLOGY'].tolist()
     Assign1 = []
     Assign1 = []
     for x in Tech_list1:
-        for i in range (1,50000):
-            if (','.join(["source%dstream" % i ])) in x:
-                Assign1.append(','.join(["source%d" % i ]))
-        for j in range (1,50000):
-            if (','.join(["sink%dstream" % j ])) in x:
-                Assign1.append(','.join(["sink%d" % j ]))
-
+        if("grid") in x:
+            Assign1.append("sourcex0s")
+        else:
+            for i in range (1,50000):
+                if (','.join(["source%dstream" % i ])) in x:
+                    Assign1.append(','.join(["sourcex%ds" % i ]))
+                elif (','.join(["sink%dstream" % i ])) in x:
+                    Assign1.append(','.join(["sinkx%ds" % i ])) 
+    Assign1            
     df4['Assignment'] = Assign1
     df4
     df4 = df4.drop(['TECHNOLOGY'], axis = 1)
     df4 = df4[['VALUE', 'TIMESLICE', 'Assignment', 'YEAR']]
-    df4
+
     #Creating a Pivot Table
     table = pd.pivot_table(df4,index=['TIMESLICE'],columns=['Assignment'],values=['VALUE'],aggfunc=np.sum)
 
@@ -281,7 +264,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
     append_df1 = append_df.drop_duplicates()
     append_df1.index.name = None
     append_df1 = append_df1.transpose()
-
+    append_df1
 
     #Creating classification
     append_df2 = append_df1.droplevel(level = 0)
@@ -298,6 +281,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
 
     Classification_Type = pd.Series(list2)
     append_df2.insert(loc=1, column='Classification', value=Classification_Type)
+    append_df2
 
     #Creating ID
 
@@ -306,8 +290,8 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
     list5 = []
 
     for x in list4:
-        for i in range (1,100):
-            if (','.join(["%d" % i ])) in x:
+        for i in range (0,100):
+            if (','.join(["x%ds" % i ])) in x:
                 list5.append(','.join(["%d" % i ]))
 
     ID = pd.Series(list5)
@@ -315,7 +299,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
     append_df2.drop('Assignment', axis=1, inplace=True)
     append_df2 = append_df2.fillna(0)
     value = 8784/tsmax
-    
+
     ID = append_df2["ID"].tolist()
     classification = append_df2["Classification"].tolist()
     append_df2.drop('ID', axis=1, inplace=True)
@@ -328,11 +312,85 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
 
 def CreateResults(res_df):
      
+    Names_z1 = ['DiscountedCapitalInvestmentByTechnology', 'DiscountedCapitalInvestmentByStorage', 'DiscountedSalvageValueByTechnology', 'DiscountedSalvageValueByStorage', 'VariableOMCost', 'TotalDiscountedFixedOperatingCost']
+    Results_Z1 = pd.DataFrame()
+    #res_df[res_df['NAME'] == str('DiscountedSalvageValueByStorage')]
+    for name_z1 in Names_z1:
+        Results_Z1 = Results_Z1.append((res_df[res_df['NAME'] == str(name_z1)])) 
+
+    Results_Z2 = Results_Z1.dropna(axis=1, how='all')
+    Results_Z2 = Results_Z2.drop(['SCENARIO', 'REGION'], axis = 1)
+
+    TEO_Results_Z1 = {}
+    for name_z1 in Names_z1:
+         TEO_Results_Z1[name_z1] = Results_Z2[Results_Z2['NAME'] == str(name_z1)]
+
+    divider = 1000000
+
+    DiscountedCapitalInvestmentByTechnology = TEO_Results_Z1['DiscountedCapitalInvestmentByTechnology']
+    DiscountedCapitalInvestmentByStorage = TEO_Results_Z1['DiscountedCapitalInvestmentByStorage']
+    DiscountedSalvageValueByTechnology = TEO_Results_Z1['DiscountedSalvageValueByTechnology']
+    DiscountedSalvageValueByStorage = TEO_Results_Z1['DiscountedSalvageValueByStorage']
+    TotalDiscountedFixedOperatingCost = TEO_Results_Z1['TotalDiscountedFixedOperatingCost']
+    VariableOMCost = TEO_Results_Z1['VariableOMCost']
+
+    DiscountedCapitalInvestmentByTechnology1 = DiscountedCapitalInvestmentByTechnology.dropna(axis=1, how='all')
+    DiscountedCapitalInvestmentByStorage1 = DiscountedCapitalInvestmentByStorage.dropna(axis=1, how='all')
+    DiscountedSalvageValueByTechnology1 = DiscountedSalvageValueByTechnology.dropna(axis=1, how='all')
+    DiscountedSalvageValueByStorage1 = DiscountedSalvageValueByStorage.dropna(axis=1, how='all')
+    TotalDiscountedFixedOperatingCost1 = TotalDiscountedFixedOperatingCost.dropna(axis=1, how='all')
+
+    techlist1 = TotalDiscountedFixedOperatingCost1["TECHNOLOGY"].tolist()
+    valuelist1 = TotalDiscountedFixedOperatingCost1["VALUE"].tolist()
+    correctedvaluelist1 = []
+    for i in range(0, len(techlist1)):
+        if 'grid' in techlist1[i]:
+            correctedvaluelist1.append(valuelist1[i]/divider)
+        else:
+            correctedvaluelist1.append(valuelist1[i])
+    correctedvaluelist1
+    costcorrection = sum(valuelist1) - sum(correctedvaluelist1)
+    TotalDiscountedFixedOperatingCost1["correctedvalue"] = correctedvaluelist1
+    TotalDiscountedFixedOperatingCost1.drop("VALUE", axis=1, inplace=True)
+    TotalDiscountedFixedOperatingCost1.rename(columns={"correctedvalue": "VALUE"}, inplace=True)
+
+    VariableOMCost1 = VariableOMCost.dropna(axis=1, how='all')
+    VariableOMCost1 = VariableOMCost1.loc[VariableOMCost1['YEAR'] == VariableOMCost1['YEAR'].max()]
+    VariableOMCost1 = VariableOMCost1.loc[VariableOMCost1['MODE_OF_OPERATION'] == VariableOMCost1['MODE_OF_OPERATION'].min()]
+    VariableOMCost1 = VariableOMCost1.drop(['MODE_OF_OPERATION', 'YEAR',], axis = 1)
+    VariableOMCost1
+    techlist = VariableOMCost1["TECHNOLOGY"].tolist()
+    valuelist = VariableOMCost1["VALUE"].tolist()
+
+    valuelist
+    correctedvaluelist = []
+    for i in range(0, len(techlist)):
+        if 'grid' in techlist[i]:
+            correctedvaluelist.append(valuelist[i]/divider)
+        else:
+            correctedvaluelist.append(valuelist[i])
+    correctedvaluelist
+    VariableOMCost1["correctedvalue"] = correctedvaluelist
+    VariableOMCost1.drop("VALUE", axis=1, inplace=True)
+    VariableOMCost1.rename(columns={"correctedvalue": "VALUE"}, inplace=True)
+
+
+
+    DiscountedCapitalInvestmentByTechnology2 = {'DiscountedCapitalInvestmentByTechnology' : DiscountedCapitalInvestmentByTechnology1}
+    DiscountedCapitalInvestmentByStorage2 = {'DiscountedCapitalInvestmentByStorage' : DiscountedCapitalInvestmentByStorage1}
+    DiscountedSalvageValueByTechnology2 = {'DiscountedSalvageValueByTechnology' : DiscountedSalvageValueByTechnology1}
+    DiscountedSalvageValueByStorage2 = {'DiscountedSalvageValueByStorage' : DiscountedSalvageValueByStorage1}
+    TotalDiscountedFixedOperatingCost2 = {'TotalDiscountedFixedOperatingCost' : TotalDiscountedFixedOperatingCost1}
+    VariableOMCost2 = {'VariableOMCost' : VariableOMCost1}
+
+    TEO_Results_Z = {**DiscountedCapitalInvestmentByTechnology2, **DiscountedCapitalInvestmentByStorage2, **DiscountedSalvageValueByTechnology2, **DiscountedSalvageValueByStorage2, **TotalDiscountedFixedOperatingCost2, **VariableOMCost2}
+    TEO_Results_Z
+
     Names_NZ = ['Cost', 'AccumulatedNewCapacity', 'AccumulatedNewStorageCapacity', 'AnnualTechnologyEmission', 'RateOfProductionByTechnology', 'StorageLevelTimesliceStart', 'RateOfUseByTechnology'] 
     Results_NZ = pd.DataFrame() 
     for name_nz in Names_NZ: 
         Results_NZ = Results_NZ.append((res_df[res_df['NAME'] == str(name_nz)]))
-    
+
     ProductionByTechnology = Results_NZ[Results_NZ['NAME'] == str('RateOfProductionByTechnology')]
     Tlist = ProductionByTechnology["TIMESLICE"].tolist()
     Vlist = ProductionByTechnology["VALUE"].tolist()
@@ -424,14 +482,14 @@ def CreateResults(res_df):
     Results_NZ1 = Results_NZ.dropna(axis=1, how='all')
     Results_NZ1 = Results_NZ1.drop(['SCENARIO', 'REGION'], axis = 1)
     Results_NZ1 = Results_NZ1.loc[Results_NZ1['VALUE'] > 0.00000001]
-   
+
     Names_NZC = ['Cost', 'AccumulatedNewCapacity', 'AccumulatedNewStorageCapacity', 'AnnualTechnologyEmission', 'ProductionByTechnology', 'StorageLevelTimesliceStart', 'UseByTechnology'] 
 
     TEO_Results_NZ1 ={}
     for name_nz1 in Names_NZC:
         TEO_Results_NZ1[name_nz1] = Results_NZ1[Results_NZ1['NAME'] == str(name_nz1)]
-    
-    
+
+
     Cost = TEO_Results_NZ1['Cost']
     AccumulatedNewCapacity = TEO_Results_NZ1['AccumulatedNewCapacity']
     AccumulatedNewStorageCapacity = TEO_Results_NZ1['AccumulatedNewStorageCapacity']
@@ -439,17 +497,26 @@ def CreateResults(res_df):
     ProductionByTechnology = TEO_Results_NZ1['ProductionByTechnology']
     StorageLevelTimesliceStart = TEO_Results_NZ1['StorageLevelTimesliceStart']
     UseByTechnology = TEO_Results_NZ1['UseByTechnology']
-   
+
 
     Cost1 = Cost.dropna(axis=1, how='all')
+    costlist = Cost1["VALUE"].tolist()
+    correctedcostlist = []
+    for i in range(0, len(costlist)):
+        correctedcostlist.append(costlist[i] - costcorrection)
+
+    Cost1["correctedvalue"] = correctedcostlist
+    Cost1.drop("VALUE", axis=1, inplace=True)
+    Cost1.rename(columns={"correctedvalue": "VALUE"}, inplace=True)
+
     AccumulatedNewCapacity1 = AccumulatedNewCapacity.dropna(axis=1, how='all')
     AccumulatedNewStorageCapacity1 = AccumulatedNewStorageCapacity.dropna(axis=1, how='all')
     AnnualTechnologyEmission1 = AnnualTechnologyEmission.dropna(axis=1, how='all')
     ProductionByTechnology1 = ProductionByTechnology.dropna(axis=1, how='all')
     StorageLevelTimesliceStart1 = StorageLevelTimesliceStart.dropna(axis=1, how='all')
     UseByTechnology1 = UseByTechnology.dropna(axis=1, how='all')
-    
-    
+
+
     Cost2 = {'Cost' : Cost1}
     AccumulatedNewCapacity2 = {'AccumulatedNewCapacity' : AccumulatedNewCapacity1}
     AccumulatedNewStorageCapacity2 = {'AccumulatedNewStorageCapacity' : AccumulatedNewStorageCapacity1}
@@ -460,67 +527,25 @@ def CreateResults(res_df):
 
     TEO_Results_NZ = {**Cost2, **AccumulatedNewCapacity2, **AccumulatedNewStorageCapacity2, **AnnualTechnologyEmission2, **ProductionByTechnology2,**StorageLevelTimesliceStart2, **UseByTechnology2}
 
-    
+
     ProductionByTechnology = TEO_Results_NZ['ProductionByTechnology']
     UseByTechnology = TEO_Results_NZ['UseByTechnology']
-    
+
     del TEO_Results_NZ["UseByTechnology"]
-    
+    TEO_Results_NZ
     ex_capacities1 = GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax)
     ex_capacities1
-    
+
     ex_capacities = {'ex_capacities' : ex_capacities1}
-    
-    Names_z1 = ['DiscountedCapitalInvestmentByTechnology', 'DiscountedCapitalInvestmentByStorage', 'DiscountedSalvageValueByTechnology', 'DiscountedSalvageValueByStorage', 'VariableOMCost', 'TotalDiscountedFixedOperatingCost']
-    Results_Z1 = pd.DataFrame()
-    #res_df[res_df['NAME'] == str('DiscountedSalvageValueByStorage')]
-    for name_z1 in Names_z1:
-        Results_Z1 = Results_Z1.append((res_df[res_df['NAME'] == str(name_z1)])) 
-    Results_Z1[Results_Z1['NAME'] == str('TotalDiscountedFixedOperatingCost')]
 
-
-    Results_Z2 = Results_Z1.dropna(axis=1, how='all')
-    Results_Z2 = Results_Z2.drop(['SCENARIO', 'REGION'], axis = 1)
-
-    TEO_Results_Z1 = {}
-    for name_z1 in Names_z1:
-         TEO_Results_Z1[name_z1] = Results_Z2[Results_Z2['NAME'] == str(name_z1)]
-   
-
-    DiscountedCapitalInvestmentByTechnology = TEO_Results_Z1['DiscountedCapitalInvestmentByTechnology']
-    DiscountedCapitalInvestmentByStorage = TEO_Results_Z1['DiscountedCapitalInvestmentByStorage']
-    DiscountedSalvageValueByTechnology = TEO_Results_Z1['DiscountedSalvageValueByTechnology']
-    DiscountedSalvageValueByStorage = TEO_Results_Z1['DiscountedSalvageValueByStorage']
-    TotalDiscountedFixedOperatingCost = TEO_Results_Z1['TotalDiscountedFixedOperatingCost']
-    VariableOMCost = TEO_Results_Z1['VariableOMCost']
-
-    DiscountedCapitalInvestmentByTechnology1 = DiscountedCapitalInvestmentByTechnology.dropna(axis=1, how='all')
-    DiscountedCapitalInvestmentByStorage1 = DiscountedCapitalInvestmentByStorage.dropna(axis=1, how='all')
-    DiscountedSalvageValueByTechnology1 = DiscountedSalvageValueByTechnology.dropna(axis=1, how='all')
-    DiscountedSalvageValueByStorage1 = DiscountedSalvageValueByStorage.dropna(axis=1, how='all')
-    TotalDiscountedFixedOperatingCost1 = TotalDiscountedFixedOperatingCost.dropna(axis=1, how='all')
-    VariableOMCost1 = VariableOMCost.dropna(axis=1, how='all')
-    VariableOMCost1 = VariableOMCost1.loc[VariableOMCost1['YEAR'] == VariableOMCost1['YEAR'].max()]
-    VariableOMCost1 = VariableOMCost1.loc[VariableOMCost1['MODE_OF_OPERATION'] == VariableOMCost1['MODE_OF_OPERATION'].min()]
-    VariableOMCost1 = VariableOMCost1.drop(['MODE_OF_OPERATION', 'YEAR',], axis = 1)
-
-    DiscountedCapitalInvestmentByTechnology2 = {'DiscountedCapitalInvestmentByTechnology' : DiscountedCapitalInvestmentByTechnology1}
-    DiscountedCapitalInvestmentByStorage2 = {'DiscountedCapitalInvestmentByStorage' : DiscountedCapitalInvestmentByStorage1}
-    DiscountedSalvageValueByTechnology2 = {'DiscountedSalvageValueByTechnology' : DiscountedSalvageValueByTechnology1}
-    DiscountedSalvageValueByStorage2 = {'DiscountedSalvageValueByStorage' : DiscountedSalvageValueByStorage1}
-    TotalDiscountedFixedOperatingCost2 = {'TotalDiscountedFixedOperatingCost' : TotalDiscountedFixedOperatingCost1}
-    VariableOMCost2 = {'VariableOMCost' : VariableOMCost1}
-
-    TEO_Results_Z = {**DiscountedCapitalInvestmentByTechnology2, **DiscountedCapitalInvestmentByStorage2, **DiscountedSalvageValueByTechnology2, **DiscountedSalvageValueByStorage2, **TotalDiscountedFixedOperatingCost2, **VariableOMCost2}
-    
     Output = {}
     Output = {**TEO_Results_NZ, **TEO_Results_Z, **ex_capacities}
-    
+
 
     TEO_Results = {}
-    
+
     for key in Output.keys():
         TEO_Results[key] = Output[key].to_dict(orient = 'records')
-    
+  
     
     return TEO_Results
