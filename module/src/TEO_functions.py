@@ -240,7 +240,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
         if("grid") in x:
             Assign1.append("sourcex0s")
         else:
-            for i in range (1,50000):
+            for i in range (1,250):
                 if (','.join(["sou%dstr" % i ])) in x:
                     Assign1.append(','.join(["sourcex%ds" % i ]))
                 elif (','.join(["sink%dstr" % i ])) in x:
@@ -290,7 +290,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
     list5 = []
 
     for x in list4:
-        for i in range (0,500):
+        for i in range (0,250):
             if (','.join(["x%ds" % i ])) in x:
                 list5.append(','.join(["%d" % i ]))
 
