@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass, field
 
-from error_handling.module_exception import ModuleException
+from .module_exception import ModuleException
 
 
 @dataclass

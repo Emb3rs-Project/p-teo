@@ -22,7 +22,7 @@ def prepare_inputs(sets_df, df, input_data):
     platform_storages = pd.DataFrame(input_platform['platform_storages'])
     platform_annual_emission_limit = pd.DataFrame(input_platform['platform_annual_emission_limit'])
     platform_technology_to_storage = pd.DataFrame(input_platform['platform_technology_to_storage'])
-    platform_budget_limit= pd.DataFrame(input_platform['platform_budget_limit'])
+    # platform_budget_limit= pd.DataFrame(input_platform['platform_budget_limit'])
     
     sets_df1_year = pd.DataFrame(sets_df['YEAR'])
     sets_df1_storage = pd.DataFrame(sets_df['STORAGE'])
