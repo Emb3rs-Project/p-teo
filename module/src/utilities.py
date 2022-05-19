@@ -1,7 +1,7 @@
 from numpy import floor, inner
 import pandas as pd
 from pandas.core.frame import DataFrame
-from gen_settings import DEFAULT_PARAM_SETTINGS
+from .gen_settings import DEFAULT_PARAM_SETTINGS
 
 
 def create_sets_dataframe(jData):

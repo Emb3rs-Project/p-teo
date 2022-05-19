@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 import pulp
 import itertools
-from TEO_functions import *
-from error_handling.module_runtime_exception import ModuleRuntimeException
+from .TEO_functions import *
+from .error_handling.module_runtime_exception import ModuleRuntimeException
 
 def buildmodel(sets_df, df, defaults_df, mcs_df, n):
 

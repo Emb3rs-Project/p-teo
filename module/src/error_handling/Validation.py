@@ -37,7 +37,7 @@ class Inputscheck(BaseModel):
 
 
     @validator('maxstocap')
-    def check3(cls, v, values, **kwargs):
+    def check2(cls, v, values, **kwargs):
         for i in range(0, len(values['resstocap'])):
             if values['resstocap'][i] > v[i]:
                 raise ValueError("Please make sure that the residual storage capacity is less than the maximum allowed storage capacity")
