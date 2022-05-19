@@ -12,16 +12,17 @@
       "MODE_OF_OPERATION": [1, 2],
       "STORAGE": ["sto1", "sto2"]
     },
+      
     "platform_technologies": [
       {
         "technology": "gridspecificngboilersink",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
-        "residual_capacity": 100,
+        "residual_capacity": 0,
         "max_capacity_investment": 15000,
         "min_capacity": 0.01,
-        "min_capacity_investment": 1000,
+        "min_capacity_investment": 0.01,
         "annual_activity_lower_limit": 100,
         "annual_activity_upper_limit": 100000,
         "model_period_activity_lower_limit": 1000,
@@ -32,7 +33,7 @@
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
-        "residual_capacity": 100,
+        "residual_capacity": 0,
         "max_capacity_investment": 15000,
         "min_capacity": 0.01,
         "min_capacity_investment": 0.01,
@@ -308,8 +309,8 @@
         "storage_return_temp": 50,
         "storage_supply_temp": 80,
         "storage_ambient_temp": 20,
-        "residual_storage_capacity": 100,
-        "max_storage_capacity": 45,
+        "residual_storage_capacity": 0,
+        "max_storage_capacity": 45000,
         "storage_level_start": 1,
         "u_value": 0.14
       },
@@ -333,7 +334,10 @@
       }
     ],
     "platform_annual_emission_limit": [
-      { "emission": "co2", "annual_emission_limit": 150000 }
+      { "emission": "co2", "annual_emission_limit": 15000000 }
+    ],
+    "platform_budget_limit": [
+      { "Region": "Sweden", "budget_limit": 1}
     ],
     "platform_technology_to_storage": [
       {

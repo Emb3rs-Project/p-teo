@@ -12,4 +12,7 @@ def init():
     # UNLESS YOU KNOW WHAT YOUR DOING
     args = defineArguments(availableTests)
 
-    processInput(args, availableTests)
+    try:
+        processInput(args, availableTests)
+    except Exception as e:
+        print(e)

@@ -876,7 +876,7 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
         # ------------------------------------------------------------------------------------------------------------------
         #    SOLVE
         # ------------------------------------------------------------------------------------------------------------------
-        model.solve(solver)
+        model.solve()
         logging.info(f"\t{dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\t"
                      f"Model is solved. Solution is: "
                      f"{pulp.LpStatus[model.status]}")
