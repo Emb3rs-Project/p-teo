@@ -9,26 +9,26 @@
         38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48
       ],
       "YEAR": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009],
-      "MODE_OF_OPERATION": [1],
-      "STORAGE": ["sto1"]
+      "MODE_OF_OPERATION": [1, 2],
+      "STORAGE": ["sto1", "sto2"]
     },
     "platform_technologies": [
       {
-        "technology": "gridspecificngboiler",
+        "technology": "gridspecificngboilersink",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
         "residual_capacity": 100,
         "max_capacity_investment": 15000,
         "min_capacity": 0.01,
-        "min_capacity_investment": 0.01,
+        "min_capacity_investment": 1000,
         "annual_activity_lower_limit": 100,
         "annual_activity_upper_limit": 100000,
         "model_period_activity_lower_limit": 1000,
         "model_period_activity_upper_limit": 150000000
       },
       {
-        "technology": "gridspecificoilboiler",
+        "technology": "gridspecificoilboilersink",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -42,7 +42,7 @@
         "model_period_activity_upper_limit": 150000000
       },
       {
-        "technology": "gridspecificbiomassboiler",
+        "technology": "gridspecificbiomassboilersink",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -56,7 +56,7 @@
         "model_period_activity_upper_limit": 1500000000
       },
       {
-        "technology": "gridspecifichp",
+        "technology": "gridspecifichpsink",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -70,7 +70,7 @@
         "model_period_activity_upper_limit": 1500000000
       },
       {
-        "technology": "sink12heatexchangersink",
+        "technology": "sink1stream2heatexchangersink",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -84,7 +84,7 @@
         "model_period_activity_upper_limit": 1500000000
       },
       {
-        "technology": "sink562heatexchangersink",
+        "technology": "sink56stream2heatexchangersink",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -112,7 +112,7 @@
         "model_period_activity_upper_limit": 150000000
       },
       {
-        "technology": "source1stream1",
+        "technology": "stream1source1",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -126,7 +126,7 @@
         "model_period_activity_upper_limit": 150000000
       },
       {
-        "technology": "source1stream2",
+        "technology": "stream2source1",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -140,7 +140,7 @@
         "model_period_activity_upper_limit": 150000000
       },
       {
-        "technology": "source11mhe",
+        "technology": "source1stream1mhe",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -154,7 +154,7 @@
         "model_period_activity_upper_limit": 150000000
       },
       {
-        "technology": "source11orc",
+        "technology": "source1stream1orc",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -168,7 +168,7 @@
         "model_period_activity_upper_limit": 150000000
       },
       {
-        "technology": "source12electricitywhrb",
+        "technology": "source1stream2electricitywhrb",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -182,7 +182,7 @@
         "model_period_activity_upper_limit": 150000000
       },
       {
-        "technology": "source12ngwhrb",
+        "technology": "source1stream2ngwhrb",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -196,7 +196,7 @@
         "model_period_activity_upper_limit": 150000000
       },
       {
-        "technology": "source12oilwhrb",
+        "technology": "source1stream2oilwhrb",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -210,7 +210,7 @@
         "model_period_activity_upper_limit": 150000000
       },
       {
-        "technology": "source12biomasswhrb",
+        "technology": "source1stream2biomasswhrb",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -224,7 +224,7 @@
         "model_period_activity_upper_limit": 150000000
       },
       {
-        "technology": "source12hp",
+        "technology": "source1stream2hp",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -238,7 +238,7 @@
         "model_period_activity_upper_limit": 150000000
       },
       {
-        "technology": "source12chpng",
+        "technology": "source1stream2chpng",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -252,7 +252,7 @@
         "model_period_activity_upper_limit": 150000000
       },
       {
-        "technology": "source12chpoil",
+        "technology": "source1stream2chpoil",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -266,7 +266,21 @@
         "model_period_activity_upper_limit": 150000000
       },
       {
-        "technology": "source12chpbiomass",
+        "technology": "source1stream2chpbiomass",
+        "availability_factor": 0.95,
+        "discount_rate_tech": 0.01,
+        "capacity_to_activity": 8761,
+        "residual_capacity": 0.001,
+        "max_capacity_investment": 15000,
+        "min_capacity": 0.001,
+        "min_capacity_investment": 0.001,
+        "annual_activity_lower_limit": 0.001,
+        "annual_activity_upper_limit": 1000000,
+        "model_period_activity_lower_limit": 0.001,
+        "model_period_activity_upper_limit": 150000000
+      },
+      {
+        "technology": "source1stream2boosthp",
         "availability_factor": 0.95,
         "discount_rate_tech": 0.01,
         "capacity_to_activity": 8761,
@@ -290,14 +304,32 @@
         "storage_max_discharge": 10000,
         "l2d": 1,
         "tag_heating": 1,
-        "tag_cooling": 0.001,
+        "tag_cooling": 0,
         "storage_return_temp": 50,
         "storage_supply_temp": 80,
         "storage_ambient_temp": 20,
         "residual_storage_capacity": 100,
-        "max_storage_capacity": 450000,
+        "max_storage_capacity": 45,
         "storage_level_start": 1,
         "u_value": 0.14
+      },
+      {
+        "storage": "sto2",
+        "capital_cost_storage": 100,
+        "dicount_rate_sto": 0.1,
+        "operational_life_sto": 100,
+        "storage_max_charge": 10000,
+        "storage_max_discharge": 10000,
+        "l2d": 1,
+        "tag_heating": 1,
+        "tag_cooling": 0,
+        "storage_return_temp": 50,
+        "storage_supply_temp": 80,
+        "storage_ambient_temp": 20,
+        "residual_storage_capacity": 0,
+        "max_storage_capacity": 0,
+        "storage_level_start": 0,
+        "u_value": 0
       }
     ],
     "platform_annual_emission_limit": [
@@ -305,22 +337,16 @@
     ],
     "platform_technology_to_storage": [
       {
-        "technology": "source1whrb1",
-        "storage": "sto1",
-        "technologytostorage": 0.001,
-        "technologyfromstorage": 0.001
-      },
-      {
-        "technology": "source2whrb2",
-        "storage": "sto1",
-        "technologytostorage": 0.001,
-        "technologyfromstorage": 0.001
-      },
-      {
         "technology": "dhn",
         "storage": "sto1",
-        "technologytostorage": 0.001,
-        "technologyfromstorage": 0.001
+        "technologytostorage": 1,
+        "technologyfromstorage": 1
+      },
+      {
+        "technology": "sink1stream2heatexchangersink",
+        "storage": "sto2",
+        "technologytostorage": 1,
+        "technologyfromstorage": 1
       }
     ]
   },
@@ -330,39 +356,31 @@
   },
   "cf-module": {
     "specified_demand_profile_cf": [
-      {
-        "12demand": 0.3333333333333333,
-        "562demand": 0.3333333333333333
-      },
-      {
-        "12demand": 0.3333333333333333,
-        "562demand": 0.3333333333333333
-      },
-      {
-        "12demand": 0.3333333333333333,
-        "562demand": 0.3333333333333333
-      }
+      { "12demand": 0.3333333333333333, "562demand": 0.3333333333333333 },
+      { "12demand": 0.3333333333333333, "562demand": 0.3333333333333333 },
+      { "12demand": 0.3333333333333333, "562demand": 0.3333333333333333 }
     ],
     "sets_technologies": [
-      "gridspecificngboiler",
-      "gridspecificoilboiler",
-      "gridspecificbiomassboiler",
-      "gridspecifichp",
-      "sink12heatexchangersink",
-      "sink562heatexchangersink",
+      "gridspecificngboilersink",
+      "gridspecificoilboilersink",
+      "gridspecificbiomassboilersink",
+      "gridspecifichpsink",
+      "sink1stream2heatexchangersink",
+      "sink56stream2heatexchangersink",
       "dhn",
-      "source1stream1",
-      "source1stream2",
-      "source11mhe",
-      "source11orc",
-      "source12electricitywhrb",
-      "source12ngwhrb",
-      "source12oilwhrb",
-      "source12biomasswhrb",
-      "source12hp",
-      "source12chpng",
-      "source12chpoil",
-      "source12chpbiomass"
+      "stream1source1",
+      "stream2source1",
+      "source1stream1mhe",
+      "source1stream1orc",
+      "source1stream2electricitywhrb",
+      "source1stream2ngwhrb",
+      "source1stream2oilwhrb",
+      "source1stream2biomasswhrb",
+      "source1stream2hp",
+      "source1stream2chpng",
+      "source1stream2chpoil",
+      "source1stream2chpbiomass",
+      "source1stream2boosthp"
     ],
     "sets_fuels": [
       "dhnwatersupply",
@@ -382,7 +400,7 @@
         "om_var": 0.03106451148390813,
         "emissions_factor": 0.22779730362698178,
         "input": 0.9215370887082585,
-        "technology": "gridspecificngboiler",
+        "technology": "gridspecificngboilersink",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -396,7 +414,7 @@
         "om_var": 0.065911153,
         "emissions_factor": 0.28894354037691566,
         "input": 0.9215370887082585,
-        "technology": "gridspecificoilboiler",
+        "technology": "gridspecificoilboilersink",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -410,7 +428,7 @@
         "om_var": 0.043199654,
         "emissions_factor": 0.3971625282201407,
         "input": 0.9215370887082585,
-        "technology": "gridspecificbiomassboiler",
+        "technology": "gridspecificbiomassboilersink",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -424,7 +442,7 @@
         "om_var": 0.0869,
         "emissions_factor": 0.11652236652236651,
         "input": 1.8414526129317983,
-        "technology": "gridspecifichp",
+        "technology": "gridspecifichpsink",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -438,7 +456,7 @@
         "om_var": 0.00018318802627147375,
         "emissions_factor": 0.00021726951953128282,
         "input": 0.9499999999999998,
-        "technology": "sink12heatexchangersink",
+        "technology": "sink1stream2heatexchangersink",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -452,7 +470,7 @@
         "om_var": 0.00018318802627147375,
         "emissions_factor": 0.00021726951953128282,
         "input": 0.9499999999999998,
-        "technology": "sink562heatexchangersink",
+        "technology": "sink56stream2heatexchangersink",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -466,7 +484,7 @@
         "om_fix": 0.1,
         "om_var": 0.1,
         "emissions_factor": 0.1,
-        "technology": "source1stream1",
+        "technology": "stream1source1",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -480,7 +498,7 @@
         "om_fix": 0.1,
         "om_var": 0.1,
         "emissions_factor": 0.1,
-        "technology": "source1stream2",
+        "technology": "stream2source1",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -494,7 +512,7 @@
         "om_var": 0.0005382611432241898,
         "emissions_factor": 0.0006384027512658996,
         "input": 0.9025,
-        "technology": "source11mhe",
+        "technology": "source1stream1mhe",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -508,7 +526,7 @@
         "om_var": 0.0002343092502164664,
         "emissions_factor": 0.0002779016688613904,
         "input": 0.8133197623496438,
-        "technology": "source11orc",
+        "technology": "source1stream1orc",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -522,7 +540,7 @@
         "om_var": 0.21747300456982002,
         "emissions_factor": 0.26053487377232293,
         "input": 0.95,
-        "technology": "source12electricitywhrb",
+        "technology": "source1stream2electricitywhrb",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -536,7 +554,7 @@
         "om_var": 0.0843220793591107,
         "emissions_factor": 0.25674333633840624,
         "input": 0.95,
-        "technology": "source12ngwhrb",
+        "technology": "source1stream2ngwhrb",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -550,7 +568,7 @@
         "om_var": 0.07314219684915998,
         "emissions_factor": 0.32556346075963993,
         "input": 0.95,
-        "technology": "source12oilwhrb",
+        "technology": "source1stream2oilwhrb",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -564,7 +582,7 @@
         "om_var": 0.048042859834728224,
         "emissions_factor": 0.44736399344931166,
         "input": 0.95,
-        "technology": "source12biomasswhrb",
+        "technology": "source1stream2biomasswhrb",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -578,7 +596,7 @@
         "om_var": 0.8613143964607557,
         "emissions_factor": 0.41858635236459213,
         "input": 6.766476810414971,
-        "technology": "source12hp",
+        "technology": "source1stream2hp",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -592,7 +610,7 @@
         "om_var": 0.12273881669969193,
         "emissions_factor": 0.5370260876250914,
         "input": 6.766476810414971,
-        "technology": "source12chpng",
+        "technology": "source1stream2chpng",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -606,7 +624,7 @@
         "om_var": 0.10658197360851779,
         "emissions_factor": 0.6807582597987556,
         "input": 6.766476810414971,
-        "technology": "source12chpoil",
+        "technology": "source1stream2chpoil",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -620,7 +638,21 @@
         "om_var": 0.07030913715663799,
         "emissions_factor": 0.9351410480111295,
         "input": 6.766476810414971,
-        "technology": "source12chpbiomass",
+        "technology": "source1stream2chpbiomass",
+        "emissions": "co2",
+        "emission": "co2"
+      },
+      {
+        "input_fuel": "excessheat",
+        "output_fuel": "dhnwatersupply",
+        "output": 1,
+        "max_capacity": 900,
+        "turnkey_a": 313.65581457487224,
+        "om_fix": 658.8112368496734,
+        "om_var": 0.21532859911518892,
+        "emissions_factor": 0.10464658809114803,
+        "input": 1.6916192026037427,
+        "technology": "source1stream2boosthp",
         "emissions": "co2",
         "emission": "co2"
       },
@@ -641,17 +673,17 @@
       }
     ],
     "specified_annual_demand_cf": [
-      { "fuel": "12demand", "value": 0 },
-      { "fuel": "562demand", "value": 0 }
+      { "fuel": "12demand", "value": 3000 },
+      { "fuel": "562demand", "value": 3000 }
     ],
     "capacity_factor_cf": [
-      { "source1stream1": 1, "source1stream2": 1 },
-      { "source1stream1": 1, "source1stream2": 1 },
-      { "source1stream1": 1, "source1stream2": 1 },
-      { "source1stream1": 1, "source1stream2": 1 },
-      { "source1stream1": 1, "source1stream2": 1 },
-      { "source1stream1": 1, "source1stream2": 1 },
-      { "source1stream1": 1, "source1stream2": 1 }
+      { "stream1source1": 1, "stream2source1": 1 },
+      { "stream1source1": 1, "stream2source1": 1 },
+      { "stream1source1": 1, "stream2source1": 1 },
+      { "stream1source1": 1, "stream2source1": 1 },
+      { "stream1source1": 1, "stream2source1": 1 },
+      { "stream1source1": 1, "stream2source1": 1 },
+      { "stream1source1": 1, "stream2source1": 1 }
     ]
-  }  
+  }
 }
