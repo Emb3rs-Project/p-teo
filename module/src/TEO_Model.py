@@ -7,6 +7,7 @@ import pulp
 import itertools
 from .TEO_functions import *
 from .error_handling.module_runtime_exception import ModuleRuntimeException
+from .Visualization import *
 
 def buildmodel(sets_df, df, defaults_df, mcs_df, n):
 
@@ -912,5 +913,8 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
         del model  # Delete model
 
         i += 1
+
+        template_content = Report(Results)
+        Results['template_content'] = template_content
 
     return Results

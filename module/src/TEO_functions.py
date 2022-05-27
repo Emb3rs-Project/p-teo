@@ -305,9 +305,9 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
     append_df2.drop('ID', axis=1, inplace=True)
     append_df2.drop('Classification', axis=1, inplace=True)
     append_df2=(append_df2/value).round(2)
-    append_df2.insert(0, 'classification', classification)
-    append_df2.insert(0, 'ID', ID)
-    append_df2
+    append_df2.insert(0, 'number', ID)
+    append_df2.insert(0, 'classification_type', classification)
+    append_df2.insert(0, 'source_sink', '')
     return(append_df2)
 
 def CreateResults(res_df):
