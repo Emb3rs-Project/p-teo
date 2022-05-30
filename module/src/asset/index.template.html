@@ -108,9 +108,11 @@ The techno-economic optimization of your case has been succesfully completed. Th
     <h4><p><u>The installed capacity of technologies for all grid specific technologies</u></p></h4>
         
         
-    <p> Grid specific technologies are used a back up technologies when the excess heat from the sources in not adequate to meet the sink heat or cold demands. The installed capacity of technologies for all grid specific technologies is visualized in the graph below.<p>
+    <p> Grid specific technologies are used a back up technologies when the excess heat from the sources in not adequate to meet the sink heat or cold demands.<p>
     
-  {% if EMGRIDSANCGSPEC|length %}
+  {% if ANCGS|length %}
+    
+    <p>The installed capacity of technologies for all grid specific technologies is visualized in the graph below.</p>
     
        <center> {{ANCGS|safe}}   </center>  
         

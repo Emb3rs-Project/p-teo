@@ -273,7 +273,6 @@ def Report(Results):
             ancsi.append(ancsiuel)
 
     # Grid Specific
-    # del AccumulatedNewCapacitySource['Classification']
     Techlist = AccumulatedNewCapacity["TECHNOLOGY"].tolist()
     Assign8 = []
     for x in Techlist:
@@ -290,7 +289,7 @@ def Report(Results):
         AccumulatedNewCapacityGridplot = AccumulatedNewCapacityGridplot.droplevel(level=0, axis=1)
         list4 = AccumulatedNewCapacityGridplot.columns.tolist()
         list4.remove('')
-        fig4= px.bar(AccumulatedNewCapacityGridplot, x='', y=list4)
+        fig4 = px.bar(AccumulatedNewCapacityGridplot, x='', y=list4)
         fig4.update_layout(
             title=("Accumulated New Capacity for Grid Specific Technologies"),
             title_x=0.45,
@@ -752,7 +751,7 @@ def Report(Results):
     figCI.update_layout(
         title="Total Capital Investment",
         title_x=0.45,
-        xaxis_title="Year",
+        xaxis_title="Technologies",
         paper_bgcolor='#FFFFFF',
         yaxis_title="Capital Investment in €",
         legend_title="Technologies",
@@ -812,7 +811,7 @@ def Report(Results):
             figsoCI.update_layout(
                 title=(','.join(["Total Capital Investment for Source %d" % i ])),
                 title_x=0.45,
-                xaxis_title="Year",
+                xaxis_title="Technologies",
                 paper_bgcolor='#FFFFFF',
                 yaxis_title="Capital Investment in €",
                 legend_title="Technologies",
@@ -871,7 +870,7 @@ def Report(Results):
             fig3siCI.update_layout(
                 title=(','.join(["Total Capital Investment for Sink %d" % i ])),
                 title_x=0.45,
-                xaxis_title="Year",
+                xaxis_title="Technologies",
                 paper_bgcolor='#FFFFFF',
                 yaxis_title="Capital Investment in €",
                 legend_title="Technologies",
@@ -893,7 +892,7 @@ def Report(Results):
     figCIS.update_layout(
         title="Total Capital Investment Storage",
         title_x=0.45,
-        xaxis_title="Year",
+        xaxis_title="Storage",
         paper_bgcolor='#FFFFFF',
         yaxis_title="Capital Investment Storage in €",
         legend_title="Storage",
@@ -1023,7 +1022,7 @@ def Report(Results):
     figOC.update_layout(
         title="Total Operating Cost",
         title_x=0.45,
-        xaxis_title="Year",
+        xaxis_title="Technologies",
         paper_bgcolor='#FFFFFF',
         yaxis_title="Operating Cost in €",
         legend_title="Technologies",
@@ -1081,7 +1080,7 @@ def Report(Results):
             figsoOC.update_layout(
                 title=(','.join(["Total OperatingCost for Source %d" % i ])),
                 title_x=0.45,
-                xaxis_title="Year",
+                xaxis_title="Technologies",
                 paper_bgcolor='#FFFFFF',
                 yaxis_title="Operating Cost in €",
                 legend_title="Technologies",
@@ -1142,7 +1141,7 @@ def Report(Results):
             fig3siOC.update_layout(
                 title=(','.join(["Total Operating Cost for Sink %d" % i ])),
                 title_x=0.45,
-                xaxis_title="Year",
+                xaxis_title="Technologies",
                 paper_bgcolor='#FFFFFF',
                 yaxis_title="Operating Costt in €",
                 legend_title="Technologies",
