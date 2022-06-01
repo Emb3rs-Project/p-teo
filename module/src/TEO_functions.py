@@ -222,7 +222,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
 
     #UseByTechnology
     df1 = UseByTechnology
-    df1 = df1.loc[df1['FUEL'] == 'dhnwaterdemand']
+    df1 = df1.loc[df1['FUEL'] == 'dhnwaterdem']
     df1 = df1.loc[df1['VALUE'] != 0]
     df2 = df1.loc[df1['YEAR'] == df1['YEAR'].max()]
     df2.reset_index(drop=True, inplace=True)
@@ -290,7 +290,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
     list5 = []
 
     for x in list4:
-        for i in range (0,250):
+        for i in range (0,100):
             if (','.join(["x%ds" % i ])) in x:
                 list5.append(','.join(["%d" % i ]))
 
@@ -308,6 +308,75 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
     append_df2.insert(0, 'number', ID)
     append_df2.insert(0, 'classification_type', classification)
     append_df2.insert(0, 'source_sink', '')
+
+    dfsink = append_df2.loc[append_df2['classification_type'] == 'sink']
+    dfsource = append_df2.loc[append_df2['classification_type'] == 'source']
+
+    sinklist = dfsink.columns.tolist()
+    sinklist.remove('number')
+    sinklist.remove('classification_type')
+    sinklist.remove('source_sink')
+    sourcelist = dfsource.columns.tolist()
+    sourcelist.remove('number')
+    sourcelist.remove('classification_type')
+    sourcelist.remove('source_sink')
+    sinksumlist = []
+    sourcesumlist = []
+    for i in sinklist:
+        sinksumlist.append(dfsink[i].sum())
+    for i in sourcelist:
+        sourcesumlist.append(dfsource[i].sum())
+    sourcesumlist
+
+    difflist = []
+
+    for i in range(0,len(sinksumlist)):
+        difflist.append(sourcesumlist[i] - sinksumlist[i])
+    difflist
+
+    chargelist = []
+    dischargelist = []
+
+    for i in difflist:
+        if i >= 0:
+            chargelist.append(i)
+            dischargelist.append(0)
+        elif i < 0: 
+            dischargelist.append((i) * -1)
+            chargelist.append(0)
+    dfcharge = pd.DataFrame(chargelist)
+    dfdischarge = pd.DataFrame(dischargelist)
+
+    dfcharge = dfcharge.transpose()
+    dfdischarge = dfdischarge.transpose()
+    chargeID = [-1]
+    dischargeID = [-2]
+    chargeclass = ['sink']
+    dischargeclass = ['source']
+
+    dfcharge.insert(0, 'number', chargeID)
+    dfcharge.insert(0, 'classification_type', chargeclass)
+    dfcharge.insert(0, 'source_sink', '')
+   
+    dfdischarge.insert(0, 'number', dischargeID)
+    dfdischarge.insert(0, 'classification_type', dischargeclass)
+    dfdischarge.insert(0, 'source_sink', '')
+    
+
+    dfnew = dfcharge.append(dfdischarge)
+    
+    headerlist = append_df2.columns.tolist()
+    dfnew.columns = headerlist
+
+    append_df2 = append_df2.append(dfnew)
+
+    dfsink1 = append_df2.loc[append_df2['classification_type'] == 'sink']
+    dfsource1 = append_df2.loc[append_df2['classification_type'] == 'source']
+
+    append_df2 = dfsink1.append(dfsource1)
+    
+    append_df2 = append_df2.fillna(0)
+    
     return(append_df2)
 
 def CreateResults(res_df):
@@ -481,7 +550,7 @@ def CreateResults(res_df):
 
     Results_NZ1 = Results_NZ.dropna(axis=1, how='all')
     Results_NZ1 = Results_NZ1.drop(['SCENARIO', 'REGION'], axis = 1)
-    Results_NZ1 = Results_NZ1.loc[Results_NZ1['VALUE'] > 0.00000001]
+    Results_NZ1 = Results_NZ1.loc[Results_NZ1['VALUE'] > 0]
 
     Names_NZC = ['Cost', 'AccumulatedNewCapacity', 'AccumulatedNewStorageCapacity', 'AnnualTechnologyEmission', 'ProductionByTechnology', 'StorageLevelTimesliceStart', 'UseByTechnology'] 
 
