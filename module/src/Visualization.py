@@ -38,8 +38,8 @@ def Report(Results):
             Assign2.append("Grid Specific Natural gas Boiler")
         elif ("gridspecificoilboiler") in x:
             Assign2.append("Grid Specific Oil Boiler")
-        elif ("gridspecificbiomassboiler") in x:
-            Assign2.append("Grid Specific Biomass Boiler")
+        elif ("gridspecificbioboiler") in x:
+            Assign2.append("Grid Specific biomass Boiler")
         elif ("gridspecifichp") in x:
             Assign2.append("Grid Specific Heat Pump")
         elif ("dhn") in x:
@@ -48,20 +48,20 @@ def Report(Results):
             Assign2.append("Single Heat Exchanger")      
         elif ("mhe") in x:
             Assign2.append("Multiple Heat Exchanger")
-        elif ("electricitywhrb") in x:
+        elif ("elwhrb") in x:
             Assign2.append("Electric Waste Heat Recovery Boiler")
         elif ("ngwhrb") in x:
             Assign2.append("Natural Gas Heat Recovery Boiler")
         elif ("oilwhrb") in x:
             Assign2.append("Oil Heat Recovery Boiler")
-        elif ("biomasswhrb") in x:
-            Assign2.append("Biomass Heat Recovery Boiler")
+        elif ("biowhrb") in x:
+            Assign2.append("bio Heat Recovery Boiler")
         elif ("chpng") in x:
             Assign2.append("Natural Gas CHP")
         elif ("chpoil") in x:
             Assign2.append("Oil CHP")
-        elif ("chpbiomass") in x:
-            Assign2.append("Biomass CHP")
+        elif ("chpbio") in x:
+            Assign2.append("bio CHP")
         elif ("boosthp") in x:
             Assign2.append("Booster Heat Pump")
         elif ("sthp") in x:
@@ -70,10 +70,10 @@ def Report(Results):
             Assign2.append("Solar thermal with Natural gas boiler")
         elif ("stoilboiler") in x:
             Assign2.append("Solar thermal with oil boiler")
-        elif ("stbiomassboiler") in x:
+        elif ("stbioboiler") in x:
             Assign2.append("Solar thermal with biomass boiler")
-        elif ("stelectricityboiler") in x:
-            Assign2.append("Solar thermal with electricity boiler")
+        elif ("stelboiler") in x:
+            Assign2.append("Solar thermal with el boiler")
         elif x.endswith('ac') is True:
             Assign2.append("Absorption Chiller")
         elif x.endswith('acec') is True:
@@ -82,7 +82,7 @@ def Report(Results):
             Assign2.append("Absorption Chiller with Natural gas boiler")
         elif ("acoilboiler") in x:
             Assign2.append("Absorption Chiller with oil boiler")
-        elif ("acbiomassboiler") in x:
+        elif ("acbioboiler") in x:
             Assign2.append("Absorption Chiller with biomass boiler")
         elif ("acelectricboiler") in x:
             Assign2.append("Absorption Chiller with electric boiler")  
@@ -90,7 +90,7 @@ def Report(Results):
             Assign2.append("Absorption Chiller and Electric Chiller with Natural gas boiler")
         elif ("acecoilboiler") in x:
             Assign2.append("Absorption Chiller and Electric Chiller with oil boiler")
-        elif ("acecbiomassboiler") in x:
+        elif ("acecbioboiler") in x:
             Assign2.append("Absorption Chiller and Electric Chiller with biomass boiler")
         elif ("acecelectricboiler") in x:
             Assign2.append("Absorption Chiller and Electric Chiller with electric boiler")
@@ -361,8 +361,8 @@ def Report(Results):
             Assignem2.append("Grid Specific Natural gas Boiler")
         elif ("gridspecificoilboiler") in x:
             Assignem2.append("Grid Specific Oil Boiler")
-        elif ("gridspecificbiomassboiler") in x:
-            Assignem2.append("Grid Specific Biomass Boiler")
+        elif ("gridspecificbioboiler") in x:
+            Assignem2.append("Grid Specific biomass Boiler")
         elif ("gridspecifichp") in x:
             Assignem2.append("Grid Specific Heat Pump")
         elif ("dhn") in x:
@@ -371,20 +371,20 @@ def Report(Results):
             Assignem2.append("Single Heat Exchanger")      
         elif ("mhe") in x:
             Assignem2.append("Multiple Heat Exchanger")
-        elif ("electricitywhrb") in x:
+        elif ("elwhrb") in x:
             Assignem2.append("Electric Waste Heat Recovery Boiler")
         elif ("ngwhrb") in x:
             Assignem2.append("Natural Gas Heat Recovery Boiler")
         elif ("oilwhrb") in x:
             Assignem2.append("Oil Heat Recovery Boiler")
-        elif ("biomasswhrb") in x:
-            Assignem2.append("Biomass Heat Recovery Boiler")
+        elif ("biowhrb") in x:
+            Assignem2.append("bio Heat Recovery Boiler")
         elif ("chpng") in x:
             Assignem2.append("Natural Gas CHP")
         elif ("chpoil") in x:
             Assignem2.append("Oil CHP")
-        elif ("chpbiomass") in x:
-            Assignem2.append("Biomass CHP")
+        elif ("chpbio") in x:
+            Assignem2.append("bio CHP")
         elif ("hp") in x:
             Assignem2.append("Heat Pump")
         elif ("boosthp") in x:
@@ -395,10 +395,10 @@ def Report(Results):
             Assignem2.append("Solar thermal with Natural gas boiler")
         elif ("stoilboiler") in x:
             Assignem2.append("Solar thermal with oil boiler")
-        elif ("stbiomassboiler") in x:
+        elif ("stbioboiler") in x:
             Assignem2.append("Solar thermal with biomass boiler")
-        elif ("stelectricityboiler") in x:
-            Assignem2.append("Solar thermal with electricity boiler")
+        elif ("stelboiler") in x:
+            Assignem2.append("Solar thermal with el boiler")
         elif x.endswith('ac') is True:
             Assign2.append("Absorption Chiller")
         elif x.endswith('acec') is True:
@@ -407,7 +407,7 @@ def Report(Results):
             Assignem2.append("Absorption Chiller with Natural gas boiler")
         elif ("acoilboiler") in x:
             Assignem2.append("Absorption Chiller with oil boiler")
-        elif ("acbiomassboiler") in x:
+        elif ("acbioboiler") in x:
             Assignem2.append("Absorption Chiller with biomass boiler")
         elif ("acelectricboiler") in x:
             Assignem2.append("Absorption Chiller with electric boiler")  
@@ -415,7 +415,7 @@ def Report(Results):
             Assignem2.append("Absorption Chiller and Electric Chiller with Natural gas boiler")
         elif ("acecoilboiler") in x:
             Assignem2.append("Absorption Chiller and Electric Chiller with oil boiler")
-        elif ("acecbiomassboiler") in x:
+        elif ("acecbioboiler") in x:
             Assignem2.append("Absorption Chiller and Electric Chiller with biomass boiler")
         elif ("acecelectricboiler") in x:
             Assignem2.append("Absorption Chiller and Electric Chiller with electric boiler")
@@ -659,8 +659,8 @@ def Report(Results):
             AssignCI2.append("Grid Specific Natural gas Boiler")
         elif ("gridspecificoilboiler") in x:
             AssignCI2.append("Grid Specific Oil Boiler")
-        elif ("gridspecificbiomassboiler") in x:
-            AssignCI2.append("Grid Specific Biomass Boiler")
+        elif ("gridspecificbioboiler") in x:
+            AssignCI2.append("Grid Specific biomass Boiler")
         elif ("gridspecifichp") in x:
             AssignCI2.append("Grid Specific Heat Pump")
         elif ("dhn") in x:
@@ -669,20 +669,20 @@ def Report(Results):
             AssignCI2.append("Single Heat Exchanger")      
         elif ("mhe") in x:
             AssignCI2.append("Multiple Heat Exchanger")
-        elif ("electricitywhrb") in x:
+        elif ("elwhrb") in x:
             AssignCI2.append("Electric Waste Heat Recovery Boiler")
         elif ("ngwhrb") in x:
             AssignCI2.append("Natural Gas Heat Recovery Boiler")
         elif ("oilwhrb") in x:
             AssignCI2.append("Oil Heat Recovery Boiler")
-        elif ("biomasswhrb") in x:
-            AssignCI2.append("Biomass Heat Recovery Boiler")
+        elif ("biowhrb") in x:
+            AssignCI2.append("bio Heat Recovery Boiler")
         elif ("chpng") in x:
             AssignCI2.append("Natural Gas CHP")
         elif ("chpoil") in x:
             AssignCI2.append("Oil CHP")
-        elif ("chpbiomass") in x:
-            AssignCI2.append("Biomass CHP")
+        elif ("chpbio") in x:
+            AssignCI2.append("bio CHP")
         elif ("hp") in x:
             AssignCI2.append("Heat Pump")
         elif ("boosthp") in x:
@@ -693,10 +693,10 @@ def Report(Results):
             AssignCI2.append("Solar thermal with Natural gas boiler")
         elif ("stoilboiler") in x:
             AssignCI2.append("Solar thermal with oil boiler")
-        elif ("stbiomassboiler") in x:
+        elif ("stbioboiler") in x:
             AssignCI2.append("Solar thermal with biomass boiler")
-        elif ("stelectricityboiler") in x:
-            AssignCI2.append("Solar thermal with electricity boiler")
+        elif ("stelboiler") in x:
+            AssignCI2.append("Solar thermal with el boiler")
         elif x.endswith('ac') is True:
             Assign2.append("Absorption Chiller")
         elif x.endswith('acec') is True:
@@ -705,7 +705,7 @@ def Report(Results):
             AssignCI2.append("Absorption Chiller with Natural gas boiler")
         elif ("acoilboiler") in x:
             AssignCI2.append("Absorption Chiller with oil boiler")
-        elif ("acbiomassboiler") in x:
+        elif ("acbioboiler") in x:
             AssignCI2.append("Absorption Chiller with biomass boiler")
         elif ("acelectricboiler") in x:
             AssignCI2.append("Absorption Chiller with electric boiler")  
@@ -713,7 +713,7 @@ def Report(Results):
             AssignCI2.append("Absorption Chiller and Electric Chiller with Natural gas boiler")
         elif ("acecoilboiler") in x:
             AssignCI2.append("Absorption Chiller and Electric Chiller with oil boiler")
-        elif ("acecbiomassboiler") in x:
+        elif ("acecbioboiler") in x:
             AssignCI2.append("Absorption Chiller and Electric Chiller with biomass boiler")
         elif ("acecelectricboiler") in x:
             AssignCI2.append("Absorption Chiller and Electric Chiller with electric boiler")
@@ -934,8 +934,8 @@ def Report(Results):
             AssignOC2.append("Grid Specific Natural gas Boiler")
         elif ("gridspecificoilboiler") in x:
             AssignOC2.append("Grid Specific Oil Boiler")
-        elif ("gridspecificbiomassboiler") in x:
-            AssignOC2.append("Grid Specific Biomass Boiler")
+        elif ("gridspecificbioboiler") in x:
+            AssignOC2.append("Grid Specific biomass Boiler")
         elif ("gridspecifichp") in x:
             AssignOC2.append("Grid Specific Heat Pump")
         elif ("dhn") in x:
@@ -944,20 +944,20 @@ def Report(Results):
             AssignOC2.append("Single Heat Exchanger")      
         elif ("mhe") in x:
             AssignOC2.append("Multiple Heat Exchanger")
-        elif ("electricitywhrb") in x:
+        elif ("elwhrb") in x:
             AssignOC2.append("Electric Waste Heat Recovery Boiler")
         elif ("ngwhrb") in x:
             AssignOC2.append("Natural Gas Heat Recovery Boiler")
         elif ("oilwhrb") in x:
             AssignOC2.append("Oil Heat Recovery Boiler")
-        elif ("biomasswhrb") in x:
-            AssignOC2.append("Biomass Heat Recovery Boiler")
+        elif ("biowhrb") in x:
+            AssignOC2.append("bio Heat Recovery Boiler")
         elif ("chpng") in x:
             AssignOC2.append("Natural Gas CHP")
         elif ("chpoil") in x:
             AssignOC2.append("Oil CHP")
-        elif ("chpbiomass") in x:
-            AssignOC2.append("Biomass CHP")
+        elif ("chpbio") in x:
+            AssignOC2.append("bio CHP")
         elif ("boosthp") in x:
             AssignOC2.append("Booster Heat Pump")
         elif ("sthp") in x:
@@ -966,10 +966,10 @@ def Report(Results):
             AssignOC2.append("Solar thermal with Natural gas boiler")
         elif ("stoilboiler") in x:
             AssignOC2.append("Solar thermal with oil boiler")
-        elif ("stbiomassboiler") in x:
+        elif ("stbioboiler") in x:
             AssignOC2.append("Solar thermal with biomass boiler")
-        elif ("stelectricityboiler") in x:
-            AssignOC2.append("Solar thermal with electricity boiler")
+        elif ("stelboiler") in x:
+            AssignOC2.append("Solar thermal with el boiler")
         elif x.endswith('ac') is True:
             Assign2.append("Absorption Chiller")
         elif x.endswith('acec') is True:
@@ -978,7 +978,7 @@ def Report(Results):
             AssignOC2.append("Absorption Chiller with Natural gas boiler")
         elif ("acoilboiler") in x:
             AssignOC2.append("Absorption Chiller with oil boiler")
-        elif ("acbiomassboiler") in x:
+        elif ("acbioboiler") in x:
             AssignOC2.append("Absorption Chiller with biomass boiler")
         elif ("acelectricboiler") in x:
             AssignOC2.append("Absorption Chiller with electric boiler")  
@@ -986,7 +986,7 @@ def Report(Results):
             AssignOC2.append("Absorption Chiller and Electric Chiller with Natural gas boiler")
         elif ("acecoilboiler") in x:
             AssignOC2.append("Absorption Chiller and Electric Chiller with oil boiler")
-        elif ("acecbiomassboiler") in x:
+        elif ("acecbioboiler") in x:
             AssignOC2.append("Absorption Chiller and Electric Chiller with biomass boiler")
         elif ("acecelectricboiler") in x:
             AssignOC2.append("Absorption Chiller and Electric Chiller with electric boiler")
@@ -1253,8 +1253,8 @@ def Report(Results):
             AssignPBT2.append("Grid Specific Natural gas Boiler")
         elif ("gridspecificoilboiler") in x:
             AssignPBT2.append("Grid Specific Oil Boiler")
-        elif ("gridspecificbiomassboiler") in x:
-            AssignPBT2.append("Grid Specific Biomass Boiler")
+        elif ("gridspecificbioboiler") in x:
+            AssignPBT2.append("Grid Specific biomass Boiler")
         elif ("gridspecifichp") in x:
             AssignPBT2.append("Grid Specific Heat Pump")
         elif ("dhn") in x:
@@ -1263,20 +1263,20 @@ def Report(Results):
             AssignPBT2.append("Single Heat Exchanger")      
         elif ("mhe") in x:
             AssignPBT2.append("Multiple Heat Exchanger")
-        elif ("electricitywhrb") in x:
+        elif ("elwhrb") in x:
             AssignPBT2.append("Electric Waste Heat Recovery Boiler")
         elif ("ngwhrb") in x:
             AssignPBT2.append("Natural Gas Heat Recovery Boiler")
         elif ("oilwhrb") in x:
             AssignPBT2.append("Oil Heat Recovery Boiler")
-        elif ("biomasswhrb") in x:
-            AssignPBT2.append("Biomass Heat Recovery Boiler")
+        elif ("biowhrb") in x:
+            AssignPBT2.append("bio Heat Recovery Boiler")
         elif ("chpng") in x:
             AssignPBT2.append("Natural Gas CHP")
         elif ("chpoil") in x:
             AssignPBT2.append("Oil CHP")
-        elif ("chpbiomass") in x:
-            AssignPBT2.append("Biomass CHP")
+        elif ("chpbio") in x:
+            AssignPBT2.append("bio CHP")
         elif ("boosthp") in x:
             AssignPBT2.append("Booster Heat Pump")
         elif ("sthp") in x:
@@ -1285,10 +1285,10 @@ def Report(Results):
             AssignPBT2.append("Solar thermal with Natural gas boiler")
         elif ("stoilboiler") in x:
             AssignPBT2.append("Solar thermal with oil boiler")
-        elif ("stbiomassboiler") in x:
+        elif ("stbioboiler") in x:
             AssignPBT2.append("Solar thermal with biomass boiler")
-        elif ("stelectricityboiler") in x:
-            AssignPBT2.append("Solar thermal with electricity boiler")
+        elif ("stelboiler") in x:
+            AssignPBT2.append("Solar thermal with el boiler")
         elif x.endswith('ac') is True:
             Assign2.append("Absorption Chiller")
         elif x.endswith('acec') is True:
@@ -1297,7 +1297,7 @@ def Report(Results):
             AssignPBT2.append("Absorption Chiller with Natural gas boiler")
         elif ("acoilboiler") in x:
             AssignPBT2.append("Absorption Chiller with oil boiler")
-        elif ("acbiomassboiler") in x:
+        elif ("acbioboiler") in x:
             AssignPBT2.append("Absorption Chiller with biomass boiler")
         elif ("acelectricboiler") in x:
             AssignPBT2.append("Absorption Chiller with electric boiler")  
@@ -1305,7 +1305,7 @@ def Report(Results):
             AssignPBT2.append("Absorption Chiller and Electric Chiller with Natural gas boiler")
         elif ("acecoilboiler") in x:
             AssignPBT2.append("Absorption Chiller and Electric Chiller with oil boiler")
-        elif ("acecbiomassboiler") in x:
+        elif ("acecbioboiler") in x:
             AssignPBT2.append("Absorption Chiller and Electric Chiller with biomass boiler")
         elif ("acecelectricboiler") in x:
             AssignPBT2.append("Absorption Chiller and Electric Chiller with electric boiler")
@@ -1558,8 +1558,8 @@ def Report(Results):
             AssignPA2.append("Grid Specific Natural gas Boiler")
         elif ("gridspecificoilboiler") in x:
             AssignPA2.append("Grid Specific Oil Boiler")
-        elif ("gridspecificbiomassboiler") in x:
-            AssignPA2.append("Grid Specific Biomass Boiler")
+        elif ("gridspecificbioboiler") in x:
+            AssignPA2.append("Grid Specific biomass Boiler")
         elif ("gridspecifichp") in x:
             AssignPA2.append("Grid Specific Heat Pump")
         elif ("dhn") in x:
@@ -1568,20 +1568,20 @@ def Report(Results):
             AssignPA2.append("Single Heat Exchanger")      
         elif ("mhe") in x:
             AssignPA2.append("Multiple Heat Exchanger")
-        elif ("electricitywhrb") in x:
+        elif ("elwhrb") in x:
             AssignPA2.append("Electric Waste Heat Recovery Boiler")
         elif ("ngwhrb") in x:
             AssignPA2.append("Natural Gas Heat Recovery Boiler")
         elif ("oilwhrb") in x:
             AssignPA2.append("Oil Heat Recovery Boiler")
-        elif ("biomasswhrb") in x:
-            AssignPA2.append("Biomass Heat Recovery Boiler")
+        elif ("biowhrb") in x:
+            AssignPA2.append("bio Heat Recovery Boiler")
         elif ("chpng") in x:
             AssignPA2.append("Natural Gas CHP")
         elif ("chpoil") in x:
             AssignPA2.append("Oil CHP")
-        elif ("chpbiomass") in x:
-            AssignPA2.append("Biomass CHP")
+        elif ("chpbio") in x:
+            AssignPA2.append("bio CHP")
         elif ("boosthp") in x:
             AssignPA2.append("Booster Heat Pump")
         elif ("sthp") in x:
@@ -1590,10 +1590,10 @@ def Report(Results):
             AssignPA2.append("Solar thermal with Natural gas boiler")
         elif ("stoilboiler") in x:
             AssignPA2.append("Solar thermal with oil boiler")
-        elif ("stbiomassboiler") in x:
+        elif ("stbioboiler") in x:
             AssignPA2.append("Solar thermal with biomass boiler")
-        elif ("stelectricityboiler") in x:
-            AssignPA2.append("Solar thermal with electricity boiler")
+        elif ("stelboiler") in x:
+            AssignPA2.append("Solar thermal with el boiler")
         elif x.endswith('ac') is True:
             Assign2.append("Absorption Chiller")
         elif x.endswith('acec') is True:
@@ -1602,7 +1602,7 @@ def Report(Results):
             AssignPA2.append("Absorption Chiller with Natural gas boiler")
         elif ("acoilboiler") in x:
             AssignPA2.append("Absorption Chiller with oil boiler")
-        elif ("acbiomassboiler") in x:
+        elif ("acbioboiler") in x:
             AssignPA2.append("Absorption Chiller with biomass boiler")
         elif ("acelectricboiler") in x:
             AssignPA2.append("Absorption Chiller with electric boiler")  
@@ -1610,7 +1610,7 @@ def Report(Results):
             AssignPA2.append("Absorption Chiller and Electric Chiller with Natural gas boiler")
         elif ("acecoilboiler") in x:
             AssignPA2.append("Absorption Chiller and Electric Chiller with oil boiler")
-        elif ("acecbiomassboiler") in x:
+        elif ("acecbioboiler") in x:
             AssignPA2.append("Absorption Chiller and Electric Chiller with biomass boiler")
         elif ("acecelectricboiler") in x:
             AssignPA2.append("Absorption Chiller and Electric Chiller with electric boiler")
