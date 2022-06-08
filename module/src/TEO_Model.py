@@ -8,6 +8,7 @@ import itertools
 from .TEO_functions import *
 from .error_handling.module_runtime_exception import ModuleRuntimeException
 from .Visualization import *
+import gurobipy as gp
 
 def buildmodel(sets_df, df, defaults_df, mcs_df, n):
 
@@ -16,8 +17,7 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
     # ----------------------------------------------------------------------------------------------------------------------
     #    SETS (CHANGED FOR NEW FORMAT)
     # ----------------------------------------------------------------------------------------------------------------------
-    path_to_solver = r'C:\Program Files\Gurobi_9.5.1\win64\bin\gurobi_cl.exe'
-    solver = pulp.GUROBI_CMD(path=path_to_solver)
+    solver = pulp.GUROBI()
     YEAR = createTuple(sets_df["YEAR"], "YEAR")
     TECHNOLOGY = createTuple(sets_df["TECHNOLOGY"], "TECHNOLOGY")
     TIMESLICE = createTuple(sets_df["TIMESLICE"], "TIMESLICE")
@@ -877,7 +877,7 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
         # ------------------------------------------------------------------------------------------------------------------
         #    SOLVE
         # ------------------------------------------------------------------------------------------------------------------
-        model.solve()
+        model.solve(solver)
         logging.info(f"\t{dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\t"
                      f"Model is solved. Solution is: "
                      f"{pulp.LpStatus[model.status]}")
@@ -915,6 +915,6 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
         i += 1
 
         template_content = Report(Results)
-        Results['template_content'] = template_content
+        Results['Report'] = template_content
 
     return Results
