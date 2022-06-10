@@ -1655,7 +1655,7 @@ def Report(Results):
                 if(','.join(["str%dhp" % i ])) in x:
                     AssignPA2.append("Heat Pump") 
         else:
-            Assign2.append(" ")
+            AssignPA2.append(" ")
     AssignPA3= []
 
     for i in range(0, len(AssignPA1)):
