@@ -18,17 +18,27 @@ def Report(Results):
     Tech_list1 = AccumulatedNewCapacity['TECHNOLOGY'].tolist()
     Assign1 = []
     Assign2 = []
+    Assign4 = []
     for x in Tech_list1:
         if("grid") in x:
             Assign1.append("Grid Specific")
+            Assign4.append('')
         elif ("dhn") in x:
             Assign1.append("District Heating Network")
+            Assign4.append('')
         else:
+            10
             for i in range (1,250):
                 if (','.join(["sou%dstr" % i ])) in x:
                     Assign1.append(','.join(["Source%d" % i ]))            
                 elif (','.join(["sink%dstr" % i ])) in x:
                     Assign1.append(','.join(["Sink%d" % i ]))
+            if "sou" or "sink" in x:
+                for i in range (10000,99999):
+                    if(','.join(["str%d" % i ])) in x:
+                        Assign4.append(','.join(["Stream%d" % i ]))
+            else:
+                Assign4.append('')
             for i in range (1,100000):
                 if(','.join(["str%dsou" % i ])) in x:
                     Assign1.append(','.join(["Stream%d" % i ])) 
@@ -118,7 +128,7 @@ def Report(Results):
         elif Assign2[i] == '':
             Assign3.append(str(str(Assign1[i]) + str(Assign2[i])))
         else:
-            Assign3.append(str(str(Assign1[i]) + ' ' + str(Assign2[i])))
+            Assign3.append(str(str(Assign1[i] + ' ' + str(Assign4[i])+ + ' ' + str(Assign2[i])))
 
     AccumulatedNewCapacity['Assignment'] = Assign3
     AccumulatedNewCapacity = AccumulatedNewCapacity.drop(['TECHNOLOGY'], axis = 1)
@@ -337,26 +347,36 @@ def Report(Results):
 
 
 
-    # AnnualTechnologyEmission all combined, sink and source specific
+    #AnnualTechnologyEmission all combined, sink and source specific
 
-    # AnnualTechnologyEmission all combined
+    #AnnualTechnologyEmission all combined
 
-    AnnualTechnologyEmission = pd.DataFrame(a['AnnualTechnologyEmission'])
+    AnnualTechnologyEmission = pd.DataFrame(a['AnnTechEmission'])
 
     Tech_listem = AnnualTechnologyEmission['TECHNOLOGY'].tolist()
     Assignem1 = []
     Assignem2 = []
+    Assignem4 = []                
     for x in Tech_listem:
         if("grid") in x:
             Assignem1.append("Grid Specific")
+            Assignem4.append('')
         elif ("dhn") in x:
             Assignem1.append("District Heating Network")
+            Assignem4.append('')
         else:
             for i in range (1,250):
                 if (','.join(["sou%dstr" % i ])) in x:
                     Assignem1.append(','.join(["Source%d" % i ]))
                 elif (','.join(["sink%dstr" % i ])) in x:
                     Assignem1.append(','.join(["Sink%d" % i ]))
+            if "sou" or "sink" in x:
+                for i in range (10000,99999):
+                    if(','.join(["str%d" % i ])) in x:
+                        Assignem4.append(','.join(["Stream%d" % i ]))
+            else:
+                Assignem4.append('')
+            
             for i in range (1,100000):
                 if(','.join(["str%dsou" % i ])) in x:
                     Assignem1.append(','.join(["Stream%d" % i ])) 
@@ -406,9 +426,9 @@ def Report(Results):
         elif ("stelboiler") in x:
             Assignem2.append("Solar thermal with el boiler")
         elif x.endswith('ac') is True:
-            Assignem2.append("Absorption Chiller")
+            Assign2.append("Absorption Chiller")
         elif x.endswith('acec') is True:
-            Assignem2.append("Absorption Chiller with Electric Chiller")
+            Assign2.append("Absorption Chiller with Electric Chiller")
         elif ("acngboiler") in x:
             Assignem2.append("Absorption Chiller with Natural gas boiler")
         elif ("acoilboiler") in x:
@@ -449,7 +469,7 @@ def Report(Results):
         elif Assignem2[i] == '':
             Assignem3.append(str(str(Assignem1[i]) + str(Assignem2[i])))
         else:
-            Assignem3.append(str(str(Assignem1[i]) + ' ' + str(Assignem2[i])))
+            Assignem3.append(str(str(Assignem1[i]) + ' ' + str(Assignem4[i])+ ' ' + str(Assignem2[i])))
     Assignem3
 
     AnnualTechnologyEmission['Assignment'] = Assignem3
@@ -644,23 +664,32 @@ def Report(Results):
     # Capital Investment combined, source and sink
 
     # Capital Investment
-    CapitalInvestment = pd.DataFrame(a['DiscountedCapitalInvestmentByTechnology'])
+    CapitalInvestment = pd.DataFrame(a['DiscCapitalInvestmentByTech'])
     CapitalInvestment 
 
     Tech_listem = CapitalInvestment['TECHNOLOGY'].tolist()
     AssignCI1 = []
     AssignCI2= []
+    AssignCI4= []              
     for x in Tech_listem:
         if("grid") in x:
             AssignCI1.append("Grid Specific")
+            AssignCI4.append('')
         elif ("dhn") in x:
             AssignCI1.append("District Heating Network")
+            AssignCI4.append('')                           
         else:
             for i in range (1,250):
                 if (','.join(["sou%dstr" % i ])) in x:
                     AssignCI1.append(','.join(["Source%d" % i ]))
                 elif (','.join(["sink%dstr" % i ])) in x:
                     AssignCI1.append(','.join(["Sink%d" % i ]))
+            if "sou" or "sink" in x:
+                for i in range (10000,99999):
+                    if(','.join(["str%d" % i ])) in x:
+                        AssignCI4.append(','.join(["Stream%d" % i ]))
+            else:
+                AssignCI4.append('')
             for i in range (1,100000):
                 if(','.join(["str%dsou" % i ])) in x:
                     AssignCI1.append(','.join(["Stream%d" % i ])) 
@@ -753,7 +782,7 @@ def Report(Results):
         elif AssignCI2[i] == '':
             AssignCI3.append(str(str(AssignCI1[i]) + str(AssignCI2[i])))
         else:
-            AssignCI3.append(str(str(AssignCI1[i]) + ' ' + str(AssignCI2[i])))
+            AssignCI3.append(str(str(AssignCI1[i]) + ' ' + str(AssignCI4[i])+ ' ' + str(AssignCI2[i])))
     AssignCI3
 
     CapitalInvestment['Assignment'] = AssignCI3
@@ -901,7 +930,7 @@ def Report(Results):
             cisi.append(cisiuel) 
 
     # capital investment storage
-    CapitalInvestmentsto = pd.DataFrame(a['DiscountedCapitalInvestmentByStorage'])
+    CapitalInvestmentsto = pd.DataFrame(a['DiscCapitalInvestmentByStorage'])
     CapitalInvestmentsto = CapitalInvestmentsto.loc[CapitalInvestmentsto["VALUE"] != 0] 
     del CapitalInvestmentsto['NAME']
 
@@ -931,17 +960,27 @@ def Report(Results):
     Tech_listem = OperatingCost['TECHNOLOGY'].tolist()
     AssignOC1 = []
     AssignOC2= []
+    AssignOC4= []                           
     for x in Tech_listem:
         if("grid") in x:
             AssignOC1.append("Grid Specific")
+            AssignOC4.append('')
         elif ("dhn") in x:
             AssignOC1.append("District Heating Network")
+            AssignOC4.append('')
         else:
             for i in range (1,250):
                 if (','.join(["sou%dstr" % i ])) in x:
                     AssignOC1.append(','.join(["Source%d" % i ]))
                 elif (','.join(["sink%dstr" % i ])) in x:
                     AssignOC1.append(','.join(["Sink%d" % i ]))
+            if "sou" or "sink" in x:
+                for i in range (10000,99999):
+                    if(','.join(["str%d" % i ])) in x:
+                        AssignPA4.append(','.join(["Stream%d" % i ]))
+            else:
+                AssignOC4.append('')
+
             for i in range (1,100000):
                 if(','.join(["str%dsou" % i ])) in x:
                     AssignOC1.append(','.join(["Stream%d" % i ])) 
@@ -989,9 +1028,9 @@ def Report(Results):
         elif ("stelboiler") in x:
             AssignOC2.append("Solar thermal with el boiler")
         elif x.endswith('ac') is True:
-            AssignOC2.append("Absorption Chiller")
+            Assign2.append("Absorption Chiller")
         elif x.endswith('acec') is True:
-            AssignOC2.append("Absorption Chiller with Electric Chiller")
+            Assign2.append("Absorption Chiller with Electric Chiller")
         elif ("acngboiler") in x:
             AssignOC2.append("Absorption Chiller with Natural gas boiler")
         elif ("acoilboiler") in x:
@@ -1031,8 +1070,7 @@ def Report(Results):
         elif AssignOC2[i] == '':
             AssignOC3.append(str(str(AssignOC1[i]) + str(AssignOC2[i])))
         else:
-            AssignOC3.append(str(str(AssignOC1[i]) + ' ' + str(AssignOC2[i])))
-    AssignOC3
+            AssignOC3.append(str(str(AssignOC1[i]) + ' ' + str(AssignOC4[i])+ ' ' + str(AssignOC2[i])))
 
     OperatingCost['Assignment'] = AssignOC3
     OperatingCost = OperatingCost.drop(['TECHNOLOGY'], axis = 1)
@@ -1255,17 +1293,27 @@ def Report(Results):
     Tech_listPBT = productionbytechnology['TECHNOLOGY'].tolist()
     AssignPBT1 = []
     AssignPBT2= []
+    AssignPBT4= []                           
     for x in Tech_listPBT:
         if("grid") in x:
             AssignPBT1.append("Grid Specific")
+            AssignPBT4.append('')
         elif ("dhn") in x:
             AssignPBT1.append("District Heating Network")
+            AssignPBT4.append('')                           
         else:
             for i in range (1,250):
                 if (','.join(["sou%dstr" % i ])) in x:
                     AssignPBT1.append(','.join(["Source%d" % i ]))
                 elif (','.join(["sink%dstr" % i ])) in x:
                     AssignPBT1.append(','.join(["Sink%d" % i ]))
+            if "sou" or "sink" in x:
+                for i in range (10000,99999):
+                    if(','.join(["str%d" % i ])) in x:
+                        AssignPBT4.append(','.join(["Stream%d" % i ]))
+            else:
+                AssignPBT4.append('')
+                           
             for i in range (1,100000):
                 if(','.join(["str%dsou" % i ])) in x:
                     AssignPBT1.append(','.join(["Stream%d" % i ])) 
@@ -1355,7 +1403,7 @@ def Report(Results):
         elif AssignPBT2[i] == '':
             AssignPBT3.append(str(str(AssignPBT1[i]) + str(AssignPBT2[i])))
         else:
-            AssignPBT3.append(str(str(AssignPBT1[i]) + ' ' + str(AssignPBT2[i])))
+            AssignPBT3.append(str(str(AssignPBT1[i]) + ' ' + str(AssignPBT4[i])+ ' ' + str(AssignPBT2[i])))
     AssignPBT3
 
     productionbytechnology['Assignment'] = AssignPBT3
@@ -1560,25 +1608,41 @@ def Report(Results):
             pbtsiel = plotly.io.to_html(figsPBTeachSink, full_html=False,include_plotlyjs=False)
             pbtsin.append(pbtsiel)  
 
-    #Production Annual
-    productionannual = pd.DataFrame(a['ProductionByTechnology'])
-    Tech_listPA = productionannual['TECHNOLOGY'].tolist()
+    #Intial setup for production annual
+    productionannualt = pd.DataFrame(a['ProductionByTechnology'])
+    productionannual = productionannualt.pivot_table(values=['VALUE'], index=['YEAR'],columns=['TECHNOLOGY'],aggfunc=np.sum)
+    productionannual = productionannual.reset_index()
+    productionannual = productionannual.droplevel(level=0, axis=1)
+
+    Tech_listPA = []
+    Tech_listPA = productionannual.columns.tolist()
+    Tech_listPA.remove('')
+    Tech_listPA
     AssignPA1 = []
     AssignPA2= []
+    AssignPA4 = []
     for x in Tech_listPA:
         if("grid") in x:
             AssignPA1.append("Grid Specific")
+            AssignPA4.append('')
         elif ("dhn") in x:
             AssignPA1.append("District Heating Network")
+            AssignPA4.append('')
         else:
             for i in range (1,250):
                 if (','.join(["sou%dstr" % i ])) in x:
                     AssignPA1.append(','.join(["Source%d" % i ]))
                 elif (','.join(["sink%dstr" % i ])) in x:
                     AssignPA1.append(','.join(["Sink%d" % i ]))
-            for i in range (1,100000):
+            if "sou" or "sink" in x:
+                for i in range (10000,99999):
+                    if(','.join(["str%d" % i ])) in x:
+                        AssignPA4.append(','.join(["Stream%d" % i ]))
+            else:
+                AssignPA4.append('')
+            for i in range (10000,99999):
                 if(','.join(["str%dsou" % i ])) in x:
-                    AssignPA1.append(','.join(["Stream%d" % i ])) 
+                    AssignPA1.append(','.join(["Source Stream%d" % i ]))               
 
         if ("gridspecificngboiler") in x:
             AssignPA2.append("Grid Specific Natural gas Boiler")
@@ -1651,62 +1715,41 @@ def Report(Results):
         elif ("exgrid") in x:
             AssignPA2.append("Existing Grid Technologies")
         elif("hp") in x:
-            for i in range (1,100000):
+            for i in range (10000,99999):
                 if(','.join(["str%dhp" % i ])) in x:
                     AssignPA2.append("Heat Pump") 
         else:
             AssignPA2.append(" ")
-    AssignPA3= []
+    AssignPA3= ['']
 
     for i in range(0, len(AssignPA1)):
         if AssignPA1[i] in AssignPA2[i]:
             AssignPA3.append(AssignPA2[i])
-        elif AssignPA2[i] == '':
+        elif AssignPA2[i] == ' ':
             AssignPA3.append(str(str(AssignPA1[i]) + str(AssignPA2[i])))
         else:
-            AssignPA3.append(str(str(AssignPA1[i]) + ' ' + str(AssignPA2[i])))
-    AssignPA3
+            AssignPA3.append(str(str(AssignPA1[i]) + ' ' + str(AssignPA4[i])+ ' '+ str(AssignPA2[i])))
 
-    productionannual['Assignment'] = AssignPA3
-    productionannual  = productionannual .drop(['TECHNOLOGY'], axis = 1)
-    productionannual  = productionannual .drop(['NAME'], axis = 1)
-    productionannual .rename(columns={"Assignment": "TECHNOLOGY"}, inplace=True)
-    productionannual  = productionannual  [['VALUE', 'TECHNOLOGY', 'TIMESLICE', 'YEAR']]
 
-    #Production Annual Source side aggregation
-    productionannualsource = productionannual
-    Techlist4PAsource = productionannualsource["TECHNOLOGY"].tolist()
-    Assign4PA = []
-    for x in Techlist4PAsource:
-        if "Source" in x:
-            Assign4PA.append("Source")
-        else:
-            Assign4PA.append('')
+    productionannual.columns = AssignPA3
 
-    productionannualsource['Classification'] = Assign4PA
-    productionannualsource = productionannualsource.loc[productionannualsource["Classification"] == "Source"]
-    del productionannualsource['Classification']
-    Techlist4PAsource = productionannualsource["TECHNOLOGY"].tolist()
-    Techlist4PAsource
-    sourcelistaggPA = []
-    for x in Techlist4PAsource:
-        for i in range (1,250):
-            if (','.join(["Source%d" % i ])) in x:
-                sourcelistaggPA.append(','.join(["Source%d" % i ]))
 
-    productionannualsource['Classification'] = sourcelistaggPA
-    productionannualsource
-    productionannualsourceplot = productionannualsource.pivot_table(productionannualsource,index=['YEAR'],columns=['Classification'],aggfunc=np.sum)
-    productionannualsourceplot = productionannualsourceplot.reset_index()
-    productionannualsourceplot = productionannualsourceplot.droplevel(level=0, axis=1)
-    productionannualsourceplot
+    #Production annual source aggregated
+
+    collist = productionannual.columns.tolist()
+    sourcelist = ['']
+    for i in collist:
+        if 'Source' in i:
+            sourcelist.append(i)
+    productionannualsourceplot = productionannual[sourcelist]
     list4PAplotsource = productionannualsourceplot.columns.tolist()
     list4PAplotsource.remove('')
+
     figsPAsource = px.bar(productionannualsourceplot, x='', y=list4PAplotsource)
     figsPAsource.update_layout(
         title="Annual heat generation for sources",
         title_x=0.45,
-        xaxis_title="Timeslice",
+        xaxis_title="Year",
         paper_bgcolor='#FFFFFF',
         yaxis_title="Production in kWh",
         legend_title="Technologies",
@@ -1717,35 +1760,43 @@ def Report(Results):
         )
     )
 
-    #Production Annual Sink side aggregation
-    productionannualsink = productionannual
-    Techlist4PAsink = productionannualsink["TECHNOLOGY"].tolist()
-    Assign4PA = []
-    for x in Techlist4PAsink:
-        if "Sink" in x:
-            Assign4PA.append("Sink")
-        else:
-            Assign4PA.append('')
+    #Production annual source aggregated
 
-    productionannualsink['Classification'] = Assign4PA
-    productionannualsink = productionannualsink.loc[productionannualsink["Classification"] == "Sink"]
-    del productionannualsink['Classification']
+    collist = productionannual.columns.tolist()
+    sourcelist = ['']
+    for i in collist:
+        if 'Source' in i:
+            sourcelist.append(i)
+    productionannualsourceplot = productionannual[sourcelist]
+    list4PAplotsource = productionannualsourceplot.columns.tolist()
+    list4PAplotsource.remove('')
 
-    TechlistPASinkclassagg = productionannualsink["TECHNOLOGY"].tolist()
-    SinklistPAagg = []
-    for x in TechlistPASinkclassagg:
-        for i in range (1,250):
-            if (','.join(["Sink%d " % i ])) in x:
-                SinklistPAagg.append(','.join(["Sink%d" % i ]))
+    figsPAsource = px.bar(productionannualsourceplot, x='', y=list4PAplotsource)
+    figsPAsource.update_layout(
+        title="Annual heat generation for sources",
+        title_x=0.45,
+        xaxis_title="Year",
+        paper_bgcolor='#FFFFFF',
+        yaxis_title="Production in kWh",
+        legend_title="Technologies",
+        font=dict(
+            family="Times New Roman",
+            size=12,
+            color="Black"
+        )
+    )
 
-    productionannualsink['Classification'] = SinklistPAagg
+    #Production annual sink aggregated
 
-    productionannualsinkplot = productionannualsink.pivot_table(productionannualsink,index=['YEAR'],columns=['Classification'],aggfunc=np.sum)
-    productionannualsinkplot = productionannualsinkplot.reset_index()
-    productionannualsinkplot = productionannualsinkplot.droplevel(level=0, axis=1)
-    productionannualsinkplot
+    sinklist = ['']
+    for i in collist:
+        if 'Sink' in i:
+            sinklist.append(i)
+    productionannualsinkplot = productionannual[sinklist]
     list4PAplotsink = productionannualsinkplot.columns.tolist()
     list4PAplotsink.remove('')
+
+
     figsPAsink = px.bar(productionannualsinkplot, x='', y=list4PAplotsink)
     figsPAsink.update_layout(
         title="Annual heat or cold consumption for sinks",
@@ -1760,37 +1811,21 @@ def Report(Results):
             color="Black"
         )
     )
-    #Each Source PA
 
-    TechlistPAsourceclass = productionannualsource["TECHNOLOGY"].tolist()
-    sourcelistPA = []
-    for x in TechlistPAsourceclass:
-        for i in range (1,250):
-            if (','.join(["Source%d" % i ])) in x:
-                sourcelistPA.append(','.join(["Source%d" % i ]))
-
-    productionannualsource['Classification'] = sourcelistPA
-
-    sourcelistPAd = []
-
-    for i in sourcelistPA:
-        if i not in sourcelistPAd:
-            sourcelistPAd.append(i)
-    sourcelistPAd        
+    #Production annual each source
 
     pagso = []
 
     for i in range (1,250):
-        if (','.join(["Source%d" % i ])) in sourcelistPAd:
-
-
-            productionannualsource= productionannualsource.loc[productionannualsource["Classification"] == 'Source1']
-            productionannualsourceplot = productionannualsource.pivot_table(productionannualsource,index=['YEAR'],columns=['TECHNOLOGY'],aggfunc=np.sum)
-            productionannualsourceplot = productionannualsourceplot.reset_index()
-            productionannualsourceplot = productionannualsourceplot.droplevel(level=0, axis=1)
-            listPAeachsource = productionannualsourceplot.columns.tolist()
+        eachsouPAlist = ['']
+        for x in list4PAplotsource:
+            if (','.join(["Source%d" % i ])) in x:
+                eachsouPAlist.append(x)  
+        if len(eachsouPAlist) > 1:
+            productionannualeachsourceplot = productionannualsourceplot[eachsouPAlist]
+            listPAeachsource = productionannualeachsourceplot.columns.tolist()
             listPAeachsource.remove('')
-            figsPAeachsource = px.bar(productionannualsourceplot, x='', y=listPAeachsource)
+            figsPAeachsource = px.bar(productionannualeachsourceplot, x='', y=listPAeachsource)
             figsPAeachsource.update_layout(
                 title=(','.join(["Annual heat generation for Source %d" % i ])),
                 title_x=0.45,
@@ -1807,35 +1842,19 @@ def Report(Results):
             pasoel = plotly.io.to_html(figsPAeachsource, full_html=False,include_plotlyjs=False)
             pagso.append(pasoel)
 
-    #Each Sink PA
 
-    TechlistPASinkclass = productionannualsink["TECHNOLOGY"].tolist()
-    SinklistPA = []
-    for x in TechlistPASinkclass:
-        for i in range (1,250):
-            if (','.join(["Sink%d " % i ])) in x:
-                SinklistPA.append(','.join(["Sink%d" % i ]))
-
-    productionannualsink['Classification'] = SinklistPA
-
-    SinklistPAd = []
-
-    for i in SinklistPA:
-        if i not in SinklistPAd:
-            SinklistPAd.append(i)
-    SinklistPAd        
+    #Production annual each sink
 
     pagsi = []
 
     for i in range (1,250):
-        if (','.join(["Sink%d" % i ])) in SinklistPAd:
-
-
-            productionannualsinkclassified= productionannualsink.loc[productionannualsink["Classification"] == 'Sink1']
-            productionannualsinkplot = productionannualsinkclassified.pivot_table(productionannualsink,index=['YEAR'],columns=['TECHNOLOGY'],aggfunc=np.sum)
-            productionannualsinkplot = productionannualsinkplot.reset_index()
-            productionannualsinkplot = productionannualsinkplot.droplevel(level=0, axis=1)
-            listPAeachSink = productionannualsinkplot.columns.tolist()
+        eachsinkPAlist = ['']
+        for x in list4PAplotsink:
+            if (','.join(["Sink%d " % i ])) in x:
+                eachsinkPAlist.append(x)  
+        if len(eachsinkPAlist) > 1:
+            productionannualeachsinkplot = productionannualsinkplot[eachsinkPAlist]
+            listPAeachSink = productionannualeachsinkplot.columns.tolist()
             listPAeachSink.remove('')
             figsPAeachSink = px.bar(productionannualsinkplot, x='', y=listPAeachSink)
             figsPAeachSink.update_layout(
@@ -1855,9 +1874,41 @@ def Report(Results):
             pagsi.append(pasiel)
 
     #Pie charts
+    #SOurce Pie
 
-    productionannualsourcepie = productionannualsource.pivot_table(productionannualsource,columns=['Classification'],aggfunc=np.sum)
+    productionannualpie = productionannualt.pivot_table(values=['VALUE'], index=['TECHNOLOGY'],aggfunc=np.sum)
+    techlist = productionannualpie.index.tolist()
+
+    productionannualpie['Tech'] = techlist
+    productionannualpie = productionannualpie.reset_index()
+    productionannualpie.drop('Tech', inplace=True, axis=1)
+    techlist = productionannualpie['TECHNOLOGY'].tolist()
+    classlist = []
+    for x in techlist:
+        if 'sink' in x:
+            classlist.append('Sink')
+        elif 'sou' in x:
+            classlist.append('Source')
+        else:
+            classlist.append(' ')
+    productionannualpie['Class'] = classlist
+    productionannualpie
+
+    productionannualsourcepie = productionannualpie.loc[productionannualpie['Class'] == 'Source']
     productionannualsourcepie
+
+    sourcelist1 = productionannualsourcepie['TECHNOLOGY'].tolist()
+    Assignpiesou = []
+    for x in sourcelist1:
+        for i in range (1,250):
+                if (','.join(["sou%dstr" % i ])) in x:
+                    Assignpiesou.append(','.join(["Source%d" % i ]))
+                elif x.endswith(','.join(["sou%d" % i ])) is True:
+                    Assignpiesou.append('stream')
+    productionannualsourcepie['source'] = Assignpiesou
+    productionannualsourcepie = productionannualsourcepie.loc[productionannualsourcepie['source'] != 'stream']
+    productionannualsourcepie = productionannualsourcepie.pivot_table(productionannualsourcepie,columns=['source'],aggfunc=np.sum)
+
     piecollistsource = productionannualsourcepie.columns.tolist()
     pievallistsource = productionannualsourcepie.values.tolist()
     pievalflatlistsource = []
@@ -1870,8 +1921,16 @@ def Report(Results):
     productionannualsourcepieplot
     figpiesource = px.pie(productionannualsourcepieplot, values='Total Production', names='Sources', title='Share of excess heat generation')
 
-    productionannualsinkpie = productionannualsink.pivot_table(productionannualsink,columns=['Classification'],aggfunc=np.sum)
-    productionannualsinkpie
+    productionannualsinkpie = productionannualpie.loc[productionannualpie['Class'] == 'Sink']
+    sinklist1 = productionannualsinkpie['TECHNOLOGY'].tolist()
+    Assignpiesink = []
+    for x in sinklist1:
+        for i in range (1,250):
+                if (','.join(["sink%dstr" % i ])) in x:
+                    Assignpiesink.append(','.join(["Sink%d" % i ]))
+    productionannualsinkpie['sink'] = Assignpiesink
+    productionannualsinkpie = productionannualsinkpie.pivot_table(productionannualsinkpie,columns=['sink'],aggfunc=np.sum)
+
     piecollistsink = productionannualsinkpie.columns.tolist()
     pievallistsink = productionannualsinkpie.values.tolist()
     pievalflatlistsink = []
