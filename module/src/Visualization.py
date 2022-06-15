@@ -351,7 +351,7 @@ def Report(Results):
 
     #AnnualTechnologyEmission all combined
 
-    AnnualTechnologyEmission = pd.DataFrame(a['AnnTechEmission'])
+    AnnualTechnologyEmission = pd.DataFrame(a['AnnualTechnologyEmission'])
 
     Tech_listem = AnnualTechnologyEmission['TECHNOLOGY'].tolist()
     Assignem1 = []
@@ -664,7 +664,7 @@ def Report(Results):
     # Capital Investment combined, source and sink
 
     # Capital Investment
-    CapitalInvestment = pd.DataFrame(a['DiscCapitalInvestmentByTech'])
+    CapitalInvestment = pd.DataFrame(a['DiscountedCapitalInvestmentByTechnology'])
     CapitalInvestment 
 
     Tech_listem = CapitalInvestment['TECHNOLOGY'].tolist()
