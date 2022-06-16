@@ -426,9 +426,9 @@ def Report(Results):
         elif ("stelboiler") in x:
             Assignem2.append("Solar thermal with el boiler")
         elif x.endswith('ac') is True:
-            Assign2.append("Absorption Chiller")
+            Assignem2.append("Absorption Chiller")
         elif x.endswith('acec') is True:
-            Assign2.append("Absorption Chiller with Electric Chiller")
+            Assignem2.append("Absorption Chiller with Electric Chiller")
         elif ("acngboiler") in x:
             Assignem2.append("Absorption Chiller with Natural gas boiler")
         elif ("acoilboiler") in x:
@@ -1028,9 +1028,9 @@ def Report(Results):
         elif ("stelboiler") in x:
             AssignOC2.append("Solar thermal with el boiler")
         elif x.endswith('ac') is True:
-            Assign2.append("Absorption Chiller")
+            AssignOC2.append("Absorption Chiller")
         elif x.endswith('acec') is True:
-            Assign2.append("Absorption Chiller with Electric Chiller")
+            AssignOC2.append("Absorption Chiller with Electric Chiller")
         elif ("acngboiler") in x:
             AssignOC2.append("Absorption Chiller with Natural gas boiler")
         elif ("acoilboiler") in x:
