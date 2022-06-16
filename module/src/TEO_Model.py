@@ -8,6 +8,7 @@ import itertools
 from .TEO_functions import *
 from .error_handling.module_runtime_exception import ModuleRuntimeException
 from .Visualization import *
+from .Visualization_short import *
 import gurobipy as gp
 
 def buildmodel(sets_df, df, defaults_df, mcs_df, n):
@@ -912,9 +913,13 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
 
         del model  # Delete model
 
-        i += 1
-
-        template_content = Report(Results)
+        i += 1        
+        
+        if len(TIMESLICE) < 366:
+            template_content = Report(Results)
+        else:
+            template_content = Reportshort(Results)
+        
         Results['Report'] = template_content
 
     return Results

@@ -9,7 +9,7 @@ import plotly
 from jinja2 import Environment, FileSystemLoader, PackageLoader, select_autoescape
 import pandas as pd
 
-def Report(Results):
+def Reportshort(Results):
     
     a = Results
     #Accumulated New Capacity
@@ -128,7 +128,7 @@ def Report(Results):
         elif Assign2[i] == '':
             Assign3.append(str(str(Assign1[i]) + str(Assign2[i])))
         else:
-            Assign3.append(str(str(Assign1[i] + ' ' + str(Assign4[i]) + ' ' + str(Assign2[i]))))
+            Assign3.append(str(str(Assign1[i] + ' ' + str(Assign4[i])+  ' ' + str(Assign2[i]))))
 
     AccumulatedNewCapacity['Assignment'] = Assign3
     AccumulatedNewCapacity = AccumulatedNewCapacity.drop(['TECHNOLOGY'], axis = 1)
@@ -1215,399 +1215,6 @@ def Report(Results):
             ocsi.append(ocsiuel)  
 
 
-    #Storage level
-
-    StorageLevel = pd.DataFrame(a['StorageLevelTimesliceStart'])
-    StorageLevel = StorageLevel.loc[StorageLevel['YEAR'] == StorageLevel['YEAR'].max()]
-    Stolist = StorageLevel['STORAGE'].tolist()
-    del StorageLevel['YEAR']
-    del StorageLevel['NAME']
-    TSlist = StorageLevel['TIMESLICE'].tolist()
-    TSlistint= []
-    for i in TSlist:
-        TSlistint.append(int(i))
-    StorageLevel['TIMESLICEINT'] = TSlistint
-    del StorageLevel['TIMESLICE']
-    StorageLevel.rename(columns={"TIMESLICEINT": "TIMESLICE"}, inplace=True)
-    StorageLevelsorted = StorageLevel.sort_values(by=['TIMESLICE'], ascending=True)
-    StorageLevelsorted
-    Stolistd =[]
-    for i in Stolist:
-        if i not in Stolistd:
-            Stolistd.append(i)
-
-    stol = []
-    for i in Stolistd:
-        StorageLevelplot = StorageLevelsorted.loc[StorageLevel['STORAGE'] == str(i)]
-        figsl = px.area(StorageLevelplot, x='TIMESLICE', y='VALUE', color_discrete_sequence=px.colors.qualitative.Alphabet, markers=True)
-        figsl.update_layout(
-            title="Intra annual Storage level for {sto}".format(sto = i),
-            title_x=0.45,
-            xaxis_title="Timeslice",
-            paper_bgcolor='#FFFFFF',
-            yaxis_title="Storage Level in kWh",
-            legend_title="Technologies",
-            font=dict(
-                family="Times New Roman",
-                size=12,
-                color="Black"
-            )
-        )
-        stoluel = plotly.io.to_html(figsl, full_html=False,include_plotlyjs=False)
-        stol.append(stoluel) 
-
-    stocd = []
-
-    for k in Stolistd:
-        storageLevelplot = StorageLevelsorted.loc[StorageLevel['STORAGE'] == 'sto1']
-        valuelist = storageLevelplot['VALUE'].tolist()
-        differencelist = []
-        for i in range(0, int(len(valuelist))):
-            if i == 0:
-                differencelist.append(valuelist[i])
-            else:
-                differencelist.append(valuelist[i] - valuelist[i-1])
-        storageLevelplot['Charging_and_Discharging'] = differencelist
-        del storageLevelplot['VALUE']
-        storageLevelplot
-        figslcd = px.line(storageLevelplot, x='TIMESLICE', y='Charging_and_Discharging', color_discrete_sequence=px.colors.qualitative.Alphabet, markers=True)
-        figslcd.update_layout(
-            title="Intra annual Storage charge and discharge for {sto}".format(sto = k),
-            title_x=0.45,
-            xaxis_title="Timeslice",
-            paper_bgcolor='#FFFFFF',
-            yaxis_title="Storage charge and discharge in kWh",
-            legend_title="Technologies",
-            font=dict(
-                family="Times New Roman",
-                size=12,
-                color="Black"
-            )
-        )
-        stocduel = plotly.io.to_html(figslcd, full_html=False,include_plotlyjs=False)
-        stocd.append(stocduel)  
-
-    #PBT
-    productionbytechnology = pd.DataFrame(a['ProductionByTechnology'])
-    productionbytechnology = productionbytechnology.loc[productionbytechnology['YEAR'] == productionbytechnology['YEAR'].max()]
-    Tech_listPBT = productionbytechnology['TECHNOLOGY'].tolist()
-    AssignPBT1 = []
-    AssignPBT2= []
-    AssignPBT4= []                           
-    for x in Tech_listPBT:
-        if("grid") in x:
-            AssignPBT1.append("Grid Specific")
-            AssignPBT4.append('')
-        elif ("dhn") in x:
-            AssignPBT1.append("District Heating Network")
-            AssignPBT4.append('')                           
-        else:
-            for i in range (1,250):
-                if (','.join(["sou%dstr" % i ])) in x:
-                    AssignPBT1.append(','.join(["Source%d" % i ]))
-                elif (','.join(["sink%dstr" % i ])) in x:
-                    AssignPBT1.append(','.join(["Sink%d" % i ]))
-            if "sou" or "sink" in x:
-                for i in range (1,99999):
-                    if(','.join(["str%d" % i ])) in x:
-                        AssignPBT4.append(','.join(["Stream%d" % i ]))
-            else:
-                AssignPBT4.append('')
-                           
-            for i in range (1,100000):
-                if(','.join(["str%dsou" % i ])) in x:
-                    AssignPBT1.append(','.join(["Stream%d" % i ])) 
-
-        if ("gridspecificngboiler") in x:
-            AssignPBT2.append("Grid Specific Natural gas Boiler")
-        elif ("gridspecificoilboiler") in x:
-            AssignPBT2.append("Grid Specific Oil Boiler")
-        elif ("gridspecificbiomassboiler") in x:
-            AssignPBT2.append("Grid Specific Biomass Boiler")
-        elif ("gridspecifichp") in x:
-            AssignPBT2.append("Grid Specific Heat Pump")
-        elif ("gridspecificsthp") in x:
-            AssignPBT2.append("Grid Specific solar thermal with Heat Pump")
-        elif ("dhn") in x:
-            AssignPBT2.append("District Heating Network")
-        elif ("she") in x:
-            AssignPBT2.append("Single Heat Exchanger")      
-        elif ("mhe") in x:
-            AssignPBT2.append("Multiple Heat Exchanger")
-        elif ("elwhrb") in x:
-            AssignPBT2.append("Electric Waste Heat Recovery Boiler")
-        elif ("ngwhrb") in x:
-            AssignPBT2.append("Natural Gas Heat Recovery Boiler")
-        elif ("oilwhrb") in x:
-            AssignPBT2.append("Oil Heat Recovery Boiler")
-        elif ("biomasswhrb") in x:
-            AssignPBT2.append("Biomass Heat Recovery Boiler")
-        elif ("chpng") in x:
-            AssignPBT2.append("Natural Gas CHP")
-        elif ("chpoil") in x:
-            AssignPBT2.append("Oil CHP")
-        elif ("chpbiomass") in x:
-            AssignPBT2.append("Biomass CHP")
-        elif ("boosthp") in x:
-            AssignPBT2.append("Booster Heat Pump")
-        elif ("sthp") in x:
-            AssignPBT2.append("Solar thermal Heat Pump")
-        elif ("stngboiler") in x:
-            AssignPBT2.append("Solar thermal with Natural gas boiler")
-        elif ("stoilboiler") in x:
-            AssignPBT2.append("Solar thermal with oil boiler")
-        elif ("stbiomassboiler") in x:
-            AssignPBT2.append("Solar thermal with biomass boiler")
-        elif ("stelboiler") in x:
-            AssignPBT2.append("Solar thermal with el boiler")
-        elif x.endswith('ac') is True:
-            AssignPBT2.append("Absorption Chiller")
-        elif x.endswith('acec') is True:
-            AssignPBT2.append("Absorption Chiller with Electric Chiller")
-        elif ("acngboiler") in x:
-            AssignPBT2.append("Absorption Chiller with Natural gas boiler")
-        elif ("acoilboiler") in x:
-            AssignPBT2.append("Absorption Chiller with oil boiler")
-        elif ("acbiomassboiler") in x:
-            AssignPBT2.append("Absorption Chiller with biomass boiler")
-        elif ("acelectricboiler") in x:
-            AssignPBT2.append("Absorption Chiller with electric boiler")  
-        elif ("acecngboiler") in x:
-            AssignPBT2.append("Absorption Chiller and Electric Chiller with Natural gas boiler")
-        elif ("acecoilboiler") in x:
-            AssignPBT2.append("Absorption Chiller and Electric Chiller with oil boiler")
-        elif ("acecbiomassboiler") in x:
-            AssignPBT2.append("Absorption Chiller and Electric Chiller with biomass boiler")
-        elif ("acecelectricboiler") in x:
-            AssignPBT2.append("Absorption Chiller and Electric Chiller with electric boiler")
-        elif ("acechp") in x:
-            AssignPBT2.append("Absorption Chiller and Electric Chiller with heat pump")
-        elif ("achp") in x:
-            AssignPBT2.append("Absorption Chiller with heat pump")
-        elif ("orc") in x:
-            AssignPBT2.append("Organic Rankine Cycle")
-        elif ("exgrid") in x:
-            AssignPBT2.append("Existing Grid Technologies")
-        elif("hp") in x:
-            for i in range (1,100000):
-                if(','.join(["str%dhp" % i ])) in x:
-                    AssignPBT2.append("Heat Pump") 
-        else:
-            AssignPBT2.append(" ")
-
-    AssignPBT3= []
-
-    for i in range(0, len(AssignPBT1)):
-        if AssignPBT1[i] in AssignPBT2[i]:
-            AssignPBT3.append(AssignPBT2[i])
-        elif AssignPBT2[i] == '':
-            AssignPBT3.append(str(str(AssignPBT1[i]) + str(AssignPBT2[i])))
-        else:
-            AssignPBT3.append(str(str(AssignPBT1[i]) + ' ' + str(AssignPBT4[i])+ ' ' + str(AssignPBT2[i])))
-    AssignPBT3
-
-    productionbytechnology['Assignment'] = AssignPBT3
-    productionbytechnology = productionbytechnology.drop(['TECHNOLOGY'], axis = 1)
-    productionbytechnology = productionbytechnology.drop(['NAME'], axis = 1)
-    productionbytechnology.rename(columns={"Assignment": "TECHNOLOGY"}, inplace=True)
-    productionbytechnology = productionbytechnology [['VALUE', 'TECHNOLOGY', 'TIMESLICE']]
-
-    #Aggregated Source side PBT
-
-    productionbytechnologysource = productionbytechnology
-    Techlist4PBTsource = productionbytechnologysource["TECHNOLOGY"].tolist()
-    Assign4PBT = []
-    for x in Techlist4PBTsource:
-        if "Source" in x:
-            Assign4PBT.append("Source")
-        else:
-            Assign4PBT.append('')
-
-    productionbytechnologysource['Classification'] = Assign4PBT
-    productionbytechnologysource = productionbytechnologysource.loc[productionbytechnologysource["Classification"] == "Source"]
-    TSlistPBTsource = productionbytechnologysource['TIMESLICE'].tolist()
-    TSlistPBTsourceint= []
-    for i in TSlistPBTsource:
-        TSlistPBTsourceint.append(int(i))
-    productionbytechnologysource['TIMESLICEINT'] = TSlistPBTsourceint
-    del productionbytechnologysource['TIMESLICE']
-    productionbytechnologysource.rename(columns={"TIMESLICEINT": "TIMESLICE"}, inplace=True)
-    productionbytechnologysource = productionbytechnologysource.sort_values(by=['TIMESLICE'], ascending=True)
-    del productionbytechnologysource['Classification']
-    productionbytechnologysourceplot = productionbytechnologysource.pivot_table(productionbytechnologysource,index=['TIMESLICE'],columns=['TECHNOLOGY'],aggfunc=np.sum)
-    productionbytechnologysourceplot = productionbytechnologysourceplot.reset_index()
-    productionbytechnologysourceplot = productionbytechnologysourceplot.droplevel(level=0, axis=1)
-    productionbytechnologysourceplot
-    list4PBTplotsource = productionbytechnologysourceplot.columns.tolist()
-    list4PBTplotsource.remove('')
-    figsPBTsource = px.area(productionbytechnologysourceplot, x='', y=list4PBTplotsource, color_discrete_sequence=px.colors.qualitative.Alphabet, markers=True)
-    figsPBTsource.update_layout(
-        title="Intra annual heat generation for sources",
-        title_x=0.45,
-        xaxis_title="Timeslice",
-        paper_bgcolor='#FFFFFF',
-        yaxis_title="Production in kWh",
-        legend_title="Technologies",
-        font=dict(
-            family="Times New Roman",
-            size=12,
-            color="Black"
-        )
-    )
-
-    #Aggregated Sink side PBT
-
-    productionbytechnologySink = productionbytechnology
-    Techlist4PBTSink = productionbytechnologySink["TECHNOLOGY"].tolist()
-    Assign4PBTsink = []
-    for x in Techlist4PBTSink:
-        if "Sink" in x:
-            Assign4PBTsink.append("Sink")
-        else:
-            Assign4PBTsink.append('')
-
-    productionbytechnologySink['Classification'] = Assign4PBTsink
-    productionbytechnologySink = productionbytechnologySink.loc[productionbytechnologySink["Classification"] == "Sink"]
-    TSlistPBTSink = productionbytechnologySink['TIMESLICE'].tolist()
-    TSlistPBTSinkint= []
-    for i in TSlistPBTSink:
-        TSlistPBTSinkint.append(int(i))
-    productionbytechnologySink['TIMESLICEINT'] = TSlistPBTSinkint
-    del productionbytechnologySink['TIMESLICE']
-    productionbytechnologySink.rename(columns={"TIMESLICEINT": "TIMESLICE"}, inplace=True)
-    productionbytechnologySink = productionbytechnologySink.sort_values(by=['TIMESLICE'], ascending=True)
-    del productionbytechnologySink['Classification']
-    productionbytechnologySinkplot = productionbytechnologySink.pivot_table(productionbytechnologySink,index=['TIMESLICE'],columns=['TECHNOLOGY'],aggfunc=np.sum)
-    productionbytechnologySinkplot = productionbytechnologySinkplot.reset_index()
-    productionbytechnologySinkplot = productionbytechnologySinkplot.droplevel(level=0, axis=1)
-    productionbytechnologySinkplot
-    list4PBTplotSink = productionbytechnologySinkplot.columns.tolist()
-    list4PBTplotSink.remove('')
-    figsPBTSink = px.area(productionbytechnologySinkplot, x='', y=list4PBTplotSink, color_discrete_sequence=px.colors.qualitative.Alphabet, markers=True)
-    figsPBTSink.update_layout(
-        title="Intra heat or cold consumption for Sinks",
-        title_x=0.45,
-        xaxis_title="Timeslice",
-        paper_bgcolor='#FFFFFF',
-        yaxis_title="Production in kWh",
-        legend_title="Technologies",
-        font=dict(
-            family="Times New Roman",
-            size=12,
-            color="Black"
-        )
-    )
-
-    #Each Source PBT
-
-    TechlistPBTsourceclass = productionbytechnologysource["TECHNOLOGY"].tolist()
-    sourcelistPBT = []
-    for x in TechlistPBTsourceclass:
-        for i in range (1,250):
-            if (','.join(["Source%d" % i ])) in x:
-                sourcelistPBT.append(','.join(["Source%d" % i ]))
-
-    productionbytechnologysource['Classification'] = sourcelistPBT
-
-    TSlistPBTeachsource = productionbytechnologysource['TIMESLICE'].tolist()
-    TSlistPBTeachsourceint= []
-    for i in TSlistPBTeachsource:
-        TSlistPBTeachsourceint.append(int(i))
-
-    productionbytechnologysource['TIMESLICEINT'] = TSlistPBTeachsourceint
-    del productionbytechnologysource['TIMESLICE']
-    productionbytechnologysource.rename(columns={"TIMESLICEINT": "TIMESLICE"}, inplace=True)
-    productionbytechnologysourcesorted = productionbytechnologysource.sort_values(by=['TIMESLICE'], ascending=True)
-    productionbytechnologysourcesorted
-    sourcelistPBTd = []
-
-    for i in sourcelistPBT:
-        if i not in sourcelistPBTd:
-            sourcelistPBTd.append(i)
-
-    pbtso = []
-
-    for i in range (1,250):
-        if (','.join(["Source%d" % i ])) in sourcelistPBTd:
-
-            productionbytechnologysourcesorted = productionbytechnologysourcesorted.loc[productionbytechnologysourcesorted["Classification"] == (','.join(["Source%d" % i ]))]
-            productionbytechnologysourcesortedplot = productionbytechnologysourcesorted.pivot_table(productionbytechnologysourcesorted,index=['TIMESLICE'],columns=['TECHNOLOGY'],aggfunc=np.sum)
-            productionbytechnologysourcesortedplot = productionbytechnologysourcesortedplot.reset_index()
-            productionbytechnologysourcesortedplot = productionbytechnologysourcesortedplot.droplevel(level=0, axis=1)
-            listPBTeachsource = productionbytechnologysourcesortedplot.columns.tolist()
-            listPBTeachsource.remove('')
-            figsPBTeachsource = px.area(productionbytechnologysourcesortedplot, x='', y=listPBTeachsource, color_discrete_sequence=px.colors.qualitative.Alphabet, markers=True)
-            figsPBTeachsource.update_layout(
-                title=(','.join(["Intra annual heat generation for Source %d" % i ])),
-                title_x=0.45,
-                xaxis_title="Timeslice",
-                paper_bgcolor='#FFFFFF',
-                yaxis_title="Production in kWh",
-                legend_title="Technologies",
-                font=dict(
-                    family="Times New Roman",
-                    size=12,
-                    color="Black"
-                )
-            )
-            pbtsoel = plotly.io.to_html(figsPBTeachsource, full_html=False,include_plotlyjs=False)
-            pbtso.append(pbtsoel)  
-
-    #Each Sink PBT
-
-    TechlistPBTSinkclass = productionbytechnologySink["TECHNOLOGY"].tolist()
-    SinklistPBT = []
-    for x in TechlistPBTSinkclass:
-        for i in range (1,250):
-            if (','.join(["Sink%d " % i ])) in x:
-                SinklistPBT.append(','.join(["Sink%d" % i ]))
-
-    productionbytechnologySink['Classification'] = SinklistPBT
-
-    TSlistPBTeachSink = productionbytechnologySink['TIMESLICE'].tolist()
-    TSlistPBTeachSinkint= []
-    for i in TSlistPBTeachSink:
-        TSlistPBTeachSinkint.append(int(i))
-
-    productionbytechnologySink['TIMESLICEINT'] = TSlistPBTeachSinkint
-    del productionbytechnologySink['TIMESLICE']
-    productionbytechnologySink.rename(columns={"TIMESLICEINT": "TIMESLICE"}, inplace=True)
-    productionbytechnologySinksorted = productionbytechnologySink.sort_values(by=['TIMESLICE'], ascending=True)
-    productionbytechnologySinksorted
-    SinklistPBTd = []
-
-    for i in SinklistPBT:
-        if i not in SinklistPBTd:
-            SinklistPBTd.append(i)
-
-    pbtsin = []
-
-    for i in range (1,250):
-        if (','.join(["Sink%d" % i ])) in SinklistPBTd:
-
-            productionbytechnologySinksortedclassified = productionbytechnologySinksorted.loc[productionbytechnologySinksorted["Classification"] == (','.join(["Sink%d" % i ]))]
-            productionbytechnologySinksortedplot = productionbytechnologySinksortedclassified.pivot_table(productionbytechnologySinksortedclassified,index=['TIMESLICE'],columns=['TECHNOLOGY'],aggfunc=np.sum)
-            productionbytechnologySinksortedplot = productionbytechnologySinksortedplot.reset_index()
-            productionbytechnologySinksortedplot = productionbytechnologySinksortedplot.droplevel(level=0, axis=1)
-            listPBTeachSink = productionbytechnologySinksortedplot.columns.tolist()
-            listPBTeachSink.remove('')
-            figsPBTeachSink = px.area(productionbytechnologySinksortedplot, x='', y=listPBTeachSink, color_discrete_sequence=px.colors.qualitative.Alphabet, markers=True)
-            figsPBTeachSink.update_layout(
-                title=(','.join(["Intra annual heat or cold consumption for Sink %d" % i ])),
-                title_x=0.45,
-                xaxis_title="Timeslice",
-                paper_bgcolor='#FFFFFF',
-                yaxis_title="Production in kWh",
-                legend_title="Technologies",
-                font=dict(
-                    family="Times New Roman",
-                    size=12,
-                    color="Black"
-                )
-            )
-            pbtsiel = plotly.io.to_html(figsPBTeachSink, full_html=False,include_plotlyjs=False)
-            pbtsin.append(pbtsiel)  
-
     #Intial setup for production annual
     productionannualt = pd.DataFrame(a['ProductionByTechnology'])
     productionannual = productionannualt.pivot_table(values=['VALUE'], index=['YEAR'],columns=['TECHNOLOGY'],aggfunc=np.sum)
@@ -1959,7 +1566,7 @@ def Report(Results):
     AnnualTechnologyEmissiondf = AnnualTechnologyEmission.pivot_table(AnnualTechnologyEmission,columns=['TECHNOLOGY'],aggfunc=np.sum)
     AnnualTechnologyEmissiondf.reset_index(drop=True, inplace=True)
     AnnualTechnologyEmissiondf = AnnualTechnologyEmissiondf.rename_axis(None, axis=1)
-    AnnualTechnologyEmissiondf = AnnualTechnologyEmissiondf.round(decimals=2)
+    AnnualTechnologyEmissiondf = pd.DataFrame()
     AnnualTechnologyEmissiondf1 = AnnualTechnologyEmissiondf.to_html(index=False, col_space= 100, justify='center')
     AnnualTechnologyEmissiondtable = AnnualTechnologyEmissiondf1.replace('<tr>', '<tr align="center">')
 
@@ -1987,12 +1594,11 @@ def Report(Results):
 
 
     # Operating costs table
-    #del OperatingCost['Classification']
+    # del OperatingCost['Classification']
     OperatingCostTable1 = OperatingCost.pivot_table(OperatingCost,columns=['TECHNOLOGY'],aggfunc=np.sum)
     OperatingCostTable1.reset_index(drop=True)
     OperatingCostTable1.reset_index(drop=True, inplace=True)
     OperatingCostTable1 = OperatingCostTable1.rename_axis(None, axis=1)
-    OperatingCostTable1 = OperatingCostTable1.round(decimals=2)
     OperatingCostTabledf1 =  OperatingCostTable1.to_html(index=False, col_space= 100, justify='center')
     OperatingCosttable = OperatingCostTabledf1.replace('<tr>', '<tr align="center">')
 
@@ -2059,8 +1665,6 @@ def Report(Results):
     ciac = plotly.io.to_html(figCI, full_html=False,include_plotlyjs=False)
     cisto = plotly.io.to_html(figCIS, full_html=False,include_plotlyjs=False)
     cioc = plotly.io.to_html(figOC, full_html=False,include_plotlyjs=False)
-    pbtsor = plotly.io.to_html(figsPBTsource, full_html=False,include_plotlyjs=False) 
-    pbtsi = plotly.io.to_html(figsPBTSink, full_html=False,include_plotlyjs=False) 
     pasou = plotly.io.to_html(figsPAsource, full_html=False,include_plotlyjs=False) 
     pasi = plotly.io.to_html(figsPAsink, full_html=False,include_plotlyjs=False) 
     piesou = plotly.io.to_html(figpiesource, full_html=False,include_plotlyjs=False) 
@@ -2073,8 +1677,8 @@ def Report(Results):
         autoescape=False
     )
 
-    template = env.get_template('index.template.html')
-    template_content = template.render(ANCT_df=AccumulatedNewCapacitytable,PIESOU=piesou, ANCSOU=ancsou, ANCSI=ancsi, EMSO=emso, EMSI=emsi, CISO=ciso, CICI=cisi, OCSO=ocso, OCSI=ocsi, STOL=stol, STOCD=stocd, PBTGSO=pbtso, PBTGSI=pbtsin, PEISI=piesi, PAGSO=pagso, PAGSI=pagsi, PASOU=pasou, ANCAC=combinedaccnewcap,PASI=pasi, PBTSI=pbtsi, CIOC=cioc, PBTSOU=pbtsor, ACSTO=accsto,CISTO=cisto, EMALLCOMB=emallcomb, EMGRIDSPEC=emgridspec,CIAC=ciac, ANCGS=gridaccnewcap, ANST_df=AccumulatedNewStorageCapacitytable, AHTSO_df=productionannualsourcetable, AHTSI_df=productionannualsinkplottable, TOTSO_df=productionannualsourcepietable, TOTSI_df=productionannualsinkpieplottable, CISTO_df=CapitalInvestmentstotable, TOTEM_df=AnnualTechnologyEmissiondtable, CI_df=CapitalInvestmenttable, OC_df=OperatingCosttable)
+    template = env.get_template('index-short.template.html')
+    template_content = template.render(ANCT_df=AccumulatedNewCapacitytable,PIESOU=piesou, ANCSOU=ancsou, ANCSI=ancsi, EMSO=emso, EMSI=emsi, CISO=ciso, CICI=cisi, OCSO=ocso, OCSI=ocsi, PEISI=piesi, PAGSO=pagso, PAGSI=pagsi, PASOU=pasou, ANCAC=combinedaccnewcap,PASI=pasi, CIOC=cioc, ACSTO=accsto,CISTO=cisto, EMALLCOMB=emallcomb, EMGRIDSPEC=emgridspec,CIAC=ciac, ANCGS=gridaccnewcap, ANST_df=AccumulatedNewStorageCapacitytable, AHTSO_df=productionannualsourcetable, AHTSI_df=productionannualsinkplottable, TOTSO_df=productionannualsourcepietable, TOTSI_df=productionannualsinkpieplottable, CISTO_df=CapitalInvestmentstotable, TOTEM_df=AnnualTechnologyEmissiondtable, CI_df=CapitalInvestmenttable, OC_df=OperatingCosttable)
 
     
     return(template_content)
