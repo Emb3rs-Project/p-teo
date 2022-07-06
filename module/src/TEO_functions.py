@@ -290,7 +290,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
     list5 = []
 
     for x in list4:
-        for i in range (0,100):
+        for i in range (0,250):
             if (','.join(["x%ds" % i ])) in x:
                 list5.append(','.join(["%d" % i ]))
 
