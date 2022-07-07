@@ -44,7 +44,7 @@ class Inputscheck(BaseModel):
         return (v)
     
     @validator('stolevelstart')
-    def check3(cls, v, values, **kwargs):
+    def check30(cls, v, values, **kwargs):
         for i in range(0, len(values['maxstocap'])):
             if values['maxstocap'][i] < v[i]:
                 raise ValueError("Please make sure that the storage starting level is less than the maximum allowed storage capacity")
