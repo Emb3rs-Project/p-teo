@@ -2067,9 +2067,11 @@ def Report(Results):
     piesi =  plotly.io.to_html(figpiesink, full_html=False,include_plotlyjs=False) 
 
     ### REPORT_RENDERING_CODE [BEGIN]
+    import os
+    script_dir = os.path.dirname(__file__)
 
     env = Environment(
-        loader=FileSystemLoader('asset'),
+        loader=FileSystemLoader(os.path.join(script_dir, "asset")),
         autoescape=False
     )
 
