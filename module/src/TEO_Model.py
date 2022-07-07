@@ -920,6 +920,6 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
         else:
             template_content = Reportshort(Results)
         
-        Results['Report'] = template_content
+        Results['report'] = template_content
 
     return Results
