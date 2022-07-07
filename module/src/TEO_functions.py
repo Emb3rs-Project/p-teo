@@ -290,7 +290,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
     list5 = []
 
     for x in list4:
-        for i in range (0,250):
+        for i in range (0,100):
             if (','.join(["x%ds" % i ])) in x:
                 list5.append(','.join(["%d" % i ]))
 
@@ -593,8 +593,14 @@ def CreateResults(res_df):
     ProductionByTechnology2 = {'ProductionByTechnology' : ProductionByTechnology1}
     StorageLevelTimesliceStart2 = {'StorageLevelTimesliceStart' : StorageLevelTimesliceStart1}
     UseByTechnology2 = {'UseByTechnology' : UseByTechnology1}
+    
+    dfe = pd.DataFrame(AnnualTechnologyEmission2['AnnualTechnologyEmission'])
+    TotalEmissions = dfe['VALUE'].sum()
+    TotalEmissions2 = {'TotalEmissions' : TotalEmissions}
+    TotalEmissions3 =  pd.DataFrame(TotalEmissions2, index=[0])
+    TotalEmissions4 = {'TotalEmissions' : TotalEmissions3}
 
-    TEO_Results_NZ = {**Cost2, **AccumulatedNewCapacity2, **AccumulatedNewStorageCapacity2, **AnnualTechnologyEmission2, **ProductionByTechnology2,**StorageLevelTimesliceStart2, **UseByTechnology2}
+    TEO_Results_NZ = {**Cost2, **AccumulatedNewCapacity2, **AccumulatedNewStorageCapacity2, **AnnualTechnologyEmission2, **ProductionByTechnology2,**StorageLevelTimesliceStart2, **UseByTechnology2, **TotalEmissions4}
 
 
     ProductionByTechnology = TEO_Results_NZ['ProductionByTechnology']
