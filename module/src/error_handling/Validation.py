@@ -37,7 +37,7 @@ class Inputscheck(BaseModel):
 
 
     @validator('maxstocap')
-    def check2(cls, v, values, **kwargs):
+    def check3(cls, v, values, **kwargs):
         for i in range(0, len(values['resstocap'])):
             if values['resstocap'][i] > v[i]:
                 raise ValueError("Please make sure that the residual storage capacity is less than the maximum allowed storage capacity")
@@ -143,21 +143,21 @@ class Inputscheck(BaseModel):
     @validator('listspd')
     def check17(cls, v, values, **kwargs):
         for i in v:
-            if 'demand' not in i:
+            if 'dem' not in i:
                 raise ValueError("The structure of demand input from the CF module is incompatible with the TEO. Please make sure that all demands are included in the right format.")
         return (v)
                      
     @validator('listspdprof')
     def check18(cls, v, values, **kwargs):
         for i in v:
-            if 'demand' not in i:
+            if 'dem' not in i:
                 raise ValueError("The structure of demand input for CF module is incompatible with the TEO. Please make sure that all demands are included in the right format.")
         return (v)
                      
     @validator('listcfcap')
     def check19(cls, v, values, **kwargs):
         for i in v:
-            if 'source' not in i:
+            if 'sou' not in i:
                 raise ValueError("The structure of capacity factor input for CF module is incompatible with the TEO. Please make sure that all capacity factors are included in the right format.")
         return ()
 
