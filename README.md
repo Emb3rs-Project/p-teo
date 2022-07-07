@@ -18,7 +18,7 @@ import pulp (version 1.6.8 or higher) - Pulp is the optimization package in pyth
 
 ## The TEO module 
 
-The TEO module will optimize the matching between the different sources and the sinks, while taking into account various technical and economic constraints, such as demand profiles, technology cost, efficiencies and losses while also considering thermal energy storage. TEO optimizes investments and the operation for source and sink matching. 
+The TEO module will optimize the matching between the different sources and the sinks, while taking into account various technical and economic constraints, such as demand profiles, technology cost, efficiencies and losses while also considering thermal energy storage. TEO optimizes investments and the operation for source and sink matching. Further information on the TEO module, inputs and outputs can be found in the moduel documentataion here https://emb3rs-project-p-teo.readthedocs.io/en/latest/ .
 
 ## Script
 TEO_model.py
