@@ -478,7 +478,7 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
             model += Demand.get(ci(rfly)) == RateOfDemand.get(ci(rfly)) * YearSplit.get(ci(rfly[2:4])), ""
 
             # EBa11_EnergyBalanceEachTS5
-            model += Production.get(ci(rfly)) >= Demand.get(ci(rfly)) + Use.get(ci(rfly)) + (GIS_Losses.get(ci([*rfly[0:2]]), dflt.get('GIS_Losses')) * (8760 / int(max(TIMESLICE)))) + pulp.lpSum([Trade.get(ci([rfly[0], rr, *rfly[1:4]])) * TradeRoute.get(ci([rfly[0], rr, rfly[1], rfly[3]]), dflt.get('TradeRoute')) for rr in REGION2]), ""
+            model += Production.get(ci(rfly)) >= Demand.get(ci(rfly)) + Use.get(ci(rfly)) + pulp.lpSum([Trade.get(ci([rfly[0], rr, *rfly[1:4]])) * TradeRoute.get(ci([rfly[0], rr, rfly[1], rfly[3]]), dflt.get('TradeRoute')) for rr in REGION2]), ""
 
         for rr2fly in REGION_REGION2_FUEL_TIMESLICE_YEAR:
             # EBa10_EnergyBalanceEachTS4
