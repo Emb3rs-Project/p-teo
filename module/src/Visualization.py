@@ -28,13 +28,13 @@ def Report(Results):
             Assign4.append('')
         else:
             10
-            for i in range (1,250):
+            for i in range (1,2500):
                 if (','.join(["sou%dstr" % i ])) in x:
                     Assign1.append(','.join(["Source%d" % i ]))            
                 elif (','.join(["sink%dstr" % i ])) in x:
                     Assign1.append(','.join(["Sink%d" % i ]))
             if "sou" or "sink" in x:
-                for i in range (1,99999):
+                for i in range (100,99999):
                     if(','.join(["str%d" % i ])) in x:
                         Assign4.append(','.join(["Stream%d" % i ]))
             else:
@@ -129,7 +129,6 @@ def Report(Results):
             Assign3.append(str(str(Assign1[i]) + str(Assign2[i])))
         else:
             Assign3.append(str(str(Assign1[i] + ' ' + str(Assign4[i]) + ' ' + str(Assign2[i]))))
-
     AccumulatedNewCapacity['Assignment'] = Assign3
     AccumulatedNewCapacity = AccumulatedNewCapacity.drop(['TECHNOLOGY'], axis = 1)
     AccumulatedNewCapacity = AccumulatedNewCapacity.drop(['NAME'], axis = 1)
@@ -178,15 +177,14 @@ def Report(Results):
     Assign5 = []
 
     for x in Techlist:
-        for i in range (1,250):
-            if str((','.join(["Source%d" % i ]))) in x:
+        for i in range (1,2500):
+            if str((','.join(["Source%d " % i ]))) in x:
                     Assign5.append(','.join(["Source%d" % i ]))
-
     AccumulatedNewCapacitySource['Classification'] = Assign5
 
     sourcelist = []
     for x in Techlist:
-        for i in range (1,250):
+        for i in range (1,2500):
             if (','.join(["Source%d" % i ])) in x:
                 sourcelist.append(','.join(["Source%d" % i ]))
 
@@ -197,7 +195,7 @@ def Report(Results):
             sourcelistd.append(i)
 
     ancsou = []    
-    for i in range (1,250):
+    for i in range (1,2500):
         if (','.join(["Source%d" % i ])) in sourcelistd:
             df = AccumulatedNewCapacitySource.loc[AccumulatedNewCapacitySource["Classification"] == (','.join(["Source%d" % i ]))]
             dfplot = df.pivot_table(df,index=['YEAR'],columns=['TECHNOLOGY'],aggfunc=np.sum)
@@ -241,7 +239,7 @@ def Report(Results):
 
     Assign7 = []
     for x in Techlist:
-        for i in range (1,250):
+        for i in range (1,2500):
             if str((','.join(["Sink%d " % i ]))) in x:
                 Assign7.append(','.join(["Sink%d" % i ]))
 
@@ -251,7 +249,7 @@ def Report(Results):
     sinklist = []
 
     for x in Techlist:
-        for i in range (1,250):
+        for i in range (1,2500):
             if (','.join(["Sink%d " % i ])) in x:
                 sinklist.append(','.join(["Sink%d" % i ]))
 
@@ -262,7 +260,7 @@ def Report(Results):
             sinklistd.append(i)
 
     ancsi = []          
-    for i in range (1,250):
+    for i in range (1,2500):
         if (','.join(["Sink%d" % i ])) in sinklistd:
             df = AccumulatedNewCapacitySink.loc[AccumulatedNewCapacitySink["Classification"] == (','.join(["Sink%d" % i ]))]
             dfplot1 = df.pivot_table(df,index=['YEAR'],columns=['TECHNOLOGY'],aggfunc=np.sum)
@@ -365,7 +363,7 @@ def Report(Results):
             Assignem1.append("District Heating Network")
             Assignem4.append('')
         else:
-            for i in range (1,250):
+            for i in range (1,2500):
                 if (','.join(["sou%dstr" % i ])) in x:
                     Assignem1.append(','.join(["Source%d" % i ]))
                 elif (','.join(["sink%dstr" % i ])) in x:
@@ -522,15 +520,15 @@ def Report(Results):
     Assignem5 = []
 
     for x in Techlist:
-        for i in range (1,250):
-            if str((','.join(["Source%d" % i ]))) in x:
+        for i in range (1,2500):
+            if str((','.join(["Source%d " % i ]))) in x:
                     Assignem5.append(','.join(["Source%d" % i ]))
 
     AnnualTechnologyEmissionSource['Classification'] = Assignem5
 
     sourcelist = []
     for x in Techlist:
-        for i in range (1,250):
+        for i in range (1,2500):
             if (','.join(["Source%d" % i ])) in x:
                 sourcelist.append(','.join(["Source%d" % i ]))
 
@@ -541,7 +539,7 @@ def Report(Results):
             sourcelistd.append(i)
 
     emso = []
-    for i in range (1,250):
+    for i in range (1,2500):
         if (','.join(["Source%d" % i ])) in sourcelistd:
             df = AnnualTechnologyEmissionSource.loc[AnnualTechnologyEmissionSource["Classification"] == (','.join(["Source%d" % i ]))]
             dfplot = df.pivot_table(df,index=['YEAR'],columns=['TECHNOLOGY'],aggfunc=np.sum)
@@ -584,7 +582,7 @@ def Report(Results):
     Assign7em= []
 
     for x in Techlist:
-        for i in range (1,250):
+        for i in range (1,2500):
             if str((','.join(["Sink%d " % i ]))) in x:
                     Assign7em.append(','.join(["Sink%d" % i ]))
 
@@ -593,7 +591,7 @@ def Report(Results):
     sinklist = []
 
     for x in Techlist:
-        for i in range (1,250):
+        for i in range (1,2500):
             if (','.join(["Sink%d " % i ])) in x:
                 sinklist.append(','.join(["Sink%d" % i ]))
 
@@ -604,7 +602,7 @@ def Report(Results):
             sinklistd.append(i)
 
     emsi = []
-    for i in range (1,250):
+    for i in range (1,2500):
         if (','.join(["Sink%d" % i ])) in sinklistd:
             df = AnnualTechnologyEmissionSink.loc[AnnualTechnologyEmissionSink["Classification"] == (','.join(["Sink%d" % i ]))]
             dfplot1 = df.pivot_table(df,index=['YEAR'],columns=['TECHNOLOGY'],aggfunc=np.sum)
@@ -679,7 +677,7 @@ def Report(Results):
             AssignCI1.append("District Heating Network")
             AssignCI4.append('')                           
         else:
-            for i in range (1,250):
+            for i in range (1,2500):
                 if (','.join(["sou%dstr" % i ])) in x:
                     AssignCI1.append(','.join(["Source%d" % i ]))
                 elif (','.join(["sink%dstr" % i ])) in x:
@@ -831,15 +829,15 @@ def Report(Results):
     AssignCI5 = []
 
     for x in Techlist:
-        for i in range (1,250):
-            if str((','.join(["Source%d" % i ]))) in x:
+        for i in range (1,2500):
+            if str((','.join(["Source%d " % i ]))) in x:
                     AssignCI5.append(','.join(["Source%d" % i ]))
 
     CapitalInvestmentSource['Classification'] = AssignCI5
 
     sourcelist = []
     for x in Techlist:
-        for i in range (1,250):
+        for i in range (1,2500):
             if (','.join(["Source%d" % i ])) in x:
                 sourcelist.append(','.join(["Source%d" % i ]))
 
@@ -850,7 +848,7 @@ def Report(Results):
             sourcelistd.append(i)
 
     ciso = []   
-    for i in range (1,250):
+    for i in range (1,2500):
         if (','.join(["Source%d" % i ])) in sourcelistd:
             df = CapitalInvestmentSource.loc[CapitalInvestmentSource["Classification"] == (','.join(["Source%d" % i ]))]
             figsoCI = px.bar(df,x='TECHNOLOGY', y= 'VALUE')
@@ -888,7 +886,7 @@ def Report(Results):
     Assign7CIsi= []
 
     for x in Techlist:
-        for i in range (1,250):
+        for i in range (1,2500):
             if str((','.join(["Sink%d " % i ]))) in x:
                     Assign7CIsi.append(','.join(["Sink%d" % i ]))
 
@@ -897,7 +895,7 @@ def Report(Results):
     sinklist = []
 
     for x in Techlist:
-        for i in range (1,250):
+        for i in range (1,2500):
             if (','.join(["Sink%d " % i ])) in x:
                 sinklist.append(','.join(["Sink%d" % i ]))
 
@@ -909,7 +907,7 @@ def Report(Results):
 
     cisi = []
 
-    for i in range (1,250):
+    for i in range (1,2500):
         if (','.join(["Sink%d" % i ])) in sinklistd:
             df = CapitalInvestmentSink.loc[CapitalInvestmentSink["Classification"] == (','.join(["Sink%d" % i ]))]
             fig3siCI= px.bar(df, x='TECHNOLOGY', y= 'VALUE')
@@ -969,7 +967,7 @@ def Report(Results):
             AssignOC1.append("District Heating Network")
             AssignOC4.append('')
         else:
-            for i in range (1,250):
+            for i in range (1,2500):
                 if (','.join(["sou%dstr" % i ])) in x:
                     AssignOC1.append(','.join(["Source%d" % i ]))
                 elif (','.join(["sink%dstr" % i ])) in x:
@@ -1114,16 +1112,16 @@ def Report(Results):
     AssignOC5 = []
 
     for x in Techlist:
-        for i in range (1,250):
-            if str((','.join(["Source%d" % i ]))) in x:
+        for i in range (1,2500):
+            if str((','.join(["Source%d " % i ]))) in x:
                     AssignOC5.append(','.join(["Source%d" % i ]))
 
     OperatingCostSource['Classification'] = AssignOC5
 
     sourcelist = []
     for x in Techlist:
-        for i in range (1,250):
-            if (','.join(["Source%d" % i ])) in x:
+        for i in range (1,2500):
+            if (','.join(["Source%d " % i ])) in x:
                 sourcelist.append(','.join(["Source%d" % i ]))
 
     sourcelistd = []
@@ -1133,7 +1131,7 @@ def Report(Results):
             sourcelistd.append(i)
 
     ocso = []   
-    for i in range (1,250):
+    for i in range (1,2500):
         if (','.join(["Source%d" % i ])) in sourcelistd:
             df = OperatingCostSource.loc[OperatingCostSource["Classification"] == (','.join(["Source%d" % i ]))]
             figsoOC = px.bar(df,x='TECHNOLOGY', y= 'VALUE')
@@ -1174,7 +1172,7 @@ def Report(Results):
     Assign7OCsi= []
 
     for x in Techlist:
-        for i in range (1,250):
+        for i in range (1,2500):
             if str((','.join(["Sink%d " % i ]))) in x:
                     Assign7OCsi.append(','.join(["Sink%d" % i ]))
 
@@ -1183,7 +1181,7 @@ def Report(Results):
     sinklist = []
 
     for x in Techlist:
-        for i in range (1,250):
+        for i in range (1,2500):
             if (','.join(["Sink%d " % i ])) in x:
                 sinklist.append(','.join(["Sink%d" % i ]))
 
@@ -1194,7 +1192,7 @@ def Report(Results):
             sinklistd.append(i)
 
     ocsi = []
-    for i in range (1,250):
+    for i in range (1,2500):
         if (','.join(["Sink%d" % i ])) in sinklistd:
             df = OperatingCostSink.loc[OperatingCostSink["Classification"] == (','.join(["Sink%d" % i ]))]
             fig3siOC= px.bar(df, x='TECHNOLOGY', y= 'VALUE')
@@ -1302,7 +1300,7 @@ def Report(Results):
             AssignPBT1.append("District Heating Network")
             AssignPBT4.append('')                           
         else:
-            for i in range (1,250):
+            for i in range (1,2500):
                 if (','.join(["sou%dstr" % i ])) in x:
                     AssignPBT1.append(','.join(["Source%d" % i ]))
                 elif (','.join(["sink%dstr" % i ])) in x:
@@ -1503,8 +1501,8 @@ def Report(Results):
     TechlistPBTsourceclass = productionbytechnologysource["TECHNOLOGY"].tolist()
     sourcelistPBT = []
     for x in TechlistPBTsourceclass:
-        for i in range (1,250):
-            if (','.join(["Source%d" % i ])) in x:
+        for i in range (1,2500):
+            if (','.join(["Source%d " % i ])) in x:
                 sourcelistPBT.append(','.join(["Source%d" % i ]))
 
     productionbytechnologysource['Classification'] = sourcelistPBT
@@ -1527,7 +1525,7 @@ def Report(Results):
 
     pbtso = []
 
-    for i in range (1,250):
+    for i in range (1,2500):
         if (','.join(["Source%d" % i ])) in sourcelistPBTd:
 
             productionbytechnologysourcesorted = productionbytechnologysourcesorted.loc[productionbytechnologysourcesorted["Classification"] == (','.join(["Source%d" % i ]))]
@@ -1558,7 +1556,7 @@ def Report(Results):
     TechlistPBTSinkclass = productionbytechnologySink["TECHNOLOGY"].tolist()
     SinklistPBT = []
     for x in TechlistPBTSinkclass:
-        for i in range (1,250):
+        for i in range (1,2500):
             if (','.join(["Sink%d " % i ])) in x:
                 SinklistPBT.append(','.join(["Sink%d" % i ]))
 
@@ -1582,7 +1580,7 @@ def Report(Results):
 
     pbtsin = []
 
-    for i in range (1,250):
+    for i in range (1,2500):
         if (','.join(["Sink%d" % i ])) in SinklistPBTd:
 
             productionbytechnologySinksortedclassified = productionbytechnologySinksorted.loc[productionbytechnologySinksorted["Classification"] == (','.join(["Sink%d" % i ]))]
@@ -1629,7 +1627,7 @@ def Report(Results):
             AssignPA1.append("District Heating Network")
             AssignPA4.append('')
         else:
-            for i in range (1,250):
+            for i in range (1,2500):
                 if (','.join(["sou%dstr" % i ])) in x:
                     AssignPA1.append(','.join(["Source%d" % i ]))
                 elif (','.join(["sink%dstr" % i ])) in x:
@@ -1816,7 +1814,7 @@ def Report(Results):
 
     pagso = []
 
-    for i in range (1,250):
+    for i in range (1,2500):
         eachsouPAlist = ['']
         for x in list4PAplotsource:
             if (','.join(["Source%d" % i ])) in x:
@@ -1847,7 +1845,7 @@ def Report(Results):
 
     pagsi = []
 
-    for i in range (1,250):
+    for i in range (1,2500):
         eachsinkPAlist = ['']
         for x in list4PAplotsink:
             if (','.join(["Sink%d " % i ])) in x:
@@ -1900,7 +1898,7 @@ def Report(Results):
     sourcelist1 = productionannualsourcepie['TECHNOLOGY'].tolist()
     Assignpiesou = []
     for x in sourcelist1:
-        for i in range (1,250):
+        for i in range (1,2500):
                 if (','.join(["sou%dstr" % i ])) in x:
                     Assignpiesou.append(','.join(["Source%d" % i ]))
                 elif x.endswith(','.join(["sou%d" % i ])) is True:
@@ -1925,7 +1923,7 @@ def Report(Results):
     sinklist1 = productionannualsinkpie['TECHNOLOGY'].tolist()
     Assignpiesink = []
     for x in sinklist1:
-        for i in range (1,250):
+        for i in range (1,2500):
                 if (','.join(["sink%dstr" % i ])) in x:
                     Assignpiesink.append(','.join(["Sink%d" % i ]))
     productionannualsinkpie['sink'] = Assignpiesink
@@ -1962,6 +1960,7 @@ def Report(Results):
     AnnualTechnologyEmissiondf = AnnualTechnologyEmissiondf.round(decimals=2)
     AnnualTechnologyEmissiondf1 = AnnualTechnologyEmissiondf.to_html(index=False, col_space= 100, justify='center')
     AnnualTechnologyEmissiondtable = AnnualTechnologyEmissiondf1.replace('<tr>', '<tr align="center">')
+    
 
     # Accumulated new Storage capacity table
 
@@ -2067,11 +2066,9 @@ def Report(Results):
     piesi =  plotly.io.to_html(figpiesink, full_html=False,include_plotlyjs=False) 
 
     ### REPORT_RENDERING_CODE [BEGIN]
-    import os
-    script_dir = os.path.dirname(__file__)
 
     env = Environment(
-        loader=FileSystemLoader(os.path.join(script_dir, "asset")),
+        loader=FileSystemLoader('asset'),
         autoescape=False
     )
 
