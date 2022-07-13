@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 import pulp 
 import itertools
-
+import re
 def loadData(filePath, sheetSets, sheetParams, sheetParamsDefault, sheetMcs, sheetMcsNum):
 
     """
@@ -210,7 +210,25 @@ def saveResultsTemporary(_model, _scenario_i, variables):
             return df
 
 
-def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
+def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_df):
+    
+    #creating source, sink and stream IDs
+    reslist = []
+    for i in sets_df['TECHNOLOGY']['TECHNOLOGY']:
+        res = re.findall('(\d+|[A-Za-z]+)', i)
+        reslist.append(res)
+
+    streamidlist = []
+    sourcesinkidlist = []
+    for i in range(0,len(reslist)):
+        k = reslist[i]
+        if len(k) > 1 and k[0] != 'str':
+            streamidlist.append(k[3])
+            sourcesinkidlist.append(k[1])
+    sourcesinkidlistd = []
+    for i in sourcesinkidlist:
+        if int(i) not in sourcesinkidlistd:
+            sourcesinkidlistd.append(int(i))
 
     #ProductionByTechnology
     df = ProductionByTechnology
@@ -222,7 +240,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
 
     #UseByTechnology
     df1 = UseByTechnology
-    df1 = df1.loc[df1['FUEL'] == 'dhnwaterdem']
+    df1 = df1.loc[df1['FUEL'] == 'dhnwaterdemand']
     df1 = df1.loc[df1['VALUE'] != 0]
     df2 = df1.loc[df1['YEAR'] == df1['YEAR'].max()]
     df2.reset_index(drop=True, inplace=True)
@@ -240,7 +258,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
         if("grid") in x:
             Assign1.append("sourcex0s")
         else:
-            for i in range (1,250):
+            for i in sourcesinkidlistd:
                 if (','.join(["sou%dstr" % i ])) in x:
                     Assign1.append(','.join(["sourcex%ds" % i ]))
                 elif (','.join(["sink%dstr" % i ])) in x:
@@ -290,7 +308,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
     list5 = []
 
     for x in list4:
-        for i in range (0,100):
+        for i in sourcesinkidlistd:
             if (','.join(["x%ds" % i ])) in x:
                 list5.append(','.join(["%d" % i ]))
 
@@ -379,8 +397,9 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax):
     
     return(append_df2)
 
-def CreateResults(res_df):
+def CreateResults(res_df, sets_df):
      
+    sets_df = sets_df
     Names_z1 = ['DiscountedCapitalInvestmentByTechnology', 'DiscountedCapitalInvestmentByStorage', 'DiscountedSalvageValueByTechnology', 'DiscountedSalvageValueByStorage', 'VariableOMCost', 'TotalDiscountedFixedOperatingCost']
     Results_Z1 = pd.DataFrame()
     #res_df[res_df['NAME'] == str('DiscountedSalvageValueByStorage')]
@@ -608,7 +627,7 @@ def CreateResults(res_df):
 
     del TEO_Results_NZ["UseByTechnology"]
     TEO_Results_NZ
-    ex_capacities1 = GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax)
+    ex_capacities1 = GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_df)
     ex_capacities1
 
     ex_capacities = {'ex_capacities' : ex_capacities1}

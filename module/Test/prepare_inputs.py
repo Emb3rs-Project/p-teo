@@ -22,7 +22,7 @@ def prepare_inputs(sets_df, df, input_data):
     platform_storages = pd.DataFrame(input_platform['platform_storages'])
     platform_annual_emission_limit = pd.DataFrame(input_platform['platform_annual_emission_limit'])
     platform_technology_to_storage = pd.DataFrame(input_platform['platform_technology_to_storage'])
-    # platform_budget_limit= pd.DataFrame(input_platform['platform_budget_limit'])
+    platform_budget_limit= pd.DataFrame(input_platform['platform_budget_limit'])
     
     sets_df1_year = pd.DataFrame(sets_df['YEAR'])
     sets_df1_storage = pd.DataFrame(sets_df['STORAGE'])
@@ -64,6 +64,7 @@ def prepare_inputs(sets_df, df, input_data):
     cftechlist = technologies_cf["technology"].tolist()
     listspd = specified_annual_demand_cf["fuel"].tolist()
     listspdprof = specified_demand_profile_cf.columns.values.tolist()
+    print(listspdprof)
     listcfcap = capacity_factor_cf.columns.values.tolist()
     
     masterdict = {}
@@ -154,7 +155,7 @@ def prepare_inputs(sets_df, df, input_data):
     Fuel_list1
 
     for x in Fuel_list1:
-        if (",".join(["sink"])) in x:
+        if ("dhnwaterdem") in x:
             Assign1.append(loss_list198)
         else:
             Assign1.append(0)
@@ -185,51 +186,6 @@ def prepare_inputs(sets_df, df, input_data):
     df = df.reset_index(drop=True)
     df1 = df1.reset_index(drop=True)
     df = df.append(df1, ignore_index=True)
-
-    # GISCAPITALCOSTS
-    df556 = input_gis
-    cost_list199 = df556["cost_in_kw"]
-    df2 = df.loc[df["PARAM"] == "CapitalCost"]
-    Tech_list2 = df2["TECHNOLOGY"].tolist()
-
-    Assign1 = []
-
-    for y in Tech_list2:
-        if (",".join(["dhn"])) in y:
-            Assign1.append(cost_list199)
-        else:
-            Assign1.append(0)
-
-    Assign1
-    df2["Assignment"] = Assign1
-    sum_column = df2["Assignment"] + df2["VALUE"]
-    df2["SUM"] = sum_column
-    df2
-    df2.drop("VALUE", axis=1, inplace=True)
-    df2.drop("Assignment", axis=1, inplace=True)
-    df2.rename(columns={"SUM": "VALUE"}, inplace=True)
-    df2 = df2[
-        [
-            "PARAM",
-            "VALUE",
-            "REGION",
-            "REGION2",
-            "DAYTYPE",
-            "EMISSION",
-            "FUEL",
-            "DAILYTIMEBRACKET",
-            "SEASON",
-            "TIMESLICE",
-            "STORAGE",
-            "MODE_OF_OPERATION",
-            "TECHNOLOGY",
-            "YEAR",
-        ]
-    ]
-    df = df.loc[df["PARAM"] != "CapitalCost"]
-    df = df.reset_index(drop=True)
-    df2 = df2.reset_index(drop=True)
-    df = df.append(df2, ignore_index=True)
 
     # OAR
     df483 = pd.DataFrame(input_cf["technologies_cf"])
@@ -278,6 +234,7 @@ def prepare_inputs(sets_df, df, input_data):
     Assignedcounter = []
     for o in range(0, len(Tech_list198)):
         identifier.append(str(Fuel_list198[o] + Tech_list198[o]))
+        
 
     for j in range(0, len(Tech_list198)):
         a3 = Value_list198[j]
@@ -431,9 +388,9 @@ def prepare_inputs(sets_df, df, input_data):
     Counter = []
     identifier1 = []
     Assignedcounter1 = []
-
     for o in range(0, len(Tech_list197)):
         identifier1.append(str(Fuel_list197[o] + Tech_list197[o]))
+        
 
     for j in range(0, len(Tech_list197)):
 
@@ -565,7 +522,7 @@ def prepare_inputs(sets_df, df, input_data):
     maxcounter5 = len(Year_list5d)
     for j in range(0, len(Tech_list197)): 
 
-        a5 = Value_list197[j]
+        a5 = Value_list197[j] + 0.01
 
         b5 = Tech_list197[j]
 
@@ -575,7 +532,7 @@ def prepare_inputs(sets_df, df, input_data):
                 Assign5.append(a5)
                 Assign5t.append(y)
             elif (b5 not in y) and (y not in Tech_list197) and (counter5.count(counterstring5) < maxcounter5):
-                Assign5.append(0)
+                Assign5.append(0.01)
                 Assign5t.append(y)
             counter5.append(counterstring5)
     len(df5)
@@ -611,6 +568,50 @@ def prepare_inputs(sets_df, df, input_data):
     df5 = df5.reset_index(drop=True)
     df = df.append(df5, ignore_index=True)
 
+    # GISCAPITALCOSTS
+    df556 = input_gis
+    cost_list199 = df556["cost_in_kw"]
+    df2 = df.loc[df["PARAM"] == "CapitalCost"]
+    Tech_list2 = df2["TECHNOLOGY"].tolist()
+
+    Assign1 = []
+
+    for y in Tech_list2:
+        if (",".join(["dhn"])) in y:
+            Assign1.append(cost_list199)
+        else:
+            Assign1.append(0)
+
+    Assign1
+    df2["Assignment"] = Assign1
+    sum_column = df2["Assignment"] + df2["VALUE"]
+    df2["SUM"] = sum_column
+    df2
+    df2.drop("VALUE", axis=1, inplace=True)
+    df2.drop("Assignment", axis=1, inplace=True)
+    df2.rename(columns={"SUM": "VALUE"}, inplace=True)
+    df2 = df2[
+        [
+            "PARAM",
+            "VALUE",
+            "REGION",
+            "REGION2",
+            "DAYTYPE",
+            "EMISSION",
+            "FUEL",
+            "DAILYTIMEBRACKET",
+            "SEASON",
+            "TIMESLICE",
+            "STORAGE",
+            "MODE_OF_OPERATION",
+            "TECHNOLOGY",
+            "YEAR",
+        ]
+    ]
+    df = df.loc[df["PARAM"] != "CapitalCost"]
+    df = df.reset_index(drop=True)
+    df2 = df2.reset_index(drop=True)
+    df = df.append(df2, ignore_index=True)
     
     # CFFIXEDCOSTS
     df481 = technologies_cf
