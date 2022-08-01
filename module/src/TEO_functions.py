@@ -374,11 +374,11 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_
 
     dfcharge.insert(0, 'number', chargeID)
     dfcharge.insert(0, 'classification_type', chargeclass)
-    dfcharge.insert(0, 'source_sink', '')
+    dfcharge.insert(0, 'source_sink', None)
    
     dfdischarge.insert(0, 'number', dischargeID)
     dfdischarge.insert(0, 'classification_type', dischargeclass)
-    dfdischarge.insert(0, 'source_sink', '')
+    dfdischarge.insert(0, 'source_sink', None)
     
 
     dfnew = dfcharge.append(dfdischarge)
