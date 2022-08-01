@@ -16,7 +16,7 @@ def run_build_model(input_data):
 
     model_output = buildmodel(sets_df, df, default_df, None, 0)
 
-    return _prepare_outputs(model_output)
+    return model_output
 
 
 def _prepare_inputs(input_data):
