@@ -21,7 +21,7 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
     # path_to_solver = r'C:\Program Files\Gurobi_9.5.1\win64\bin\gurobi_cl.exe'
     # solver = pulp.GUROBI_CMD(path=path_to_solver)
     solver = pulp.GUROBI()
-    path_to_cplex = r'C:/Program Files/IBM/ILOG/CPLEX_Studio128/cplex/bin/x64_win64/cplex.exe'
+    #path_to_cplex = r'C:/Program Files/IBM/ILOG/CPLEX_Studio128/cplex/bin/x64_win64/cplex.exe'
     #solver = pulp.CPLEX_CMD(path=path_to_cplex)
     YEAR = createTuple(sets_df["YEAR"], "YEAR")
     TECHNOLOGY = createTuple(sets_df["TECHNOLOGY"], "TECHNOLOGY")
