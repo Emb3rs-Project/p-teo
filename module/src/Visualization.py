@@ -4,7 +4,6 @@ import numpy as np
 import plotly.offline as pyo
 import warnings
 warnings.filterwarnings("ignore")
-from flask import Markup, render_template
 import plotly
 from jinja2 import Environment, FileSystemLoader, PackageLoader, select_autoescape
 import pandas as pd
