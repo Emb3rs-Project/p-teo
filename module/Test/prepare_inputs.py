@@ -64,7 +64,6 @@ def prepare_inputs(sets_df, df, input_data):
     cftechlist = technologies_cf["technology"].tolist()
     listspd = specified_annual_demand_cf["fuel"].tolist()
     listspdprof = specified_demand_profile_cf.columns.values.tolist()
-    print(listspdprof)
     listcfcap = capacity_factor_cf.columns.values.tolist()
     
     masterdict = {}
