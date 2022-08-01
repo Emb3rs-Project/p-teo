@@ -91,13 +91,13 @@ def Reportshort(Results, sets_df):
             Assign2.append("Natural Gas Heat Recovery Boiler")
         elif ("oilwhrb") in x:
             Assign2.append("Oil Heat Recovery Boiler")
-        elif ("biomasswhrb") in x:
+        elif ("biowhrb") in x:
             Assign2.append("Biomass Heat Recovery Boiler")
         elif ("chpng") in x:
             Assign2.append("Natural Gas CHP")
         elif ("chpoil") in x:
             Assign2.append("Oil CHP")
-        elif ("chpbiomass") in x:
+        elif ("chpbio") in x:
             Assign2.append("Biomass CHP")
         elif ("boosthp") in x:
             Assign2.append("Booster Heat Pump")
@@ -107,7 +107,7 @@ def Reportshort(Results, sets_df):
             Assign2.append("Solar thermal with Natural gas boiler")
         elif ("stoilboiler") in x:
             Assign2.append("Solar thermal with oil boiler")
-        elif ("stbiomassboiler") in x:
+        elif ("stbioboiler") in x:
             Assign2.append("Solar thermal with biomass boiler")
         elif ("stelboiler") in x:
             Assign2.append("Solar thermal with el boiler")
@@ -119,7 +119,7 @@ def Reportshort(Results, sets_df):
             Assign2.append("Absorption Chiller with Natural gas boiler")
         elif ("acoilboiler") in x:
             Assign2.append("Absorption Chiller with oil boiler")
-        elif ("acbiomassboiler") in x:
+        elif ("acbioboiler") in x:
             Assign2.append("Absorption Chiller with biomass boiler")
         elif ("acelectricboiler") in x:
             Assign2.append("Absorption Chiller with electric boiler")  
@@ -127,7 +127,7 @@ def Reportshort(Results, sets_df):
             Assign2.append("Absorption Chiller and Electric Chiller with Natural gas boiler")
         elif ("acecoilboiler") in x:
             Assign2.append("Absorption Chiller and Electric Chiller with oil boiler")
-        elif ("acecbiomassboiler") in x:
+        elif ("acecbioboiler") in x:
             Assign2.append("Absorption Chiller and Electric Chiller with biomass boiler")
         elif ("acecelectricboiler") in x:
             Assign2.append("Absorption Chiller and Electric Chiller with electric boiler")
@@ -349,28 +349,30 @@ def Reportshort(Results, sets_df):
 
     #AccumulatedNewStorageCapacity
     AccumulatedNewStorageCapacity = pd.DataFrame(a['AccumulatedNewStorageCapacity'])
+    if len(AccumulatedNewStorageCapacity) != 0:
+        AccumulatedNewStorageCapacityplot = AccumulatedNewStorageCapacity.pivot_table(AccumulatedNewStorageCapacity,index=['YEAR'],columns=['STORAGE'],aggfunc=np.sum)
+        AccumulatedNewStorageCapacityplot = AccumulatedNewStorageCapacityplot.reset_index()
+        AccumulatedNewStorageCapacityplot = AccumulatedNewStorageCapacityplot.droplevel(level=0, axis=1)
+        liststo = AccumulatedNewStorageCapacityplot.columns.tolist()
+        liststo.remove('')
 
-    AccumulatedNewStorageCapacityplot = AccumulatedNewStorageCapacity.pivot_table(AccumulatedNewStorageCapacity,index=['YEAR'],columns=['STORAGE'],aggfunc=np.sum)
-    AccumulatedNewStorageCapacityplot = AccumulatedNewStorageCapacityplot.reset_index()
-    AccumulatedNewStorageCapacityplot = AccumulatedNewStorageCapacityplot.droplevel(level=0, axis=1)
-    liststo = AccumulatedNewStorageCapacityplot.columns.tolist()
-    liststo.remove('')
 
-    
-    figsto = px.bar(AccumulatedNewStorageCapacityplot, x='', y=liststo)
-    figsto.update_layout(
-        title="Accumulated New Storage Capacity",
-        title_x=0.45,
-        xaxis_title="Year",
-        paper_bgcolor='#FFFFFF',
-        yaxis_title="Storage Capacity in kWh",
-        legend_title="Storage",
-        font=dict(
-            family="Times New Roman",
-            size=12,
-            color="Black"
+        figsto = px.bar(AccumulatedNewStorageCapacityplot, x='', y=liststo)
+        figsto.update_layout(
+            title="Accumulated New Storage Capacity",
+            title_x=0.45,
+            xaxis_title="Year",
+            paper_bgcolor='#FFFFFF',
+            yaxis_title="Storage Capacity in kWh",
+            legend_title="Storage",
+            font=dict(
+                family="Times New Roman",
+                size=12,
+                color="Black"
+            )
         )
-    )
+    else:
+        figsto = ''
 
 
 
@@ -430,13 +432,13 @@ def Reportshort(Results, sets_df):
             Assignem2.append("Natural Gas Heat Recovery Boiler")
         elif ("oilwhrb") in x:
             Assignem2.append("Oil Heat Recovery Boiler")
-        elif ("biomasswhrb") in x:
+        elif ("biowhrb") in x:
             Assignem2.append("Biomass Heat Recovery Boiler")
         elif ("chpng") in x:
             Assignem2.append("Natural Gas CHP")
         elif ("chpoil") in x:
             Assignem2.append("Oil CHP")
-        elif ("chpbiomass") in x:
+        elif ("chpbio") in x:
             Assignem2.append("Biomass CHP")
         elif ("hp") in x:
             Assignem2.append("Heat Pump")
@@ -448,7 +450,7 @@ def Reportshort(Results, sets_df):
             Assignem2.append("Solar thermal with Natural gas boiler")
         elif ("stoilboiler") in x:
             Assignem2.append("Solar thermal with oil boiler")
-        elif ("stbiomassboiler") in x:
+        elif ("stbioboiler") in x:
             Assignem2.append("Solar thermal with biomass boiler")
         elif ("stelboiler") in x:
             Assignem2.append("Solar thermal with el boiler")
@@ -460,7 +462,7 @@ def Reportshort(Results, sets_df):
             Assignem2.append("Absorption Chiller with Natural gas boiler")
         elif ("acoilboiler") in x:
             Assignem2.append("Absorption Chiller with oil boiler")
-        elif ("acbiomassboiler") in x:
+        elif ("acbioboiler") in x:
             Assignem2.append("Absorption Chiller with biomass boiler")
         elif ("acelectricboiler") in x:
             Assignem2.append("Absorption Chiller with electric boiler")  
@@ -468,7 +470,7 @@ def Reportshort(Results, sets_df):
             Assignem2.append("Absorption Chiller and Electric Chiller with Natural gas boiler")
         elif ("acecoilboiler") in x:
             Assignem2.append("Absorption Chiller and Electric Chiller with oil boiler")
-        elif ("acecbiomassboiler") in x:
+        elif ("acecbioboiler") in x:
             Assignem2.append("Absorption Chiller and Electric Chiller with biomass boiler")
         elif ("acecelectricboiler") in x:
             Assignem2.append("Absorption Chiller and Electric Chiller with electric boiler")
@@ -744,13 +746,13 @@ def Reportshort(Results, sets_df):
             AssignCI2.append("Natural Gas Heat Recovery Boiler")
         elif ("oilwhrb") in x:
             AssignCI2.append("Oil Heat Recovery Boiler")
-        elif ("biomasswhrb") in x:
+        elif ("biowhrb") in x:
             AssignCI2.append("Biomass Heat Recovery Boiler")
         elif ("chpng") in x:
             AssignCI2.append("Natural Gas CHP")
         elif ("chpoil") in x:
             AssignCI2.append("Oil CHP")
-        elif ("chpbiomass") in x:
+        elif ("chpbio") in x:
             AssignCI2.append("Biomass CHP")
         elif ("hp") in x:
             AssignCI2.append("Heat Pump")
@@ -762,7 +764,7 @@ def Reportshort(Results, sets_df):
             AssignCI2.append("Solar thermal with Natural gas boiler")
         elif ("stoilboiler") in x:
             AssignCI2.append("Solar thermal with oil boiler")
-        elif ("stbiomassboiler") in x:
+        elif ("stbioboiler") in x:
             AssignCI2.append("Solar thermal with biomass boiler")
         elif ("stelboiler") in x:
             AssignCI2.append("Solar thermal with el boiler")
@@ -774,7 +776,7 @@ def Reportshort(Results, sets_df):
             AssignCI2.append("Absorption Chiller with Natural gas boiler")
         elif ("acoilboiler") in x:
             AssignCI2.append("Absorption Chiller with oil boiler")
-        elif ("acbiomassboiler") in x:
+        elif ("acbioboiler") in x:
             AssignCI2.append("Absorption Chiller with biomass boiler")
         elif ("acelectricboiler") in x:
             AssignCI2.append("Absorption Chiller with electric boiler")  
@@ -782,7 +784,7 @@ def Reportshort(Results, sets_df):
             AssignCI2.append("Absorption Chiller and Electric Chiller with Natural gas boiler")
         elif ("acecoilboiler") in x:
             AssignCI2.append("Absorption Chiller and Electric Chiller with oil boiler")
-        elif ("acecbiomassboiler") in x:
+        elif ("acecbioboiler") in x:
             AssignCI2.append("Absorption Chiller and Electric Chiller with biomass boiler")
         elif ("acecelectricboiler") in x:
             AssignCI2.append("Absorption Chiller and Electric Chiller with electric boiler")
@@ -956,24 +958,26 @@ def Reportshort(Results, sets_df):
 
     # capital investment storage
     CapitalInvestmentsto = pd.DataFrame(a['DiscountedCapitalInvestmentByStorage'])
-    CapitalInvestmentsto = CapitalInvestmentsto.loc[CapitalInvestmentsto["VALUE"] != 0] 
-    del CapitalInvestmentsto['NAME']
+    if len(CapitalInvestmentsto) != 0:
+        CapitalInvestmentsto = CapitalInvestmentsto.loc[CapitalInvestmentsto["VALUE"] != 0] 
+        del CapitalInvestmentsto['NAME']
 
-    figCIS = px.bar(CapitalInvestmentsto,x='STORAGE', y= 'VALUE')
-    figCIS.update_layout(
-        title="Total Capital Investment Storage",
-        title_x=0.45,
-        xaxis_title="Storage",
-        paper_bgcolor='#FFFFFF',
-        yaxis_title="Capital Investment Storage in €",
-        legend_title="Storage",
-        font=dict(
-            family="Times New Roman",
-            size=12,
-            color="Black"
+        figCIS = px.bar(CapitalInvestmentsto,x='STORAGE', y= 'VALUE')
+        figCIS.update_layout(
+            title="Total Capital Investment Storage",
+            title_x=0.45,
+            xaxis_title="Storage",
+            paper_bgcolor='#FFFFFF',
+            yaxis_title="Capital Investment Storage in €",
+            legend_title="Storage",
+            font=dict(
+                family="Times New Roman",
+                size=12,
+                color="Black"
+            )
         )
-    )
-
+    else:
+        figCIS = ''
 
     # Total Operating Cost - Combined, source and sink specific
 
@@ -1032,13 +1036,13 @@ def Reportshort(Results, sets_df):
             AssignOC2.append("Natural Gas Heat Recovery Boiler")
         elif ("oilwhrb") in x:
             AssignOC2.append("Oil Heat Recovery Boiler")
-        elif ("biomasswhrb") in x:
+        elif ("biowhrb") in x:
             AssignOC2.append("Biomass Heat Recovery Boiler")
         elif ("chpng") in x:
             AssignOC2.append("Natural Gas CHP")
         elif ("chpoil") in x:
             AssignOC2.append("Oil CHP")
-        elif ("chpbiomass") in x:
+        elif ("chpbio") in x:
             AssignOC2.append("Biomass CHP")
         elif ("boosthp") in x:
             AssignOC2.append("Booster Heat Pump")
@@ -1048,7 +1052,7 @@ def Reportshort(Results, sets_df):
             AssignOC2.append("Solar thermal with Natural gas boiler")
         elif ("stoilboiler") in x:
             AssignOC2.append("Solar thermal with oil boiler")
-        elif ("stbiomassboiler") in x:
+        elif ("stbioboiler") in x:
             AssignOC2.append("Solar thermal with biomass boiler")
         elif ("stelboiler") in x:
             AssignOC2.append("Solar thermal with el boiler")
@@ -1060,7 +1064,7 @@ def Reportshort(Results, sets_df):
             AssignOC2.append("Absorption Chiller with Natural gas boiler")
         elif ("acoilboiler") in x:
             AssignOC2.append("Absorption Chiller with oil boiler")
-        elif ("acbiomassboiler") in x:
+        elif ("acbioboiler") in x:
             AssignOC2.append("Absorption Chiller with biomass boiler")
         elif ("acelectricboiler") in x:
             AssignOC2.append("Absorption Chiller with electric boiler")  
@@ -1068,7 +1072,7 @@ def Reportshort(Results, sets_df):
             AssignOC2.append("Absorption Chiller and Electric Chiller with Natural gas boiler")
         elif ("acecoilboiler") in x:
             AssignOC2.append("Absorption Chiller and Electric Chiller with oil boiler")
-        elif ("acecbiomassboiler") in x:
+        elif ("acecbioboiler") in x:
             AssignOC2.append("Absorption Chiller and Electric Chiller with biomass boiler")
         elif ("acecelectricboiler") in x:
             AssignOC2.append("Absorption Chiller and Electric Chiller with electric boiler")
@@ -1275,7 +1279,7 @@ def Reportshort(Results, sets_df):
                 AssignPA4.append('')
             for i in streamidlistd:
                 if(','.join(["str%dsou" % i])) in x:
-                    AssignPA1.append(','.join(["Source Stream%d" % i]))               
+                    AssignPA1.append(','.join(["SourceStream%d" % i]))               
 
         if ("gridspecificngboiler") in x:
             AssignPA2.append("Grid Specific Natural gas Boiler")
@@ -1299,13 +1303,13 @@ def Reportshort(Results, sets_df):
             AssignPA2.append("Natural Gas Heat Recovery Boiler")
         elif ("oilwhrb") in x:
             AssignPA2.append("Oil Heat Recovery Boiler")
-        elif ("biomasswhrb") in x:
+        elif ("biowhrb") in x:
             AssignPA2.append("Biomass Heat Recovery Boiler")
         elif ("chpng") in x:
             AssignPA2.append("Natural Gas CHP")
         elif ("chpoil") in x:
             AssignPA2.append("Oil CHP")
-        elif ("chpbiomass") in x:
+        elif ("chpbio") in x:
             AssignPA2.append("Biomass CHP")
         elif ("boosthp") in x:
             AssignPA2.append("Booster Heat Pump")
@@ -1315,7 +1319,7 @@ def Reportshort(Results, sets_df):
             AssignPA2.append("Solar thermal with Natural gas boiler")
         elif ("stoilboiler") in x:
             AssignPA2.append("Solar thermal with oil boiler")
-        elif ("stbiomassboiler") in x:
+        elif ("stbioboiler") in x:
             AssignPA2.append("Solar thermal with biomass boiler")
         elif ("stelboiler") in x:
             AssignPA2.append("Solar thermal with el boiler")
@@ -1327,7 +1331,7 @@ def Reportshort(Results, sets_df):
             AssignPA2.append("Absorption Chiller with Natural gas boiler")
         elif ("acoilboiler") in x:
             AssignPA2.append("Absorption Chiller with oil boiler")
-        elif ("acbiomassboiler") in x:
+        elif ("acbioboiler") in x:
             AssignPA2.append("Absorption Chiller with biomass boiler")
         elif ("acelectricboiler") in x:
             AssignPA2.append("Absorption Chiller with electric boiler")  
@@ -1335,7 +1339,7 @@ def Reportshort(Results, sets_df):
             AssignPA2.append("Absorption Chiller and Electric Chiller with Natural gas boiler")
         elif ("acecoilboiler") in x:
             AssignPA2.append("Absorption Chiller and Electric Chiller with oil boiler")
-        elif ("acecbiomassboiler") in x:
+        elif ("acecbioboiler") in x:
             AssignPA2.append("Absorption Chiller and Electric Chiller with biomass boiler")
         elif ("acecelectricboiler") in x:
             AssignPA2.append("Absorption Chiller and Electric Chiller with electric boiler")
@@ -1398,7 +1402,7 @@ def Reportshort(Results, sets_df):
     collist = productionannual.columns.tolist()
     sourcelist = ['']
     for i in collist:
-        if 'Source' in i:
+        if 'Source' in i and 'SourceStream' not in i:
             sourcelist.append(i)
     productionannualsourceplot = productionannual[sourcelist]
     list4PAplotsource = productionannualsourceplot.columns.tolist()
@@ -1597,16 +1601,18 @@ def Reportshort(Results, sets_df):
     AnnualTechnologyEmissiondtable = AnnualTechnologyEmissiondf1.replace('<tr>', '<tr align="center">')
 
     # Accumulated new Storage capacity table
-
-    AccumulatedNewStorageCapacitydf  = AccumulatedNewStorageCapacityplot.loc[AccumulatedNewStorageCapacityplot[''] == AccumulatedNewStorageCapacityplot[''].max()]
-    del AccumulatedNewStorageCapacitydf['']
-    AccumulatedNewStorageCapacitydf.reset_index(drop=True)
-    AccumulatedNewStorageCapacitydf.reset_index(drop=True, inplace=True)
-    AccumulatedNewStorageCapacitydf = AccumulatedNewStorageCapacitydf.rename_axis(None, axis=1)
-    AccumulatedNewStorageCapacitydf = AccumulatedNewStorageCapacitydf.round(decimals=2)
-    AccumulatedNewStorageCapacitydf1 = AccumulatedNewStorageCapacitydf.to_html(index=False, col_space= 100, justify='center')
-    AccumulatedNewStorageCapacitytable = AccumulatedNewStorageCapacitydf1.replace('<tr>', '<tr align="center">')
-    AccumulatedNewStorageCapacitydf
+    if len(AccumulatedNewStorageCapacity) != 0:
+        AccumulatedNewStorageCapacitydf  = AccumulatedNewStorageCapacityplot.loc[AccumulatedNewStorageCapacityplot[''] == AccumulatedNewStorageCapacityplot[''].max()]
+        del AccumulatedNewStorageCapacitydf['']
+        AccumulatedNewStorageCapacitydf.reset_index(drop=True)
+        AccumulatedNewStorageCapacitydf.reset_index(drop=True, inplace=True)
+        AccumulatedNewStorageCapacitydf = AccumulatedNewStorageCapacitydf.rename_axis(None, axis=1)
+        AccumulatedNewStorageCapacitydf = AccumulatedNewStorageCapacitydf.round(decimals=2)
+        AccumulatedNewStorageCapacitydf1 = AccumulatedNewStorageCapacitydf.to_html(index=False, col_space= 100, justify='center')
+        AccumulatedNewStorageCapacitytable = AccumulatedNewStorageCapacitydf1.replace('<tr>', '<tr align="center">')
+        AccumulatedNewStorageCapacitydf
+    else:
+        AccumulatedNewStorageCapacitytable = ''
 
     # Capital costs table
     # del CapitalInvestment['Classification']
@@ -1629,13 +1635,16 @@ def Reportshort(Results, sets_df):
     OperatingCosttable = OperatingCostTabledf1.replace('<tr>', '<tr align="center">')
 
     # Capital costs storage table
-    CapitalInvestmentsto1 = CapitalInvestmentsto.pivot_table(CapitalInvestmentsto,columns=['STORAGE'],aggfunc=np.sum)
-    CapitalInvestmentsto1.reset_index(drop=True)
-    CapitalInvestmentsto1.reset_index(drop=True, inplace=True)
-    CapitalInvestmentsto1 = CapitalInvestmentsto1.rename_axis(None, axis=1)
-    CapitalInvestmentsto1 = CapitalInvestmentsto1.round(decimals=2)
-    CapitalInvestmentstodf1 =  CapitalInvestmentsto1.to_html(index=False, col_space= 100, justify='center')
-    CapitalInvestmentstotable = CapitalInvestmentstodf1.replace('<tr>', '<tr align="center">')
+    if len(CapitalInvestmentsto) != 0:
+        CapitalInvestmentsto1 = CapitalInvestmentsto.pivot_table(CapitalInvestmentsto,columns=['STORAGE'],aggfunc=np.sum)
+        CapitalInvestmentsto1.reset_index(drop=True)
+        CapitalInvestmentsto1.reset_index(drop=True, inplace=True)
+        CapitalInvestmentsto1 = CapitalInvestmentsto1.rename_axis(None, axis=1)
+        CapitalInvestmentsto1 = CapitalInvestmentsto1.round(decimals=2)
+        CapitalInvestmentstodf1 =  CapitalInvestmentsto1.to_html(index=False, col_space= 100, justify='center')
+        CapitalInvestmentstotable = CapitalInvestmentstodf1.replace('<tr>', '<tr align="center">')
+    else:
+        CapitalInvestmentstotable = ''
 
     # Production annual sources table
     productionannualsourceplot.reset_index(drop=True)
@@ -1682,14 +1691,22 @@ def Reportshort(Results, sets_df):
         gridaccnewcap = plotly.io.to_html(fig4, full_html=False,include_plotlyjs=False)
     else:
         gridaccnewcap = ''    
-    accsto = plotly.io.to_html(figsto, full_html=False,include_plotlyjs=False)
+    if len(AccumulatedNewStorageCapacity) != 0:
+        accsto = plotly.io.to_html(figsto, full_html=False,include_plotlyjs=False)
+    else:
+        accsto = ''
     emallcomb = plotly.io.to_html(figem, full_html=False,include_plotlyjs=False)
     if "Grid Specific" in Assign8em:
         emgridspec = plotly.io.to_html(figemgrid, full_html=False,include_plotlyjs=False)
     else:
         emgridspec = ''
     ciac = plotly.io.to_html(figCI, full_html=False,include_plotlyjs=False)
-    cisto = plotly.io.to_html(figCIS, full_html=False,include_plotlyjs=False)
+    
+    if len(CapitalInvestmentsto) != 0:
+        cisto = plotly.io.to_html(figCIS, full_html=False,include_plotlyjs=False)
+    else:
+        cisto = ''
+        
     cioc = plotly.io.to_html(figOC, full_html=False,include_plotlyjs=False)
     pasou = plotly.io.to_html(figsPAsource, full_html=False,include_plotlyjs=False) 
     pasi = plotly.io.to_html(figsPAsink, full_html=False,include_plotlyjs=False) 

@@ -709,9 +709,12 @@ def prepare_inputs(sets_df, df, input_data):
 
         for y in Tech_list7:
             counterstring7 = str(y)
-            if str(b7) in y:
+            if str(b7) in y and 'sink' not in y:
                 Assign7.append(a7)
                 Assign7t.append(y)
+            elif str(b7) in y and 'sink' in y:
+                Assign7.append(0)
+                Assign7t.append(y)               
             elif (b7 not in y) and (y not in Tech_list196) and (counter7.count(Counterstring7) < maxcounter7):
                 Assign7.append(0)
                 Assign7t.append(y)
