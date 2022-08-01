@@ -9,7 +9,7 @@ from .TEO_functions import *
 from .error_handling.module_runtime_exception import ModuleRuntimeException
 from .Visualization import *
 from .Visualization_short import *
-import gurobipy as gp*
+import gurobipy as gp
 
 def buildmodel(sets_df, df, defaults_df, mcs_df, n):
 
