@@ -410,7 +410,6 @@ def create_market_results(ProductionByTechnology, sets_df):
         tslist = []
         for i in df['TIMESLICE']:
             tslist.append(int(i))
-        tslist
         df['TIMESLICEC'] = tslist
         del df['TIMESLICE']
         df.rename(columns={"TIMESLICEC": "TIMESLICE"}, inplace=True)
