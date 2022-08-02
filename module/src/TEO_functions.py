@@ -395,6 +395,9 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_
     
     append_df2 = append_df2.fillna(0)
     
+    append_df2["source_sink"] = None
+    append_df2["number"] = append_df2["number"].apply(int)
+    
     return(append_df2)
 
 def create_market_results(ProductionByTechnology, sets_df):

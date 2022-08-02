@@ -73,7 +73,6 @@ class Inputscheck(BaseModel):
     
     @validator('maxcap')
     def check7(cls, v, values, **kwargs):
-        print(v)
         for i in range(0, len(values['techlist'])):
             if values['mincap'][i] > v[i]:
                 raise ValueError("Please make sure that the minimum capacity addition is less than the maximum allowed capacity addition")
