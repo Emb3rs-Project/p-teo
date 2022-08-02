@@ -374,11 +374,11 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_
 
     dfcharge.insert(0, 'number', chargeID)
     dfcharge.insert(0, 'classification_type', chargeclass)
-    dfcharge.insert(0, 'source_sink', '')
+    dfcharge.insert(0, 'source_sink', None)
    
     dfdischarge.insert(0, 'number', dischargeID)
     dfdischarge.insert(0, 'classification_type', dischargeclass)
-    dfdischarge.insert(0, 'source_sink', '')
+    dfdischarge.insert(0, 'source_sink', None)
     
 
     dfnew = dfcharge.append(dfdischarge)
@@ -396,6 +396,54 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_
     append_df2 = append_df2.fillna(0)
     
     return(append_df2)
+
+def create_market_results(ProductionByTechnology, sets_df):
+    dfpbt = ProductionByTechnology
+    del dfpbt['FUEL']
+    dfpbt = dfpbt.loc[dfpbt["YEAR"] == dfpbt['YEAR'].max()] 
+    ProductionByTechnologyMM = pd.DataFrame() 
+    for i in dfpbt['TECHNOLOGY'].unique():
+        df = dfpbt.loc[dfpbt["TECHNOLOGY"] == i]
+        tslist = []
+        for i in df['TIMESLICE']:
+            tslist.append(int(i))
+        tslist
+        df['TIMESLICEC'] = tslist
+        del df['TIMESLICE']
+        df.rename(columns={"TIMESLICEC": "TIMESLICE"}, inplace=True)
+        df = df[['NAME', 'VALUE', 'TIMESLICE', 'TECHNOLOGY', 'YEAR']]
+        valuelist = []
+        for i in sets_df['TIMESLICE']['TIMESLICE']:
+            try:
+                valuelist.append((df.loc[df['TIMESLICE'] == int(i), 'VALUE']).iloc[0])  
+            except:
+                valuelist.append(0)
+        valuelistc = []    
+        for i in valuelist:
+            valuelistc.append(i/(8784/len(sets_df['TIMESLICE']['TIMESLICE'])))
+        valuelistfinal = []
+        techlistfinal = []
+        Tslistfinal = []
+        for i in range(1,8785):
+            Tslistfinal.append(i)
+        namelistfinal = []
+        yearlistfinal = []
+        df['TECHNOLOGY'].unique()[0]
+        for i in range(1,int((8784/len(sets_df['TIMESLICE']['TIMESLICE'])))+1):
+            for j in range(0, len(valuelistc)):
+                valuelistfinal.append(valuelistc[j])
+                techlistfinal.append(df['TECHNOLOGY'].unique()[0])
+                namelistfinal.append(df['NAME'].unique()[0])
+                yearlistfinal.append(df['NAME'].unique()[0])
+        finaldf = pd.DataFrame()
+        finaldf['NAME'] = namelistfinal
+        finaldf['VALUE'] = valuelistfinal
+        finaldf['TIMESLICE'] = Tslistfinal
+        finaldf['TECHNOLOGY'] = techlistfinal
+        finaldf['YEAR'] = yearlistfinal
+        ProductionByTechnologyMM =  ProductionByTechnologyMM.append(finaldf, ignore_index=True)
+
+    return (ProductionByTechnologyMM)
 
 def CreateResults(res_df, sets_df):
      
@@ -628,12 +676,19 @@ def CreateResults(res_df, sets_df):
     del TEO_Results_NZ["UseByTechnology"]
     TEO_Results_NZ
     ex_capacities1 = GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_df)
-    ex_capacities1
-
     ex_capacities = {'ex_capacities' : ex_capacities1}
+    
+    if len(sets_df['TIMESLICE']['TIMESLICE']) != 8784:
+    
+        ProductionByTechnologyMM1 = create_market_results(ProductionByTechnology, sets_df)
+    
+    else:
+        ProductionByTechnologyMM1 = TEO_Results_NZ['ProductionByTechnology']
+    
+    ProductionByTechnologyMM = {'ProductionByTechnologyMM' : ProductionByTechnologyMM1}
 
     Output = {}
-    Output = {**TEO_Results_NZ, **TEO_Results_Z, **ex_capacities}
+    Output = {**TEO_Results_NZ, **TEO_Results_Z, **ex_capacities, **ProductionByTechnologyMM}
 
 
     TEO_Results = {}
