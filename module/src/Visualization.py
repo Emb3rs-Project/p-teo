@@ -1286,7 +1286,7 @@ def Report(Results, sets_df):
     stocd = []
     if len(StorageLevel) != 0:
         for k in Stolistd:
-            storageLevelplot = StorageLevelsorted.loc[StorageLevel['STORAGE'] == 'sto1']
+            storageLevelplot = StorageLevelsorted.loc[StorageLevel['STORAGE'] == k]
             valuelist = storageLevelplot['VALUE'].tolist()
             differencelist = []
             for i in range(0, int(len(valuelist))):
