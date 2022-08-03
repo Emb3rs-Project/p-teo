@@ -248,7 +248,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_
     #Creating a combined data frame
     df4 = df3.append(df2, ignore_index=False)
     df4 = df4.drop(['FUEL'], axis = 1)
-    df4
+
     
     #Source or Sink Aggregation
     Tech_list1 = df4['TECHNOLOGY'].tolist()
@@ -265,7 +265,6 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_
                     Assign1.append(','.join(["sinkx%ds" % i ])) 
     Assign1            
     df4['Assignment'] = Assign1
-    df4
     df4 = df4.drop(['TECHNOLOGY'], axis = 1)
     df4 = df4[['VALUE', 'TIMESLICE', 'Assignment', 'YEAR']]
 
@@ -282,7 +281,6 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_
     append_df1 = append_df.drop_duplicates()
     append_df1.index.name = None
     append_df1 = append_df1.transpose()
-    append_df1
 
     #Creating classification
     append_df2 = append_df1.droplevel(level = 0)
@@ -299,7 +297,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_
 
     Classification_Type = pd.Series(list2)
     append_df2.insert(loc=1, column='Classification', value=Classification_Type)
-    append_df2
+
 
     #Creating ID
 
@@ -344,13 +342,12 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_
         sinksumlist.append(dfsink[i].sum())
     for i in sourcelist:
         sourcesumlist.append(dfsource[i].sum())
-    sourcesumlist
 
     difflist = []
 
     for i in range(0,len(sinksumlist)):
         difflist.append(sourcesumlist[i] - sinksumlist[i])
-    difflist
+
 
     chargelist = []
     dischargelist = []
@@ -410,7 +407,6 @@ def create_market_results(ProductionByTechnology, sets_df):
         tslist = []
         for i in df['TIMESLICE']:
             tslist.append(int(i))
-        tslist
         df['TIMESLICEC'] = tslist
         del df['TIMESLICE']
         df.rename(columns={"TIMESLICEC": "TIMESLICE"}, inplace=True)
@@ -487,7 +483,6 @@ def CreateResults(res_df, sets_df):
             correctedvaluelist1.append(valuelist1[i]/divider)
         else:
             correctedvaluelist1.append(valuelist1[i])
-    correctedvaluelist1
     costcorrection = sum(valuelist1) - sum(correctedvaluelist1)
     TotalDiscountedFixedOperatingCost1["correctedvalue"] = correctedvaluelist1
     TotalDiscountedFixedOperatingCost1.drop("VALUE", axis=1, inplace=True)
@@ -497,18 +492,15 @@ def CreateResults(res_df, sets_df):
     VariableOMCost1 = VariableOMCost1.loc[VariableOMCost1['YEAR'] == VariableOMCost1['YEAR'].max()]
     VariableOMCost1 = VariableOMCost1.loc[VariableOMCost1['MODE_OF_OPERATION'] == VariableOMCost1['MODE_OF_OPERATION'].min()]
     VariableOMCost1 = VariableOMCost1.drop(['MODE_OF_OPERATION', 'YEAR',], axis = 1)
-    VariableOMCost1
     techlist = VariableOMCost1["TECHNOLOGY"].tolist()
     valuelist = VariableOMCost1["VALUE"].tolist()
 
-    valuelist
     correctedvaluelist = []
     for i in range(0, len(techlist)):
         if 'grid' in techlist[i]:
             correctedvaluelist.append(valuelist[i]/divider)
         else:
             correctedvaluelist.append(valuelist[i])
-    correctedvaluelist
     VariableOMCost1["correctedvalue"] = correctedvaluelist
     VariableOMCost1.drop("VALUE", axis=1, inplace=True)
     VariableOMCost1.rename(columns={"correctedvalue": "VALUE"}, inplace=True)
@@ -523,7 +515,6 @@ def CreateResults(res_df, sets_df):
     VariableOMCost2 = {'VariableOMCost' : VariableOMCost1}
 
     TEO_Results_Z = {**DiscountedCapitalInvestmentByTechnology2, **DiscountedCapitalInvestmentByStorage2, **DiscountedSalvageValueByTechnology2, **DiscountedSalvageValueByStorage2, **TotalDiscountedFixedOperatingCost2, **VariableOMCost2}
-    TEO_Results_Z
 
     Names_NZ = ['Cost', 'AccumulatedNewCapacity', 'AccumulatedNewStorageCapacity', 'AnnualTechnologyEmission', 'RateOfProductionByTechnology', 'StorageLevelTimesliceStart', 'RateOfUseByTechnology'] 
     Results_NZ = pd.DataFrame() 
@@ -537,7 +528,6 @@ def CreateResults(res_df, sets_df):
     Tlistint = []
     for i in Tlist:
         Tlistint.append(int(i))
-    Tlistint
 
     tsmax = max(Tlistint)
 
@@ -677,7 +667,6 @@ def CreateResults(res_df, sets_df):
     UseByTechnology = TEO_Results_NZ['UseByTechnology']
 
     del TEO_Results_NZ["UseByTechnology"]
-    TEO_Results_NZ
     ex_capacities1 = GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_df)
     ex_capacities = {'ex_capacities' : ex_capacities1}
     

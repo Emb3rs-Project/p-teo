@@ -194,7 +194,6 @@ def prepare_inputs(sets_df, df, input_data):
     df3 = df.loc[df["PARAM"] == "OutputActivityRatio"]
     Tech_list3 = df3["TECHNOLOGY"].tolist()
     Tech_list3d = []
-    Tech_list3
     for i in Tech_list3:
         if i not in Tech_list3d:
             Tech_list3d.append(i)
@@ -221,7 +220,6 @@ def prepare_inputs(sets_df, df, input_data):
             MO_list3d.append(l)
 
     maxcounter2 = len(MO_list3d) * len(Year_list3d)
-    maxcounter2
     Assign3 = []
     Assign3f = []
     Assign3t = []
@@ -507,7 +505,6 @@ def prepare_inputs(sets_df, df, input_data):
     Assign5t = []
 
     df5 = df.loc[df["PARAM"] == "CapitalCost"]
-    df5
     Tech_list5 = df5["TECHNOLOGY"].tolist()
     Tech_list5
 
@@ -534,7 +531,6 @@ def prepare_inputs(sets_df, df, input_data):
                 Assign5.append(0.01)
                 Assign5t.append(y)
             counter5.append(counterstring5)
-    len(df5)
     df5["Assignment"] = Assign5
     df5["Assignmentt"] = Assign5t
     sum_column = df5["Assignment"] + df5["VALUE"]
@@ -585,7 +581,6 @@ def prepare_inputs(sets_df, df, input_data):
     df2["Assignment"] = Assign1
     sum_column = df2["Assignment"] + df2["VALUE"]
     df2["SUM"] = sum_column
-    df2
     df2.drop("VALUE", axis=1, inplace=True)
     df2.drop("Assignment", axis=1, inplace=True)
     df2.rename(columns={"SUM": "VALUE"}, inplace=True)
@@ -646,7 +641,6 @@ def prepare_inputs(sets_df, df, input_data):
                 Assign6.append(0)
                 Assign6t.append(y)
             counter6.append(counterstring6)
-    len(Assign6)
     df6["Assignment"] = Assign6
     df6["Assignmentt"] = Assign6t
     sum_column = df6["Assignment"] + df6["VALUE"]
@@ -690,7 +684,6 @@ def prepare_inputs(sets_df, df, input_data):
     df7 = df.loc[df["PARAM"] == "TotalAnnualMaxCapacity"]
 
     Tech_list7 = df7["TECHNOLOGY"].tolist()
-    Tech_list7
 
     Year_list7 = df7["YEAR"].tolist()
     Year_list7d = []
@@ -928,7 +921,6 @@ def prepare_inputs(sets_df, df, input_data):
                             Assign9y.append(z)
                         Counter9.append(Counterstring9) 
 
-    len(Assign9)
     df9["Assignment"] = Assign9
     df9["Assignmente"] = Assign9e
     df9["Assignmentm"] = Assign9m
@@ -936,7 +928,6 @@ def prepare_inputs(sets_df, df, input_data):
     df9["Assignmenty"] = Assign9y
     sum_column = df9["Assignment"] + df9["VALUE"]
     df9["SUM"] = sum_column
-    df9
     df9.drop("VALUE", axis=1, inplace=True)
     df9.drop("TECHNOLOGY", axis=1, inplace=True)
     df9.drop("MODE_OF_OPERATION", axis=1, inplace=True)
@@ -978,9 +969,7 @@ def prepare_inputs(sets_df, df, input_data):
     Value_list177 = df472["value"].tolist()
     Assign10 = []
     df10 = df.loc[df["PARAM"] == "SpecifiedAnnualDemand"]
-    df10
     Fuel_list10 = df10["FUEL"].tolist()
-    Fuel_list10
     Year_list10 = df10["YEAR"].tolist()
     Year_list10d = []
     Counter10 = []
@@ -992,7 +981,6 @@ def prepare_inputs(sets_df, df, input_data):
             Year_list10d.append(i)
 
     maxcounter10 =  len(Year_list10d)
-    maxcounter10
     for j in range(0, len(Fuel_list177)):
 
         a10 = 0.001 + Value_list177[j]
@@ -1041,7 +1029,6 @@ def prepare_inputs(sets_df, df, input_data):
     df = df.reset_index(drop=True)
     df10 = df10.reset_index(drop=True)
     df = df.append(df10, ignore_index=True)
-    df
 
     # SpecifiedDemandProfile
     import numpy as np
@@ -1058,7 +1045,6 @@ def prepare_inputs(sets_df, df, input_data):
     for j in Fuel_list11:
         if j not in Fuel_list11d:
             Fuel_list11d.append(j)
-    Fuel_list11d
     TS_list11 = df11["TIMESLICE"].tolist()
     TS_list11d = []
 
@@ -1074,14 +1060,12 @@ def prepare_inputs(sets_df, df, input_data):
             Year_list11d.append(k)
 
     maxcounter11 = len(TS_list11d) * len(Year_list11d)
-    maxcounter11
     Assign11 = []
     Assign11f = []
     Assign11t = []
     Assign11y = []
     for j in range(0, len(Fuel_list177)):
         df1 = pd.DataFrame(df499[str(Fuel_list177[j])])
-        len(df1)
         assign8784 = df1[str(Fuel_list177[j])].tolist()
         length = 8784 - len(assign8784)
 
@@ -1145,9 +1129,6 @@ def prepare_inputs(sets_df, df, input_data):
                         Assign11t.append(y)
                         Assign11y.append(z)
                     Counter.append(Counterstring)
-
-    Assign11
-    len(Assign11)
     df11["Assignment"] = Assign11
     df11["Assignmentf"] = Assign11f
     df11["Assignmentt"] = Assign11t
@@ -1186,7 +1167,6 @@ def prepare_inputs(sets_df, df, input_data):
     df = df.loc[df["PARAM"] != "SpecifiedDemandProfile"]
     df = df.reset_index(drop=True)
     df = df.append(df11, ignore_index=True)
-    df
 
     # CapacityFactor
     import numpy as np
@@ -1206,7 +1186,6 @@ def prepare_inputs(sets_df, df, input_data):
     for i in Tech_list12:
         if i not in Tech_list12d:
             Tech_list12d.append(i)
-    Tech_list12d
     TS_list12 = df12["TIMESLICE"].tolist()
     TS_list12d = []
 
@@ -1222,7 +1201,6 @@ def prepare_inputs(sets_df, df, input_data):
             Year_list12d.append(k)
 
     maxcounter12 = len(TS_list12d) * len(Year_list12d)
-    maxcounter12
     Assign12 = []
     Assign12ts = []
     Assign12t = []
@@ -1295,8 +1273,6 @@ def prepare_inputs(sets_df, df, input_data):
                         Assign12ts.append(y)
                         Assign12y.append(z)
                     Counter.append(Counterstring)
-    Assign12
-    len(df12)
     df12["Assignment"] = Assign12
     df12["Assignmentt"] = Assign12t
     df12["Assignmentts"] = Assign12ts
@@ -1335,7 +1311,6 @@ def prepare_inputs(sets_df, df, input_data):
     df = df.loc[df["PARAM"] != "CapacityFactor"]
     df = df.reset_index(drop=True)
     df = df.append(df12, ignore_index=True)
-    df
 
     # PLATFORMAVAILABILITYFACTOR
     df472 = platform_technologies
@@ -1417,7 +1392,6 @@ def prepare_inputs(sets_df, df, input_data):
     df14 = df.loc[df["PARAM"] == "CapitalCostStorage"]
 
     Sto_list14 = df14["STORAGE"].tolist()
-    Sto_list14
 
     Year_list14 = df14["YEAR"].tolist()
     Year_list14d = []
@@ -1445,7 +1419,6 @@ def prepare_inputs(sets_df, df, input_data):
                 Assign14s.append(y)
             counter14.append(counterstring14)
 
-    len(Assign14)
     df14["Assignment"] = Assign14
     df14["Assignments"] = Assign14s
     sum_column = df14["Assignment"] + df14["VALUE"]
@@ -1477,8 +1450,7 @@ def prepare_inputs(sets_df, df, input_data):
     df = df.reset_index(drop=True)
     df14 = df14.reset_index(drop=True)
     df = df.append(df14, ignore_index=True)
-    df
-
+ 
     # PLATFORMDISCOUNTRATETECH
     df472 = platform_technologies
     Tech_list173 = df472["technology"].tolist()
@@ -1761,8 +1733,7 @@ def prepare_inputs(sets_df, df, input_data):
     df = df.reset_index(drop=True)
     df18 = df18.reset_index(drop=True)
     df = df.append(df18, ignore_index=True)
-    df
-
+ 
     # PLATFORMOPERATIONALLIFESTO
     df468 = platform_storages
     Sto_list170 = df468["storage"].tolist()
@@ -1775,7 +1746,7 @@ def prepare_inputs(sets_df, df, input_data):
     df19 = df.loc[df["PARAM"] == "OperationalLifeStorage"]
 
     Sto_list19 = df19["STORAGE"].tolist()
-    Sto_list19
+
 
     Year_list19 = df19["YEAR"].tolist()
     Year_list19d = []
@@ -1834,8 +1805,7 @@ def prepare_inputs(sets_df, df, input_data):
     df = df.reset_index(drop=True)
     df19 = df19.reset_index(drop=True)
     df = df.append(df19, ignore_index=True)
-    df
-
+ 
    # PLATFORMSTOMAXDISCHARGERATE
     df469 = platform_storages
     Sto_list129 = df469["storage"].tolist()
@@ -1848,7 +1818,7 @@ def prepare_inputs(sets_df, df, input_data):
     df20 = df.loc[df["PARAM"] == "StorageMaxDischargeRate"]
 
     Sto_list20 = df20["STORAGE"].tolist()
-    Sto_list20
+
 
     Year_list20 = df20["YEAR"].tolist()
     Year_list20d = []
@@ -1982,8 +1952,7 @@ def prepare_inputs(sets_df, df, input_data):
     df = df.reset_index(drop=True)
     df21 = df21.reset_index(drop=True)
     df = df.append(df21, ignore_index=True)
-    df
-
+ 
     # PLATFORMStorageL2D
     df466 = platform_storages
     Sto_list127 = df466["storage"].tolist()
@@ -1996,7 +1965,6 @@ def prepare_inputs(sets_df, df, input_data):
     df22 = df.loc[df["PARAM"] == "StorageL2D"]
 
     Sto_list22 = df22["STORAGE"].tolist()
-    Sto_list22
 
     Year_list22 = df22["YEAR"].tolist()
     Year_list22d = []
@@ -2066,7 +2034,6 @@ def prepare_inputs(sets_df, df, input_data):
     df23 = df.loc[df["PARAM"] == "Storagetagheating"]
 
     Sto_list23 = df23["STORAGE"].tolist()
-    Sto_list23
 
     Year_list23 = df23["YEAR"].tolist()
     Year_list23d = []
@@ -2488,8 +2455,7 @@ def prepare_inputs(sets_df, df, input_data):
     df = df.reset_index(drop=True)
     df29 = df29.reset_index(drop=True)
     df = df.append(df29, ignore_index=True)
-    df
-
+ 
     # PLATFORMStorageMaxCapacity
     df458 = platform_storages
     Sto_list119 = df458["storage"].tolist()
@@ -2702,8 +2668,7 @@ def prepare_inputs(sets_df, df, input_data):
     Sto_list113 = df485["storage"].tolist()
 
     df33 = df.loc[df["PARAM"] == "TechnologyFromStorage"]
-    df33
-
+ 
     Assign33 = []
 
     Tech_list33 = df33["TECHNOLOGY"].tolist()
@@ -2715,7 +2680,6 @@ def prepare_inputs(sets_df, df, input_data):
 
     Tech_list33d
     Sto_list33 = df33["STORAGE"].tolist()
-    Sto_list33
     Sto_list33d = []
 
     for j in Sto_list33:
@@ -2740,7 +2704,6 @@ def prepare_inputs(sets_df, df, input_data):
     Assign33t = []
     Counter33 = []
     maxcounter33 = len(MO_list33d)
-    maxcounter33
     for k in range(0, len(Tech_list113)):
             a33 = Value_list113[k]
             b33 = Tech_list113[k]
@@ -2770,7 +2733,6 @@ def prepare_inputs(sets_df, df, input_data):
     df33["Assignmentm"] = Assign33m
     df33["Assignmentt"] = Assign33t
     df33["Assignments"] = Assign33s
-    df33
     sum_column = df33["Assignment"] + df33["VALUE"]
     df33["SUM"] = sum_column
     df33.drop("VALUE", axis=1, inplace=True)
@@ -2800,7 +2762,6 @@ def prepare_inputs(sets_df, df, input_data):
             "YEAR",
         ]
     ]
-    df33
     df = df.loc[df["PARAM"] != "TechnologyFromStorage"]
     df = df.reset_index(drop=True)
     df33 = df33.reset_index(drop=True)
@@ -2814,7 +2775,6 @@ def prepare_inputs(sets_df, df, input_data):
     Sto_list112 = df484["storage"].tolist()
 
     df34 = df.loc[df["PARAM"] == "TechnologyToStorage"]
-    df34
 
     Assign34 = []
 
@@ -2846,7 +2806,6 @@ def prepare_inputs(sets_df, df, input_data):
     for o in range(0, len(Tech_list112)):
         identifier34.append(str(Sto_list112[o] + Tech_list112[o]))
 
-    identifier34
     Assign34m = []
     Assign34s = []
     Assign34t = []
@@ -2884,7 +2843,6 @@ def prepare_inputs(sets_df, df, input_data):
     df34["Assignmentm"] = Assign34m
     df34["Assignmentt"] = Assign34t
     df34["Assignments"] = Assign34s
-    df34
     sum_column = df34["Assignment"] + df34["VALUE"]
     df34["SUM"] = sum_column
     df34.drop("VALUE", axis=1, inplace=True)
@@ -2914,7 +2872,6 @@ def prepare_inputs(sets_df, df, input_data):
             "YEAR",
         ]
     ]
-    df34
     df = df.loc[df["PARAM"] != "TechnologyToStorage"]
     df = df.reset_index(drop=True)
     df34 = df34.reset_index(drop=True)
@@ -2931,7 +2888,6 @@ def prepare_inputs(sets_df, df, input_data):
     df35 = df.loc[df["PARAM"] == "TotalAnnualMaxCapacityInvestment"]
 
     Tech_list35 = df35["TECHNOLOGY"].tolist()
-    Tech_list35
 
     Year_list35 = df35["YEAR"].tolist()
     Year_list35d = []
@@ -2996,7 +2952,6 @@ def prepare_inputs(sets_df, df, input_data):
     # PLATFORMTotalAnnualMinCapacity
     df420 = platform_technologies
     Tech_list116 = df420["technology"].tolist()
-    Tech_list116
     Value_list116 = df420["min_capacity"].tolist()
     Assign36 = []
     Assign36t = []
@@ -3004,7 +2959,6 @@ def prepare_inputs(sets_df, df, input_data):
     df36 = df.loc[df["PARAM"] == "TotalAnnualMinCapacity"]
 
     Tech_list36 = df36["TECHNOLOGY"].tolist()
-    Tech_list36
 
     Year_list36 = df36["YEAR"].tolist()
     Year_list36d = []
@@ -3065,7 +3019,6 @@ def prepare_inputs(sets_df, df, input_data):
     # PLATFORMTotalAnnualMinCapacityInvestment
     df466 = platform_technologies
     Tech_list115 = df466["technology"].tolist()
-    Tech_list115
     Value_list115 = df466["min_capacity_investment"].tolist()
     Assign37 = []
     Assign37t = []
@@ -3073,7 +3026,6 @@ def prepare_inputs(sets_df, df, input_data):
     df37 = df.loc[df["PARAM"] == "TotalAnnualMinCapacityInvestment"]
 
     Tech_list37 = df37["TECHNOLOGY"].tolist()
-    Tech_list37
 
     Year_list37 = df37["YEAR"].tolist()
     Year_list37d = []
@@ -3144,7 +3096,6 @@ def prepare_inputs(sets_df, df, input_data):
     df38 = df.loc[df["PARAM"] == "TotalTechnologyAnnualActivityLowerLimit"]
 
     Tech_list38 = df38["TECHNOLOGY"].tolist()
-    Tech_list38
 
     Year_list38 = df38["YEAR"].tolist()
     Year_list38d = []
@@ -3216,7 +3167,6 @@ def prepare_inputs(sets_df, df, input_data):
 
 
     Tech_list39 = df39["TECHNOLOGY"].tolist()
-    Tech_list39
 
     Year_list39 = df39["YEAR"].tolist()
     Year_list39d = []
@@ -3343,7 +3293,6 @@ def prepare_inputs(sets_df, df, input_data):
     # PLATFORMTotalTotalTechnologyModelPeriodActivityUpperLimit
     df429 = platform_technologies
     Tech_list111 = df429["technology"].tolist()
-    Tech_list111
     Value_list111 = df429["model_period_activity_upper_limit"].tolist()
     Assign41 = []
     Assign41t = []
@@ -3437,8 +3386,6 @@ def prepare_inputs(sets_df, df, input_data):
         for z in Year_list41d:
             Assign41.append(a41)
 
-    Assign41
-    len(df41)
     df41["Assignment"] = Assign41
     sum_column = df41["Assignment"] + df41["VALUE"]
     df41["SUM"] = sum_column
@@ -3463,7 +3410,6 @@ def prepare_inputs(sets_df, df, input_data):
             "YEAR",
         ]
     ]
-    df41[df41["FUEL"] == str("SINK1DEMAND")]
     df = df.loc[df["PARAM"] != "YearSplit"]
     df = df.reset_index(drop=True)
     df = df.append(df41, ignore_index=True)
