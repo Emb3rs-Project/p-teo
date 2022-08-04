@@ -1557,8 +1557,8 @@ def Report(Results, sets_df):
     for i in sourcesinkidlistd:
         if (','.join(["Source%d" % i ])) in sourcelistPBTd:
 
-            productionbytechnologysourcesorted = productionbytechnologysourcesorted.loc[productionbytechnologysourcesorted["Classification"] == (','.join(["Source%d" % i ]))]
-            productionbytechnologysourcesortedplot = productionbytechnologysourcesorted.pivot_table(productionbytechnologysourcesorted,index=['TIMESLICE'],columns=['TECHNOLOGY'],aggfunc=np.sum)
+            productionbytechnologysourcesorted1 = productionbytechnologysourcesorted.loc[productionbytechnologysourcesorted["Classification"] == (','.join(["Source%d" % i ]))]
+            productionbytechnologysourcesortedplot = productionbytechnologysourcesorted1.pivot_table(productionbytechnologysourcesorted1,index=['TIMESLICE'],columns=['TECHNOLOGY'],aggfunc=np.sum)
             productionbytechnologysourcesortedplot = productionbytechnologysourcesortedplot.reset_index()
             productionbytechnologysourcesortedplot = productionbytechnologysourcesortedplot.droplevel(level=0, axis=1)
             listPBTeachsource = productionbytechnologysourcesortedplot.columns.tolist()
