@@ -7,6 +7,7 @@ import numpy
 import itertools
 from ..src.error_handling.Validation import *
 
+
 def prepare_inputs(sets_df, df, input_data):
     input_platform = input_data["platform"]
     input_gis = input_data["gis-module"]
@@ -707,7 +708,7 @@ def prepare_inputs(sets_df, df, input_data):
             elif str(b7) in y and 'sink' in y:
                 Assign7.append(0)
                 Assign7t.append(y)               
-            elif (b7 not in y) and (y not in Tech_list196) and (counter7.count(Counterstring7) < maxcounter7):
+            elif (b7 not in y) and (y not in Tech_list196) and (counter7.count(counterstring7) < maxcounter7):
                 Assign7.append(0)
                 Assign7t.append(y)
             counter7.append(counterstring7)
@@ -2186,7 +2187,7 @@ def prepare_inputs(sets_df, df, input_data):
         if i not in Year_list26d:
             Year_list26d.append(i)
 
-    maxcounter = len(Year_list26d)
+    maxcounter26 = len(Year_list26d)
 
     for j in range(0, len(Sto_list123)):
 
@@ -2912,7 +2913,7 @@ def prepare_inputs(sets_df, df, input_data):
             elif b35 in y and a35 == 0:
                 Assign35.append(a35)
                 Assign35t.append(y)
-            elif (b35 not in y) and (y not in Tech_list35) and (counter35.count(counterstring35) < maxcounte35):
+            elif (b35 not in y) and (y not in Tech_list35) and (counter35.count(counterstring35) < maxcounter35):
                 Assign35.append(0)
                 Assign35t.append(y)
             counter35.append(counterstring35)
@@ -3242,6 +3243,8 @@ def prepare_inputs(sets_df, df, input_data):
     for i in Tech_list40:
         if i not in Tech_list40d:
             Tech_list40d.append(i)
+
+    maxcounter40 = len(Year_list39d)
 
     for j in range(0, len(Tech_list113)):
 
