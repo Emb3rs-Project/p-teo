@@ -14,7 +14,7 @@ def create_sets_dataframe(jData):
     jData["REGION2"] = []
 
     sets_df = {}
-
+    jData['REGION'][0] = jData['REGION'][0].replace(" ","")
     sets_df["REGION"] = pd.DataFrame(jData["REGION"], columns=["REGION"], dtype=str)
     sets_df["REGION2"] = pd.DataFrame(jData["REGION2"], columns=["REGION2"], dtype=str)
     sets_df["DAYTYPE"] = pd.DataFrame(jData["DAYTYPE"], columns=["DAYTYPE"], dtype=str)
