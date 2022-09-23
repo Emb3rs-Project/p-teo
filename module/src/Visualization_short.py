@@ -39,7 +39,7 @@ def Reportshort(Results, sets_df):
     a = Results
     #Accumulated New Capacity
     AccumulatedNewCapacity = pd.DataFrame(a['AccumulatedNewCapacity'])
-    AccumulatedNewCapacity
+    AccumulatedNewCapacity = AccumulatedNewCapacity.loc[AccumulatedNewCapacity["TECHNOLOGY"] != "dhn"]
     Tech_list1 = AccumulatedNewCapacity['TECHNOLOGY'].tolist()
     Assign1 = []
     Assign2 = []
@@ -693,7 +693,7 @@ def Reportshort(Results, sets_df):
 
     # Capital Investment
     CapitalInvestment = pd.DataFrame(a['DiscountedCapitalInvestmentByTechnology'])
-    CapitalInvestment 
+    CapitalInvestment = CapitalInvestment.loc[CapitalInvestment["TECHNOLOGY"] != "dhn"]
 
     Tech_listem = CapitalInvestment['TECHNOLOGY'].tolist()
     AssignCI1 = []
@@ -984,7 +984,7 @@ def Reportshort(Results, sets_df):
 
     OperatingCost = pd.DataFrame(a['TotalDiscountedFixedOperatingCost'])
     OperatingCost = OperatingCost.loc[OperatingCost["VALUE"] >= 0.001] 
-
+    OperatingCost = OperatingCost.loc[OperatingCost["TECHNOLOGY"] != "dhn"]
     Tech_listem = OperatingCost['TECHNOLOGY'].tolist()
     AssignOC1 = []
     AssignOC2= []
