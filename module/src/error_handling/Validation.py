@@ -27,7 +27,7 @@ class Inputscheck(BaseModel):
     listspd: conlist(str, min_items=0, max_items=10000)
     listspdprof: conlist(str, min_items=0, max_items=10000)
     listcfcap: conlist(str, min_items=0, max_items=10000)
-                
+    annemmlist: conlist(float, min_items=0, max_items=10000)   
 
     @validator('STOLIST')
     def check1(cls, v, values, **kwargs):

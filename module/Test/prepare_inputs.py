@@ -53,7 +53,7 @@ def prepare_inputs(sets_df, df, input_data):
     rescap =  platform_technologies["residual_capacity"].tolist()
     maxcap = technologies_cf["max_capacity"].tolist()
     techlist = platform_technologies["technology"].tolist()
-
+    annemmlist = platform_annual_emission_limit["annual_emission_limit"].tolist()
     if len(platform_storages) > 0:
         resstocap =  platform_storages["residual_storage_capacity"].tolist()
         maxstocap = platform_storages["max_storage_capacity"].tolist()
@@ -102,7 +102,7 @@ def prepare_inputs(sets_df, df, input_data):
     masterdict["listspd"] = listspd
     masterdict["listspdprof"] = listspdprof
     masterdict["listcfcap"] = listcfcap
-    
+    masterdict["annemmlist"] = annemmlist
     Inputscheck(**masterdict)
 
 
@@ -1702,7 +1702,7 @@ def prepare_inputs(sets_df, df, input_data):
 
     for j in range(0, len(EM_list170)):
 
-        a18 = Value_list170[j]
+        a18 = int(Value_list170[j])
 
         b18 = EM_list170[j]
 
