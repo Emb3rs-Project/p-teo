@@ -3447,4 +3447,10 @@ def prepare_inputs(sets_df, df, input_data):
     df = df.reset_index(drop=True)
     df = df.append(df41, ignore_index=True)
 
+    dfOMOO = df.loc[df['PARAM'] == 'OutputModeofoperation']
+    dfOMOO = dfOMOO.loc[dfOMOO["MODE_OF_OPERATION"] == '1']
+    df = df.loc[df["PARAM"] != "OutputModeofoperation"]
+    df = df.reset_index(drop=True)
+    df = df.append(dfOMOO, ignore_index=True)
+    df.loc[df["PARAM"] == "OutputModeofoperation"]
     return df
