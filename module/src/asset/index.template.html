@@ -123,19 +123,27 @@ The techno-economic optimization of your case has been succesfully completed. Th
   {% endif %}
 
   <h3><p><u>2. Storage Capacities</u></p></h3>
-    <p>The installed capacity of storages for the final year in the analyis period is shown in the table below. This can be used to analyse which storages are chosen by the TEO. </p>
-    
-        <h5><p><u><center>Storage Capacities in kWh</center></u></p></h5>
-    
-    <div class="table-responsive">
-    <div align="center"> 
-    {{ANST_df}}
-    </div>
-    <p>
         
-    <p>The installed capacity of storages for the final year in the analyis period is visualized in the graph below.</p>
-        
-    <center> {{ACSTO|safe}}   </center>      
+  {% if ACSTO|length %}
+        <p>The installed capacity of storages for the final year in the analyis period is shown in the table below. This can be used to analyse which storages are chosen by the TEO. </p>
+
+            <h5><p><u><center>Storage Capacities in kWh</center></u></p></h5>
+
+        <div class="table-responsive">
+        <div align="center"> 
+        {{ANST_df}}
+        </div>
+        <p>
+
+        <p>The installed capacity of storages for the final year in the analyis period is visualized in the graph below.</p>
+
+        <center> {{ACSTO|safe}}   </center>
+            
+  {% else %}
+     
+       <p> No storages are installed for this case.<p>
+             
+  {% endif %}
         
         
     <h3><p><u>3. Annual Heat generation</u></p></h3>
@@ -568,27 +576,34 @@ The techno-economic optimization of your case has been succesfully completed. Th
    </div>
    </div>
         
-   <h3><p><u>8. Storage operation</u></p></h3> 
+   <h3><p><u>8. Storage operation</u></p></h3>
+        
+   {% if ACSTO|length %}
     
-<p align="justify"> The techno-economic optimization considers heat storage while determining the optimal matching of sources and sinks.The annual cpacities of the heat storage have been presented befpore. However, the intra annual operation of the storage is necessary to analyze the dispatch of the systems and how the variability of excess heat vailability is balanced out in the system.<p>    
-    
-     <p align="justify"> The intrannual storage level of each storage are visualized in the graphs below. This shows the stored energy in the storage in every timestep. <p>
+    <p align="justify"> The techno-economic optimization considers heat storage while determining the optimal matching of sources and sinks.The annual cpacities of the heat storage have been presented befpore. However, the intra annual operation of the storage is necessary to analyze the dispatch of the systems and how the variability of excess heat vailability is balanced out in the system.<p>    
 
-  {% for storage in STOL %}
-    
-   <center>  {{storage|safe}}  </center> 
-    
-  {% endfor %}      
-    
-    
-     <p align="justify"> The intrannual storage charge and discharge, i.e. the cycling of each storage are visualized in the graphs below. The negative values indicate discharging and the positive values indicate charging. This shows the actual operation of the storage in every timestep. <p>    
-        
-  {% for storage in STOCD %}
-    
-   <center>  {{storage|safe}}  </center> 
-    
-  {% endfor %}  
-        
+         <p align="justify"> The intrannual storage level of each storage are visualized in the graphs below. This shows the stored energy in the storage in every timestep. <p>
+
+      {% for storage in STOL %}
+
+       <center>  {{storage|safe}}  </center> 
+
+      {% endfor %}      
+
+
+         <p align="justify"> The intrannual storage charge and discharge, i.e. the cycling of each storage are visualized in the graphs below. The negative values indicate discharging and the positive values indicate charging. This shows the actual operation of the storage in every timestep. <p>    
+
+      {% for storage in STOCD %}
+
+       <center>  {{storage|safe}}  </center> 
+
+      {% endfor %}  
+      
+   {% else %}
+     
+       <p> No storages are installed for this case.<p>
+             
+  {% endif %}      
 </body>
 
 </html>
