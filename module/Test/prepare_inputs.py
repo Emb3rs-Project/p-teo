@@ -38,7 +38,7 @@ def prepare_inputs(sets_df, df, input_data):
     if len(STOLIST) != 0 and len(MOOLIST) != 2:
         raise Exception("Please make sure that there are two modes of operation if Storage is used in the model")
     elif len(STOLIST) == 0 and len(MOOLIST) != 1:
-        raise Exception("Please make sure that there is only only modes of operation if Storage is not used in the model")
+        raise Exception("Please make sure that there is only one mode of operation if Storage is not used in the model")
     elif  len(MOOLIST) == 0:
         raise Exception("Please make sure that there is atleast one mode of operation used in the model")
 

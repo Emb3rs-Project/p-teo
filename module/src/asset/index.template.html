@@ -27,9 +27,25 @@
   <!-- Change after this -->
   <h1><p><u><center>Techno-economic optimization : Report</center></u></p></h1>
     
-  <p align="justify"> Welcome to the module simulation report of the Techno-economic optimization (TEO) module in the EMB3RS platform. The TEO module determines the cost optimal matching of sinks and the sources. The optimal capacity of the technologies and storages, and their optimal operation is determined while considering several constraints.
+  <p align="justify"> Welcome to the module simulation report of the Techno-economic optimization (TEO) module in the EMB3RS platform. The TEO module determines the cost optimal matching of sinks and the sources. The optimal capacity of the technologies and storages, and their optimal operation is determined while considering several constraints.</p>
       
-The techno-economic optimization of your case has been succesfully completed. The results of the analysis are presented in this report. The report contains several sections. Each of them will present tables, plots and some text describing the main results of your case. For a detailed analysis of the results, you can download the results of the TEO module from the platform.</p>
+    <p> The Techno-economic optimisation mdoule considers several technologies for each source and sink based on the temperature level of the source. For high temperature sources, heat recovery technologies such as heat exchangers are considered. Whereas, for low temperature sources, temperature boosting technologies such as heat pumps, boilers, Combined heat and power, solar thermal etc. are considered to supplement the heat provided by the source. Similarly for the sinks which fucntion at the grid temperature, a heat exchanger is used to transfer heat. While for heat sinks with a higher demand temperature than the grid temperature, the temperature boosting technologies specified before are used.</p>
+      
+<p>Back up technologies called as grid specific technologies are used in cases when the heat supply from the sources is not enough to meet the heat deamdns in the sink. </p>
+      
+<p>The techno-economic optimisation considers an intra annual timestep based optimisaiom, i.e. the neergy balance between the sources and the sinks is considered for each timestep within the year.</p>
+    
+<p>The techno-economic optimization of your case has been succesfully completed. The results of the analysis are presented in this report. The report contains several sections. Each of them will present tables, plots and some text describing the main results of your case. For a detailed analysis of the results, you can download the results of the TEO module from the platform. This report contains the following sections</p>
+    
+<p>1. Capacity of Sources and Sinks</p>
+<p>2. Storage Capacities</p>
+<p>3. Annual Heat generation</p>
+<p>4. Intra Annual Heat and Cold Generation</p>
+<p>5. Overall Heat and Cold Generation and Consumption</p>
+<p>6. Emissions</p>
+<p>7. Costs</p>
+<p>8. Storage operation</p>
+
   
   <h3><p><u>1. Capacity of Sources and Sinks</u></p></h3>
   <p>The installed capacity of technologies all the sources and sinks for the final year in the analysis period is shown in the table below. The installed capacity can be used to analyse which technologies are chosen by the TEO for each sink and source. </p>
@@ -304,7 +320,7 @@ The techno-economic optimization of your case has been succesfully completed. Th
     
   <h3><p><u>5. Overall Heat and Cold Generation and Consumption</u></p></h3>
     
-    <p> The heat and cold generation for all sources and sinks is shown in the tables below. This presents the overall heat and cold generation for the entire analysis period. <p>
+    <p> The heat and cold generation for all sources and sinks in th entrie analysis period is shown in the tables below. This presents the overall heat and cold generation for the entire analysis period. <p>
     
     <h5><p><u><center> Total Heat  Generation in kWh</center></u></p></h5>
     

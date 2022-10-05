@@ -4,6 +4,7 @@ import numpy as np
 import plotly.offline as pyo
 import warnings
 warnings.filterwarnings("ignore")
+from flask import Markup, render_template
 import plotly
 from jinja2 import Environment, FileSystemLoader, PackageLoader, select_autoescape
 import pandas as pd
@@ -39,7 +40,7 @@ def Reportshort(Results, sets_df):
     a = Results
     #Accumulated New Capacity
     AccumulatedNewCapacity = pd.DataFrame(a['AccumulatedNewCapacity'])
-    AccumulatedNewCapacity = AccumulatedNewCapacity.loc[AccumulatedNewCapacity["TECHNOLOGY"] != "dhn"]
+    AccumulatedNewCapacity
     Tech_list1 = AccumulatedNewCapacity['TECHNOLOGY'].tolist()
     Assign1 = []
     Assign2 = []
@@ -693,7 +694,7 @@ def Reportshort(Results, sets_df):
 
     # Capital Investment
     CapitalInvestment = pd.DataFrame(a['DiscountedCapitalInvestmentByTechnology'])
-    CapitalInvestment = CapitalInvestment.loc[CapitalInvestment["TECHNOLOGY"] != "dhn"]
+    CapitalInvestment 
 
     Tech_listem = CapitalInvestment['TECHNOLOGY'].tolist()
     AssignCI1 = []
@@ -984,7 +985,7 @@ def Reportshort(Results, sets_df):
 
     OperatingCost = pd.DataFrame(a['TotalDiscountedFixedOperatingCost'])
     OperatingCost = OperatingCost.loc[OperatingCost["VALUE"] >= 0.001] 
-    OperatingCost = OperatingCost.loc[OperatingCost["TECHNOLOGY"] != "dhn"]
+
     Tech_listem = OperatingCost['TECHNOLOGY'].tolist()
     AssignOC1 = []
     AssignOC2= []
@@ -1581,12 +1582,15 @@ def Reportshort(Results, sets_df):
     
         # Accumulated new capacity table
 
+        # Accumulated new capacity table
+
     AccumulatedNewCapacitydf = AccumulatedNewCapacityplot.loc[AccumulatedNewCapacityplot[''] == AccumulatedNewCapacityplot[''].max()]
     del AccumulatedNewCapacitydf['']
-    AccumulatedNewCapacitydf.reset_index(drop=True)
-    AccumulatedNewCapacitydf.reset_index(drop=True, inplace=True)
-    AccumulatedNewCapacitydf = AccumulatedNewCapacitydf.rename_axis(None, axis=1)
+    AccumulatedNewCapacitydf = AccumulatedNewCapacitydf.rename(index={0: 'Installed capacity (kW)'})
+    AccumulatedNewCapacitydf = AccumulatedNewCapacitydf.transpose()
     AccumulatedNewCapacitydf = AccumulatedNewCapacitydf.round(decimals=2)
+    AccumulatedNewCapacitydf.reset_index(inplace=True)
+    AccumulatedNewCapacitydf = AccumulatedNewCapacitydf.drop(0)
     AccumulatedNewCapacitydf1 = AccumulatedNewCapacitydf.to_html(index=False, col_space= 100, justify='center')
     AccumulatedNewCapacitytable = AccumulatedNewCapacitydf1.replace('<tr>', '<tr align="center">')
 
@@ -1595,9 +1599,13 @@ def Reportshort(Results, sets_df):
     AnnualTechnologyEmissiondf = AnnualTechnologyEmission.pivot_table(AnnualTechnologyEmission,columns=['TECHNOLOGY'],aggfunc=np.sum)
     AnnualTechnologyEmissiondf.reset_index(drop=True, inplace=True)
     AnnualTechnologyEmissiondf = AnnualTechnologyEmissiondf.rename_axis(None, axis=1)
-    AnnualTechnologyEmissiondf = pd.DataFrame()
+    AnnualTechnologyEmissiondf = AnnualTechnologyEmissiondf.round(decimals=2)
+    AnnualTechnologyEmissiondf = AnnualTechnologyEmissiondf.transpose()
+    AnnualTechnologyEmissiondf.reset_index(inplace=True)
+    AnnualTechnologyEmissiondf.rename(columns={'index': 'Technology',0: 'Emissions (kg CO2)'}, inplace=True)
     AnnualTechnologyEmissiondf1 = AnnualTechnologyEmissiondf.to_html(index=False, col_space= 100, justify='center')
     AnnualTechnologyEmissiondtable = AnnualTechnologyEmissiondf1.replace('<tr>', '<tr align="center">')
+    
 
     # Accumulated new Storage capacity table
     if len(AccumulatedNewStorageCapacity) != 0:
@@ -1607,9 +1615,12 @@ def Reportshort(Results, sets_df):
         AccumulatedNewStorageCapacitydf.reset_index(drop=True, inplace=True)
         AccumulatedNewStorageCapacitydf = AccumulatedNewStorageCapacitydf.rename_axis(None, axis=1)
         AccumulatedNewStorageCapacitydf = AccumulatedNewStorageCapacitydf.round(decimals=2)
+        AccumulatedNewStorageCapacitydf = AccumulatedNewStorageCapacitydf.transpose()
+        AccumulatedNewStorageCapacitydf.reset_index(inplace=True)
+        AccumulatedNewStorageCapacitydf.rename(columns={'index': 'Storage',0: 'Installed stroage capacity (kWh)'}, inplace=True)
         AccumulatedNewStorageCapacitydf1 = AccumulatedNewStorageCapacitydf.to_html(index=False, col_space= 100, justify='center')
         AccumulatedNewStorageCapacitytable = AccumulatedNewStorageCapacitydf1.replace('<tr>', '<tr align="center">')
-        AccumulatedNewStorageCapacitydf
+
     else:
         AccumulatedNewStorageCapacitytable = ''
 
@@ -1620,16 +1631,22 @@ def Reportshort(Results, sets_df):
     CapitalInvestmenttable1.reset_index(drop=True, inplace=True)
     CapitalInvestmenttable1 = CapitalInvestmenttable1.rename_axis(None, axis=1)
     CapitalInvestmenttable1 = CapitalInvestmenttable1.round(decimals=2)
+    CapitalInvestmenttable1 = CapitalInvestmenttable1.transpose()
+    CapitalInvestmenttable1.reset_index(inplace=True)
+    CapitalInvestmenttable1.rename(columns={'index': 'Technology',0: 'Capital costs (Euros)'}, inplace=True)
     CapitalInvestmenttabledf1 =  CapitalInvestmenttable1.to_html(index=False, col_space= 100, justify='center')
     CapitalInvestmenttable = CapitalInvestmenttabledf1.replace('<tr>', '<tr align="center">')
 
-
     # Operating costs table
-    # del OperatingCost['Classification']
+    #del OperatingCost['Classification']
     OperatingCostTable1 = OperatingCost.pivot_table(OperatingCost,columns=['TECHNOLOGY'],aggfunc=np.sum)
     OperatingCostTable1.reset_index(drop=True)
     OperatingCostTable1.reset_index(drop=True, inplace=True)
     OperatingCostTable1 = OperatingCostTable1.rename_axis(None, axis=1)
+    OperatingCostTable1 = OperatingCostTable1.round(decimals=2)
+    OperatingCostTable1 = OperatingCostTable1.transpose()
+    OperatingCostTable1.reset_index(inplace=True)
+    OperatingCostTable1.rename(columns={'index': 'Technology',0: 'Operating costs (Euros)'}, inplace=True)
     OperatingCostTabledf1 =  OperatingCostTable1.to_html(index=False, col_space= 100, justify='center')
     OperatingCosttable = OperatingCostTabledf1.replace('<tr>', '<tr align="center">')
 
@@ -1640,6 +1657,9 @@ def Reportshort(Results, sets_df):
         CapitalInvestmentsto1.reset_index(drop=True, inplace=True)
         CapitalInvestmentsto1 = CapitalInvestmentsto1.rename_axis(None, axis=1)
         CapitalInvestmentsto1 = CapitalInvestmentsto1.round(decimals=2)
+        CapitalInvestmentsto1 = CapitalInvestmentsto1.tranpose()
+        CapitalInvestmentsto1.reset_index(inplace=True)
+        CapitalInvestmentsto1.rename(columns={'index': 'Storage',0: 'Capital costs (€)'}, inplace=True)
         CapitalInvestmentstodf1 =  CapitalInvestmentsto1.to_html(index=False, col_space= 100, justify='center')
         CapitalInvestmentstotable = CapitalInvestmentstodf1.replace('<tr>', '<tr align="center">')
     else:
