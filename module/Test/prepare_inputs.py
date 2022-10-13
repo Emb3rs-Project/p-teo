@@ -109,52 +109,52 @@ def prepare_inputs(sets_df, df, input_data):
 
 
     # BudgetLimit
-#     df5567 = platform_budget_limit
-#     budget_list199 = df5567["budget_limit"]
-#     df2576 = df.loc[df["PARAM"] == "MaximumBudget"]
-#     region_list2233 = df2576["REGION"].tolist()
+    df5567 = platform_budget_limit
+    budget_list199 = df5567["budget_limit"]
+    df2576 = df.loc[df["PARAM"] == "MaximumBudget"]
+    region_list2233 = df2576["REGION"].tolist()
 
-#     Assign1 = []
+    Assign1 = []
 
-#     for i in range(0, len(region_list2233)):
-#         a = budget_list199[i]
-#         b = -9999999999 + a
-#         if  a != 0:
-#             Assign1.append(b)
-#         else:
-#             Assign1.append(0)
+    for i in range(0, len(region_list2233)):
+        a = budget_list199[i]
+        b = -9999999999 + a
+        if  a != 0:
+            Assign1.append(b)
+        else:
+            Assign1.append(0)
 
-#     Assign1
-#     df2576["Assignment"] = Assign1
-#     sum_column = df2576["Assignment"] + df2576["VALUE"]
-#     df2576["SUM"] = sum_column
-#     df2576
-#     df2576.drop("VALUE", axis=1, inplace=True)
-#     df2576.drop("Assignment", axis=1, inplace=True)
-#     df2576.rename(columns={"SUM": "VALUE"}, inplace=True)
-#     df2576
-#     df2576 = df2576[
-#         [
-#             "PARAM",
-#             "VALUE",
-#             "REGION",
-#             "REGION2",
-#             "DAYTYPE",
-#             "EMISSION",
-#             "FUEL",
-#             "DAILYTIMEBRACKET",
-#             "SEASON",
-#             "TIMESLICE",
-#             "STORAGE",
-#             "MODE_OF_OPERATION",
-#             "TECHNOLOGY",
-#             "YEAR",
-#         ]
-#     ]
-#     df = df.loc[df["PARAM"] != "MaximumBudget"]
-#     df = df.reset_index(drop=True)
-#     df2576 = df2576.reset_index(drop=True)
-#     df = df.append(df2576, ignore_index=True)
+    Assign1
+    df2576["Assignment"] = Assign1
+    sum_column = df2576["Assignment"] + df2576["VALUE"]
+    df2576["SUM"] = sum_column
+    df2576
+    df2576.drop("VALUE", axis=1, inplace=True)
+    df2576.drop("Assignment", axis=1, inplace=True)
+    df2576.rename(columns={"SUM": "VALUE"}, inplace=True)
+    df2576
+    df2576 = df2576[
+        [
+            "PARAM",
+            "VALUE",
+            "REGION",
+            "REGION2",
+            "DAYTYPE",
+            "EMISSION",
+            "FUEL",
+            "DAILYTIMEBRACKET",
+            "SEASON",
+            "TIMESLICE",
+            "STORAGE",
+            "MODE_OF_OPERATION",
+            "TECHNOLOGY",
+            "YEAR",
+        ]
+    ]
+    df = df.loc[df["PARAM"] != "MaximumBudget"]
+    df = df.reset_index(drop=True)
+    df2576 = df2576.reset_index(drop=True)
+    df = df.append(df2576, ignore_index=True)
     
     # GIS_LOSSES
     df555 = input_gis
@@ -1091,7 +1091,11 @@ def prepare_inputs(sets_df, df, input_data):
         df1[str(Fuel_list177[j])] = assign8784
         assign = []
         Timeslice = len(sets_df["TIMESLICE"])
-        split = Timeslice / 24
+        
+        if len(sets_df["TIMESLICE"]) == 12:
+            split = Timeslice / 6
+        else:
+            split = Timeslice / 6
         Marker = 8785 / (split)
         assign99 = []
 
@@ -1102,9 +1106,16 @@ def prepare_inputs(sets_df, df, input_data):
         df1["Marker"] = assign99
 
         assign999 = []
-        for l in range(1, 367):
-            for i in range(1, 25):
-                assign999.append(int(i))
+        if len(sets_df["TIMESLICE"]) == 12:
+            for l in range(1, 367):
+                for k in range(1, 5):
+                    for i in range(1, 7):
+                        assign999.append(int(i))
+
+        else:
+            for l in range(1, 367):
+                for i in range(1, 25):
+                    assign999.append(int(i))            
 
         df1["HourMarker"] = assign999
         table = pd.pivot_table(
@@ -1178,19 +1189,16 @@ def prepare_inputs(sets_df, df, input_data):
         ]
     ]
     df11 = df11.reset_index(drop=True)
-    df11
     df = df.loc[df["PARAM"] != "SpecifiedDemandProfile"]
     df = df.reset_index(drop=True)
     df = df.append(df11, ignore_index=True)
 
-    # CapacityFactor
+        # CapacityFactor
     import numpy as np
     import pandas as pd
 
     df500 = capacity_factor_cf
     Tech_list177 = df500.columns.tolist()
-    Tech_list177
-
     # Profile prepearation
 
     df12 = df.loc[df["PARAM"] == "CapacityFactor"]
@@ -1226,7 +1234,10 @@ def prepare_inputs(sets_df, df, input_data):
     for j in range(0, len(Tech_list177)):
         df2 = pd.DataFrame(df500[str(Tech_list177[j])])
         Timeslice1 = len(sets_df["TIMESLICE"])
-        split1 = Timeslice1 / 24
+        if len(sets_df["TIMESLICE"]) == 12:
+            split1 = Timeslice / 6
+        else:
+            split1 = Timeslice / 6
         Marker1 = 8785 / (split1)
         assign8784 = df2[str(Tech_list177[j])].tolist()
         length = 8784 - len(assign8784)
@@ -1244,9 +1255,16 @@ def prepare_inputs(sets_df, df, input_data):
 
         df2["Marker"] = assign991
         assign9991 = []
-        for k in range(1, 367):
-            for i in range(1, 25):
-                assign9991.append(int(i))
+        if len(sets_df["TIMESLICE"]) == 12:
+            for l in range(1, 367):
+                for k in range(1, 5):
+                    for i in range(1, 7):
+                        assign9991.append(int(i))
+
+        else:
+            for l in range(1, 367):
+                for i in range(1, 25):
+                    assign9991.append(int(i))
 
         df2["HourMarker"] = assign9991
 

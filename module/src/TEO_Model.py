@@ -11,18 +11,14 @@ from .Visualization import *
 from .Visualization_short import *
 import gurobipy as gp
 
-def buildmodel(sets_df, df, defaults_df, mcs_df, n):
+def buildmodel(sets_df, df, defaults_df, mcs_df, n, names):
 
     modelName = "teo_model"
 
     # ----------------------------------------------------------------------------------------------------------------------
     #    SETS (CHANGED FOR NEW FORMAT)
     # ----------------------------------------------------------------------------------------------------------------------
-    # path_to_solver = r'C:\Program Files\Gurobi_9.5.1\win64\bin\gurobi_cl.exe'
-    # solver = pulp.GUROBI_CMD(path=path_to_solver)
     solver = pulp.GUROBI()
-    #path_to_cplex = r'C:/Program Files/IBM/ILOG/CPLEX_Studio128/cplex/bin/x64_win64/cplex.exe'
-    #solver = pulp.CPLEX_CMD(path=path_to_cplex)
     YEAR = createTuple(sets_df["YEAR"], "YEAR")
     TECHNOLOGY = createTuple(sets_df["TECHNOLOGY"], "TECHNOLOGY")
     TIMESLICE = createTuple(sets_df["TIMESLICE"], "TIMESLICE")
@@ -919,9 +915,9 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n):
 
         i += 1
         if len(TIMESLICE) < 366:
-            template_content = Report(Results, sets_df)
+            template_content = Report(Results, sets_df, names)
         else:
-            template_content = Reportshort(Results, sets_df)
+            template_content = Reportshort(Results, sets_df, names)
         
         Results['report'] = template_content
         
