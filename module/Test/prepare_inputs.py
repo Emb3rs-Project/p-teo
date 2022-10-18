@@ -22,6 +22,7 @@ def prepare_inputs(sets_df, df, input_data):
     platform_technologies= pd.DataFrame(input_platform['platform_technologies'])
     platform_storages = pd.DataFrame(input_platform['platform_storages'])
     platform_annual_emission_limit = pd.DataFrame(input_platform['platform_annual_emission_limit'])
+    #platform_emission_penalty = pd.DataFrame(input_platform['platform_emission_penalty'])
     platform_technology_to_storage = pd.DataFrame(input_platform['platform_technology_to_storage'])
     platform_budget_limit= pd.DataFrame(input_platform['platform_budget_limit'])
     
@@ -1768,7 +1769,76 @@ def prepare_inputs(sets_df, df, input_data):
     df = df.reset_index(drop=True)
     df18 = df18.reset_index(drop=True)
     df = df.append(df18, ignore_index=True)
- 
+
+ # PLATFORMEMISSIONPENALTY
+    # df12345 = platform_emission_penalty
+    # EM_list9919 = df12345["emission"].tolist()
+    # Value_list9919 = df12345["emission_penalty"].tolist()
+
+    # Assign1899 = []
+    # Assign1899e = []
+    # counter1899 = []
+    # df1899 = df.loc[df["PARAM"] == "EmissionsPenalty"]
+
+    # EM_list1899 = df1899["EMISSION"].tolist()
+
+    # Year_list1899 = df1899["YEAR"].tolist()
+    # Year_list1899d = []
+
+    # for i in Year_list1899:
+    #     if i not in Year_list1899d:
+    #         Year_list1899d.append(i)
+    # maxcounter1899 = len(Year_list1899d) 
+
+    # for j in range(0, len(EM_list9919)):
+
+    #     a1899 = int(Value_list9919[j])
+
+    #     b1899 = EM_list9919[j]
+
+    #     for y in EM_list1899:
+    #         counterstring18 = str(y)
+    #         if b1899 in y:
+    #             Assign1899.append(a1899)
+    #             Assign1899e.append(y)
+    #         elif(b1899 not in y) and (y not in EM_list170) and (counter18.count(counterstring1899) < maxcounter1899):
+    #             Assign1899.append(0)
+    #             Assign1899e.append(y)
+    #         counter1899.append(counterstring18)
+
+    # df1899["Assignment"] = Assign1899
+    # df1899["Assignmente"] = Assign1899e
+    # sum_column = df1899["Assignment"] + df1899["VALUE"]
+    # df1899["SUM"] = sum_column
+    # df1899.drop("VALUE", axis=1, inplace=True)
+    # df1899.drop("EMISSION", axis=1, inplace=True)
+    # df1899.drop("Assignment", axis=1, inplace=True)
+    # df1899.rename(columns={"SUM": "VALUE"}, inplace=True)
+    # df1899.rename(columns={"Assignmente": "EMISSION"}, inplace=True)
+    # df1899 = df1899[
+    #     [
+    #         "PARAM",
+    #         "VALUE",
+    #         "REGION",
+    #         "REGION2",
+    #         "DAYTYPE",
+    #         "EMISSION",
+    #         "FUEL",
+    #         "DAILYTIMEBRACKET",
+    #         "SEASON",
+    #         "TIMESLICE",
+    #         "STORAGE",
+    #         "MODE_OF_OPERATION",
+    #         "TECHNOLOGY",
+    #         "YEAR",
+    #     ]
+    # ]
+    # df = df.loc[df["PARAM"] != "EmissionsPenalty"]
+    # df = df.reset_index(drop=True)
+    # df1899 = df1899.reset_index(drop=True)
+    # df = df.append(df1899, ignore_index=True)
+
+
     # PLATFORMOPERATIONALLIFESTO
     if len(platform_storages) > 0:
         df468 = platform_storages
