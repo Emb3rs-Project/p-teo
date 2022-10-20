@@ -173,7 +173,7 @@ def Reportshort(Results, sets_df, names):
     AccumulatedNewCapacityplot = AccumulatedNewCapacityplot.reset_index()
     # del AccumulatedNewCapacityplot['index']
     AccumulatedNewCapacityplot = AccumulatedNewCapacityplot.droplevel(level=0, axis=1)
-    del AccumulatedNewCapacityplot["Stream1  "]
+    #del AccumulatedNewCapacityplot["Stream1  "]
     list1 = AccumulatedNewCapacityplot.columns.tolist()
     list1.remove('')
 
