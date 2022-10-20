@@ -171,9 +171,16 @@ def Reportshort(Results, sets_df, names):
     AccumulatedNewCapacity = AccumulatedNewCapacity[['VALUE', 'TECHNOLOGY', 'YEAR']]
     AccumulatedNewCapacityplot = AccumulatedNewCapacity.pivot_table(AccumulatedNewCapacity,index=['YEAR'],columns=['TECHNOLOGY'],aggfunc=np.sum)
     AccumulatedNewCapacityplot = AccumulatedNewCapacityplot.reset_index()
-    # del AccumulatedNewCapacityplot['index']
     AccumulatedNewCapacityplot = AccumulatedNewCapacityplot.droplevel(level=0, axis=1)
-    #del AccumulatedNewCapacityplot["Stream1  "]
+    streamidlistunique = []
+    for i in streamidlist:
+        if i not in streamidlistunique:
+            streamidlistunique.append(i)
+
+    for i in streamidlistunique:
+        s = str("Stream" + str(i) + "  ")
+        if s in AccumulatedNewCapacityplot.columns.tolist():
+            del AccumulatedNewCapacityplot[str(s)]
     list1 = AccumulatedNewCapacityplot.columns.tolist()
     list1.remove('')
 
