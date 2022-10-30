@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import itertools
 import warnings
-import numpy
+import numpy as np
 import itertools
 from ..src.error_handling.Validation import *
 
@@ -199,158 +199,369 @@ def prepare_inputs(sets_df, df, input_data):
     df = df.append(df1, ignore_index=True)
 
     # OAR
+#     df483 = pd.DataFrame(input_cf["technologies_cf"])
+#     Tech_list198 = df483["technology"].tolist()
+#     Value_list198 = df483["output"].tolist()
+#     Fuel_list198 = df483["output_fuel"].tolist()
+#     df3 = df.loc[df["PARAM"] == "OutputActivityRatio"]
+#     Tech_list3 = df3["TECHNOLOGY"].tolist()
+#     Tech_list3d = []
+#     Tech_list3
+#     for i in Tech_list3:
+#         if i not in Tech_list3d:
+#             Tech_list3d.append(i)
+
+#     Fuel_list3 = df3["FUEL"].tolist()
+#     Fuel_list3d = []
+
+#     for j in Fuel_list3:
+#         if j not in Fuel_list3d:
+#             Fuel_list3d.append(j)
+
+#     Year_list3 = df3["YEAR"].tolist()
+#     Year_list3d = []
+
+#     for k in Year_list3:
+#         if k not in Year_list3d:
+#             Year_list3d.append(k)
+
+#     MO_list3 = df3["MODE_OF_OPERATION"].tolist()
+#     MO_list3d = []
+
+#     for l in MO_list3:
+#         if l not in MO_list3d:
+#             MO_list3d.append(l)
+
+#     maxcounter2 = len(MO_list3d) * len(Year_list3d)
+#     maxcounter2
+#     Assign3 = []
+#     Assign3f = []
+#     Assign3t = []
+#     Assign3m = []
+#     Assign3y = []
+#     Counter = []
+#     CounterY = []
+#     identifier = []
+#     Assignedcounter = []
+#     for o in range(0, len(Tech_list198)):
+#         identifier.append(str(Fuel_list198[o] + Tech_list198[o]))
+        
+
+#     for j in range(0, len(Tech_list198)):
+#         a3 = Value_list198[j]
+#         b3 = Tech_list198[j]
+#         c3 = Fuel_list198[j]
+
+#         for x in Fuel_list3d:
+#             for w in MO_list3d:
+#                 for y in Tech_list3d:
+#                     for z in Year_list3d:
+#                         Counterstring = str(str(x) + str(y))
+#                         if ((b3) in y and (c3) in x) and (Assignedcounter.count(Counterstring) < maxcounter2):
+#                             if ((int(w) == 1)):
+#                                 Assign3.append(a3)
+#                                 Assign3f.append(x)
+#                                 Assign3m.append(w)
+#                                 Assign3t.append(y)
+#                                 Assign3y.append(z)
+#                                 Assignedcounter.append(Counterstring)
+
+#                             elif((int(w) != 1)):
+#                                 Assign3.append(0)
+#                                 Assign3f.append(x)
+#                                 Assign3m.append(w)
+#                                 Assign3t.append(y)
+#                                 Assign3y.append(z)
+#                         elif (
+#                             (b3 not in y and c3 not in x)
+#                              and (Counterstring not in identifier)
+#                             and (Counter.count(Counterstring) < maxcounter2)
+#                         ):
+#                             Assign3.append(0)
+#                             Assign3f.append(x)
+#                             Assign3m.append(w)
+#                             Assign3t.append(y)
+#                             Assign3y.append(z)
+#                         elif (
+#                             (b3 not in y or c3 not in x)
+#                             and (Counterstring not in identifier)
+#                             and Counter.count(Counterstring) < maxcounter2
+#                         ):
+#                             Assign3.append(0)
+#                             Assign3f.append(x)
+#                             Assign3m.append(w)
+#                             Assign3t.append(y)
+#                             Assign3y.append(z)
+#                         Counter.append(Counterstring)
+
+#     df3["Assignment"] = Assign3
+#     df3["Assignmentf"] = Assign3f
+#     df3["Assignmentm"] = Assign3m
+#     df3["Assignmentt"] = Assign3t
+#     df3["Assignmenty"] = Assign3y
+#     sum_column = df3["Assignment"] + df3["VALUE"]
+#     df3["SUM"] = sum_column
+#     df3.drop("VALUE", axis=1, inplace=True)
+#     df3.drop("TECHNOLOGY", axis=1, inplace=True)
+#     df3.drop("MODE_OF_OPERATION", axis=1, inplace=True)
+#     df3.drop("YEAR", axis=1, inplace=True)
+#     df3.drop("FUEL", axis=1, inplace=True)
+#     df3.drop("Assignment", axis=1, inplace=True)
+#     df3.rename(columns={"SUM": "VALUE"}, inplace=True)
+#     df3.rename(columns={"Assignmentf": "FUEL"}, inplace=True)
+#     df3.rename(columns={"Assignmentm": "MODE_OF_OPERATION"}, inplace=True)
+#     df3.rename(columns={"Assignmentt": "TECHNOLOGY"}, inplace=True)
+#     df3.rename(columns={"Assignmenty": "YEAR"}, inplace=True)
+#     df3 = df3[
+#         [
+#         "PARAM",
+#         "VALUE",
+#         "REGION",
+#         "REGION2",
+#         "DAYTYPE",
+#         "EMISSION",
+#         "FUEL",
+#         "DAILYTIMEBRACKET",
+#         "SEASON",
+#         "TIMESLICE",
+#         "STORAGE",
+#         "MODE_OF_OPERATION",
+#         "TECHNOLOGY",
+#         "YEAR",
+#     ]
+#     ]
+#     df3 = df3.reset_index(drop=True)
+#     df = df.loc[df["PARAM"] != "OutputActivityRatio"]
+#     df = df.reset_index(drop=True)
+#     df = df.append(df3, ignore_index=True)
     df483 = pd.DataFrame(input_cf["technologies_cf"])
     Tech_list198 = df483["technology"].tolist()
     Value_list198 = df483["output"].tolist()
     Fuel_list198 = df483["output_fuel"].tolist()
     df3 = df.loc[df["PARAM"] == "OutputActivityRatio"]
-    Tech_list3 = df3["TECHNOLOGY"].tolist()
-    Tech_list3d = []
-    for i in Tech_list3:
-        if i not in Tech_list3d:
-            Tech_list3d.append(i)
-
-    Fuel_list3 = df3["FUEL"].tolist()
-    Fuel_list3d = []
-
-    for j in Fuel_list3:
-        if j not in Fuel_list3d:
-            Fuel_list3d.append(j)
-
     Year_list3 = df3["YEAR"].tolist()
     Year_list3d = []
+    Region = df3["REGION"].unique()[0]
 
     for k in Year_list3:
         if k not in Year_list3d:
             Year_list3d.append(k)
-
-    MO_list3 = df3["MODE_OF_OPERATION"].tolist()
-    MO_list3d = []
-
-    for l in MO_list3:
-        if l not in MO_list3d:
-            MO_list3d.append(l)
-
-    maxcounter2 = len(MO_list3d) * len(Year_list3d)
+    Year_list3d
+    Assign3n = []
     Assign3 = []
     Assign3f = []
     Assign3t = []
     Assign3m = []
     Assign3y = []
-    Counter = []
-    CounterY = []
-    identifier = []
-    Assignedcounter = []
-    for o in range(0, len(Tech_list198)):
-        identifier.append(str(Fuel_list198[o] + Tech_list198[o]))
-        
-
+    Assign3r = []
     for j in range(0, len(Tech_list198)):
-        a3 = Value_list198[j]
-        b3 = Tech_list198[j]
-        c3 = Fuel_list198[j]
-
-        for x in Fuel_list3d:
-            for w in MO_list3d:
-                for y in Tech_list3d:
-                    for z in Year_list3d:
-                        Counterstring = str(str(x) + str(y))
-                        if ((b3) in y and (c3) in x) and (Assignedcounter.count(Counterstring) < maxcounter2):
-                            if ((int(w) == 1)):
-                                Assign3.append(a3)
-                                Assign3f.append(x)
-                                Assign3m.append(w)
-                                Assign3t.append(y)
-                                Assign3y.append(z)
-                                Assignedcounter.append(Counterstring)
-
-                            elif((int(w) != 1)):
-                                Assign3.append(0)
-                                Assign3f.append(x)
-                                Assign3m.append(w)
-                                Assign3t.append(y)
-                                Assign3y.append(z)
-                        elif (
-                            (b3 not in y and c3 not in x)
-                             and (Counterstring not in identifier)
-                            and (Counter.count(Counterstring) < maxcounter2)
-                        ):
-                            Assign3.append(0)
-                            Assign3f.append(x)
-                            Assign3m.append(w)
-                            Assign3t.append(y)
-                            Assign3y.append(z)
-                        elif (
-                            (b3 not in y or c3 not in x)
-                            and (Counterstring not in identifier)
-                            and Counter.count(Counterstring) < maxcounter2
-                        ):
-                            Assign3.append(0)
-                            Assign3f.append(x)
-                            Assign3m.append(w)
-                            Assign3t.append(y)
-                            Assign3y.append(z)
-                        Counter.append(Counterstring)
-
-    df3["Assignment"] = Assign3
-    df3["Assignmentf"] = Assign3f
-    df3["Assignmentm"] = Assign3m
-    df3["Assignmentt"] = Assign3t
-    df3["Assignmenty"] = Assign3y
-    sum_column = df3["Assignment"] + df3["VALUE"]
-    df3["SUM"] = sum_column
-    df3.drop("VALUE", axis=1, inplace=True)
-    df3.drop("TECHNOLOGY", axis=1, inplace=True)
-    df3.drop("MODE_OF_OPERATION", axis=1, inplace=True)
-    df3.drop("YEAR", axis=1, inplace=True)
-    df3.drop("FUEL", axis=1, inplace=True)
-    df3.drop("Assignment", axis=1, inplace=True)
-    df3.rename(columns={"SUM": "VALUE"}, inplace=True)
-    df3.rename(columns={"Assignmentf": "FUEL"}, inplace=True)
-    df3.rename(columns={"Assignmentm": "MODE_OF_OPERATION"}, inplace=True)
-    df3.rename(columns={"Assignmentt": "TECHNOLOGY"}, inplace=True)
-    df3.rename(columns={"Assignmenty": "YEAR"}, inplace=True)
-    df3 = df3[
-        [
-        "PARAM",
-        "VALUE",
-        "REGION",
-        "REGION2",
-        "DAYTYPE",
-        "EMISSION",
-        "FUEL",
-        "DAILYTIMEBRACKET",
-        "SEASON",
-        "TIMESLICE",
-        "STORAGE",
-        "MODE_OF_OPERATION",
-        "TECHNOLOGY",
-        "YEAR",
-    ]
-    ]
-    df3 = df3.reset_index(drop=True)
+         for z in Year_list3d:
+            Assign3r.append(Region)
+            Assign3n.append('OutputActivityRatio')
+            Assign3.append(Value_list198[j])
+            Assign3f.append(Fuel_list198[j])
+            Assign3m.append(1)
+            Assign3t.append(Tech_list198[j])
+            Assign3y.append(z)
+    OARdf = pd.DataFrame()
+    OARdf["PARAM"] = Assign3n
+    OARdf["VALUE"] = Assign3
+    OARdf["REGION"] = Assign3r
+    OARdf["FUEL"] = Assign3f
+    OARdf["MODE_OF_OPERATION"] = Assign3m
+    OARdf["TECHNOLOGY"] = Assign3t
+    OARdf["YEAR"] = Assign3y
+    OARdf = OARdf.reindex(columns=["PARAM","VALUE","REGION","REGION2","DAYTYPE","EMISSION","FUEL","DAILYTIMEBRACKET","SEASON","TIMESLICE","STORAGE","MODE_OF_OPERATION","TECHNOLOGY","YEAR"])
     df = df.loc[df["PARAM"] != "OutputActivityRatio"]
-    df = df.reset_index(drop=True)
-    df = df.append(df3, ignore_index=True)
-
-
+    df = df.append(OARdf, ignore_index=True)
 
     # IAR
+#     df482 = technologies_cf
+#     Tech_list197 = df482["technology"].tolist()
+#     Value_list197 = df482["input"].tolist()
+#     Fuel_list197 = df482["input_fuel"].tolist()
+
+#     df1256 = platform_technology_to_storage
+
+#     if len(platform_technology_to_storage) > 0:
+#         Tech_list1232 = df1256["technology"].tolist()
+#     else:
+#         Tech_list1232 = []
+
+#     df4 = df.loc[df["PARAM"] == "InputActivityRatio"]
+
+#     Tech_list1971 = []
+#     Fuel_list1971 = []
+#     Value_list1971 = []
+#     for l in range(len(Fuel_list197)):
+#         if (Fuel_list197[l] != ''):
+#             Tech_list1971.append(Tech_list197[l])
+#             Fuel_list1971.append(Fuel_list197[l])
+#             Value_list1971.append(Value_list197[l])
+
+#     Tech_list197 = Tech_list1971
+#     Value_list197 = Value_list1971
+#     Fuel_list197 = Fuel_list1971
+#     Tech_list4 = df4["TECHNOLOGY"].tolist()
+#     Tech_list4d = []
+
+#     for i in Tech_list4:
+#         if i not in Tech_list4d:
+#             Tech_list4d.append(i)
+
+#     Fuel_list4 = df4["FUEL"].tolist()
+#     Fuel_list4d = []
+
+#     for j in Fuel_list4:
+#         if j not in Fuel_list4d:
+#             Fuel_list4d.append(j)
+
+#     Year_list4 = df4["YEAR"].tolist()
+#     Year_list4d = []
+
+#     for k in Year_list4:
+#         if k not in Year_list4d:
+#             Year_list4d.append(k)
+
+#     MO_list4 = df4["MODE_OF_OPERATION"].tolist()
+#     MO_list4d = []
+
+#     for l in MO_list4:
+#         if l not in MO_list4d:
+#             MO_list4d.append(l)
+
+#     maxcounter1 = len(MO_list4d) * len(Year_list4d)
+
+#     Assign4 = []
+#     Assign4f = []
+#     Assign4t = []
+#     Assign4m = []
+#     Assign4y = []
+#     Counter = []
+#     identifier1 = []
+#     Assignedcounter1 = []
+#     for o in range(0, len(Tech_list197)):
+#         identifier1.append(str(Fuel_list197[o] + Tech_list197[o]))
+        
+
+#     for j in range(0, len(Tech_list197)):
+
+#         a4 = Value_list197[j]
+#         b4 = Tech_list197[j]
+#         c4 = Fuel_list197[j]
+
+#         for x in Fuel_list4d:
+#             for w in MO_list4d:
+#                 for y in Tech_list4d:
+#                     for z in Year_list4d:
+#                         Counterstring = str(str(x) + str(y))
+#                         if (b4 in y and c4 in x) and (Assignedcounter1.count(Counterstring) < maxcounter1):
+#                             if b4 in Tech_list1232 and int(w) == 2:
+#                             #print(str(str(x) + str(y)))
+#                                 Assign4.append(a4)
+#                                 Assign4f.append(x)
+#                                 Assign4m.append(w)
+#                                 Assign4t.append(y)
+#                                 Assign4y.append(z)
+#                                 Assignedcounter1.append(Counterstring)
+
+#                             elif b4 not in Tech_list1232 and int(w) == 2:
+#                                 #print(str(str(x) + str(y)))
+#                                 Assign4.append(0)
+#                                 Assign4f.append(x)
+#                                 Assign4m.append(w)
+#                                 Assign4t.append(y)
+#                                 Assign4y.append(z)
+
+#                             elif b4 in Tech_list1232 and int(w) == 1:
+#                                 #print(str(str(x) + str(y)))
+#                                 Assign4.append(0)
+#                                 Assign4f.append(x)
+#                                 Assign4m.append(w)
+#                                 Assign4t.append(y)
+#                                 Assign4y.append(z)
+
+#                             elif b4 not in Tech_list1232 and int(w) == 1:
+#                                 #print(str(str(x) + str(y)))
+#                                 Assign4.append(a4)
+#                                 Assign4f.append(x)
+#                                 Assign4m.append(w)
+#                                 Assign4t.append(y)
+#                                 Assign4y.append(z)
+#                                 Assignedcounter1.append(Counterstring)
+
+#                         elif (b4 not in y and c4 not in x) and (Counterstring not in identifier1) and Counter.count(
+#                             Counterstring
+#                         ) < maxcounter1:
+#                             #print(str(str(x) + str(y)))
+#                             Assign4.append(0)
+#                             Assign4f.append(x)
+#                             Assign4m.append(w)
+#                             Assign4t.append(y)
+#                             Assign4y.append(z)
+#                         elif (b4 not in y or c4 not in x) and (Counterstring not in identifier1) and Counter.count(
+#                             Counterstring
+#                         ) < maxcounter1:
+#                             #print(str(str(x) + str(y)))
+#                             Assign4.append(0)
+#                             Assign4f.append(x)
+#                             Assign4m.append(w)
+#                             Assign4t.append(y)
+#                             Assign4y.append(z)
+#                         Counter.append(Counterstring)
+
+#     df4["Assignment"] = Assign4
+#     df4["Assignmentf"] = Assign4f
+#     df4["Assignmentm"] = Assign4m
+#     df4["Assignmentt"] = Assign4t
+#     df4["Assignmenty"] = Assign4y
+#     sum_column = df4["Assignment"] + df4["VALUE"]
+#     df4["SUM"] = sum_column
+#     df4.drop("VALUE", axis=1, inplace=True)
+#     df4.drop("TECHNOLOGY", axis=1, inplace=True)
+#     df4.drop("MODE_OF_OPERATION", axis=1, inplace=True)
+#     df4.drop("YEAR", axis=1, inplace=True)
+#     df4.drop("FUEL", axis=1, inplace=True)
+#     df4.drop("Assignment", axis=1, inplace=True)
+#     df4.rename(columns={"SUM": "VALUE"}, inplace=True)
+#     df4.rename(columns={"Assignmentf": "FUEL"}, inplace=True)
+#     df4.rename(columns={"Assignmentm": "MODE_OF_OPERATION"}, inplace=True)
+#     df4.rename(columns={"Assignmentt": "TECHNOLOGY"}, inplace=True)
+#     df4.rename(columns={"Assignmenty": "YEAR"}, inplace=True)
+#     df4 = df4[
+#         [
+#             "PARAM",
+#             "VALUE",
+#             "REGION",
+#             "REGION2",
+#             "DAYTYPE",
+#             "EMISSION",
+#             "FUEL",
+#             "DAILYTIMEBRACKET",
+#             "SEASON",
+#             "TIMESLICE",
+#             "STORAGE",
+#             "MODE_OF_OPERATION",
+#             "TECHNOLOGY",
+#             "YEAR",
+#         ]
+#     ]
+#     df4 = df4.reset_index(drop=True)
+#     df = df.loc[df["PARAM"] != "InputActivityRatio"]
+#     df = df.reset_index(drop=True)
+#     df = df.append(df4, ignore_index=True)
+
     df482 = technologies_cf
     Tech_list197 = df482["technology"].tolist()
     Value_list197 = df482["input"].tolist()
     Fuel_list197 = df482["input_fuel"].tolist()
-
     df1256 = platform_technology_to_storage
-    
-    if len(df1256) > 0:
+    if len(platform_technology_to_storage) > 0:
         Tech_list1232 = df1256["technology"].tolist()
     else:
         Tech_list1232 = []
-
-
     df4 = df.loc[df["PARAM"] == "InputActivityRatio"]
-
+    Region = df4["REGION"].unique()[0]
     Tech_list1971 = []
     Fuel_list1971 = []
     Value_list1971 = []
@@ -363,19 +574,6 @@ def prepare_inputs(sets_df, df, input_data):
     Tech_list197 = Tech_list1971
     Value_list197 = Value_list1971
     Fuel_list197 = Fuel_list1971
-    Tech_list4 = df4["TECHNOLOGY"].tolist()
-    Tech_list4d = []
-
-    for i in Tech_list4:
-        if i not in Tech_list4d:
-            Tech_list4d.append(i)
-
-    Fuel_list4 = df4["FUEL"].tolist()
-    Fuel_list4d = []
-
-    for j in Fuel_list4:
-        if j not in Fuel_list4d:
-            Fuel_list4d.append(j)
 
     Year_list4 = df4["YEAR"].tolist()
     Year_list4d = []
@@ -384,133 +582,37 @@ def prepare_inputs(sets_df, df, input_data):
         if k not in Year_list4d:
             Year_list4d.append(k)
 
-    MO_list4 = df4["MODE_OF_OPERATION"].tolist()
-    MO_list4d = []
-
-    for l in MO_list4:
-        if l not in MO_list4d:
-            MO_list4d.append(l)
-
-    maxcounter1 = len(MO_list4d) * len(Year_list4d)
-
     Assign4 = []
     Assign4f = []
     Assign4t = []
     Assign4m = []
     Assign4y = []
-    Counter = []
-    identifier1 = []
-    Assignedcounter1 = []
-    for o in range(0, len(Tech_list197)):
-        identifier1.append(str(Fuel_list197[o] + Tech_list197[o]))
-        
-
+    Assign4r = []
+    Assign4n = []
     for j in range(0, len(Tech_list197)):
+         for z in Year_list4d:
+            Assign4r.append(Region)
+            Assign4n.append('InputActivityRatio')
+            Assign4.append(round(Value_list197[j], 2))
+            Assign4f.append(Fuel_list197[j])
+            if (Tech_list197[j]) in Tech_list1232:
+                Assign4m.append(2)
+            else:
+                Assign4m.append(1)
+            Assign4t.append(Tech_list197[j])
+            Assign4y.append(z)
 
-        a4 = Value_list197[j]
-        b4 = Tech_list197[j]
-        c4 = Fuel_list197[j]
-
-        for x in Fuel_list4d:
-            for w in MO_list4d:
-                for y in Tech_list4d:
-                    for z in Year_list4d:
-                        Counterstring = str(str(x) + str(y))
-                        if (b4 in y and c4 in x) and (Assignedcounter1.count(Counterstring) < maxcounter1):
-                            if b4 in Tech_list1232 and int(w) == 2:
-                            #print(str(str(x) + str(y)))
-                                Assign4.append(a4)
-                                Assign4f.append(x)
-                                Assign4m.append(w)
-                                Assign4t.append(y)
-                                Assign4y.append(z)
-                                Assignedcounter1.append(Counterstring)
-
-                            elif b4 not in Tech_list1232 and int(w) == 2:
-                                #print(str(str(x) + str(y)))
-                                Assign4.append(0)
-                                Assign4f.append(x)
-                                Assign4m.append(w)
-                                Assign4t.append(y)
-                                Assign4y.append(z)
-
-                            elif b4 in Tech_list1232 and int(w) == 1:
-                                #print(str(str(x) + str(y)))
-                                Assign4.append(0)
-                                Assign4f.append(x)
-                                Assign4m.append(w)
-                                Assign4t.append(y)
-                                Assign4y.append(z)
-
-                            elif b4 not in Tech_list1232 and int(w) == 1:
-                                #print(str(str(x) + str(y)))
-                                Assign4.append(a4)
-                                Assign4f.append(x)
-                                Assign4m.append(w)
-                                Assign4t.append(y)
-                                Assign4y.append(z)
-                                Assignedcounter1.append(Counterstring)
-
-                        elif (b4 not in y and c4 not in x) and (Counterstring not in identifier1) and Counter.count(
-                            Counterstring
-                        ) < maxcounter1:
-                            #print(str(str(x) + str(y)))
-                            Assign4.append(0)
-                            Assign4f.append(x)
-                            Assign4m.append(w)
-                            Assign4t.append(y)
-                            Assign4y.append(z)
-                        elif (b4 not in y or c4 not in x) and (Counterstring not in identifier1) and Counter.count(
-                            Counterstring
-                        ) < maxcounter1:
-                            #print(str(str(x) + str(y)))
-                            Assign4.append(0)
-                            Assign4f.append(x)
-                            Assign4m.append(w)
-                            Assign4t.append(y)
-                            Assign4y.append(z)
-                        Counter.append(Counterstring)
-
-    df4["Assignment"] = Assign4
-    df4["Assignmentf"] = Assign4f
-    df4["Assignmentm"] = Assign4m
-    df4["Assignmentt"] = Assign4t
-    df4["Assignmenty"] = Assign4y
-    sum_column = df4["Assignment"] + df4["VALUE"]
-    df4["SUM"] = sum_column
-    df4.drop("VALUE", axis=1, inplace=True)
-    df4.drop("TECHNOLOGY", axis=1, inplace=True)
-    df4.drop("MODE_OF_OPERATION", axis=1, inplace=True)
-    df4.drop("YEAR", axis=1, inplace=True)
-    df4.drop("FUEL", axis=1, inplace=True)
-    df4.drop("Assignment", axis=1, inplace=True)
-    df4.rename(columns={"SUM": "VALUE"}, inplace=True)
-    df4.rename(columns={"Assignmentf": "FUEL"}, inplace=True)
-    df4.rename(columns={"Assignmentm": "MODE_OF_OPERATION"}, inplace=True)
-    df4.rename(columns={"Assignmentt": "TECHNOLOGY"}, inplace=True)
-    df4.rename(columns={"Assignmenty": "YEAR"}, inplace=True)
-    df4 = df4[
-        [
-            "PARAM",
-            "VALUE",
-            "REGION",
-            "REGION2",
-            "DAYTYPE",
-            "EMISSION",
-            "FUEL",
-            "DAILYTIMEBRACKET",
-            "SEASON",
-            "TIMESLICE",
-            "STORAGE",
-            "MODE_OF_OPERATION",
-            "TECHNOLOGY",
-            "YEAR",
-        ]
-    ]
-    df4 = df4.reset_index(drop=True)
+    IARdf = pd.DataFrame()
+    IARdf["PARAM"] = Assign4n
+    IARdf["VALUE"] = Assign4
+    IARdf["REGION"] = Assign4r
+    IARdf["FUEL"] = Assign4f
+    IARdf["MODE_OF_OPERATION"] = Assign4m
+    IARdf["TECHNOLOGY"] = Assign4t
+    IARdf["YEAR"] = Assign4y
+    IARdf = IARdf.reindex(columns=["PARAM","VALUE","REGION","REGION2","DAYTYPE","EMISSION","FUEL","DAILYTIMEBRACKET","SEASON","TIMESLICE","STORAGE","MODE_OF_OPERATION","TECHNOLOGY","YEAR"])
     df = df.loc[df["PARAM"] != "InputActivityRatio"]
-    df = df.reset_index(drop=True)
-    df = df.append(df4, ignore_index=True)
+    df = df.append(IARdf, ignore_index=True)
     
     # CFCAPITALCOSTS
     import itertools
@@ -1053,7 +1155,6 @@ def prepare_inputs(sets_df, df, input_data):
     df499 = specified_demand_profile_cf
     df499.columns
     Fuel_list177 = df499.columns.tolist()
-    Fuel_list177
     df11 = df.loc[df["PARAM"] == "SpecifiedDemandProfile"]
     Fuel_list11 = df11["FUEL"].tolist()
     Fuel_list11d = []
@@ -1080,6 +1181,8 @@ def prepare_inputs(sets_df, df, input_data):
     Assign11f = []
     Assign11t = []
     Assign11y = []
+    Assign11r = []
+    Assign11n = []
     for j in range(0, len(Fuel_list177)):
         df1 = pd.DataFrame(df499[str(Fuel_list177[j])])
         assign8784 = df1[str(Fuel_list177[j])].tolist()
@@ -1132,67 +1235,88 @@ def prepare_inputs(sets_df, df, input_data):
 
         cols = [table[col].squeeze() for col in table]
         cols = pd.concat(cols, ignore_index=True)
-
-
-        b11 = Fuel_list177[j]
-
-        for x in Fuel_list11d:
-            for y in TS_list11d:
-                for z in Year_list11d:
-                    Counterstring = str(x)
-                    if b11 in x:
-                        Assign11.append(cols[(int(y)) - 1])
-                        Assign11f.append(x)
-                        Assign11t.append(y)
-                        Assign11y.append(z)
-                    elif (
-                        (b11 not in x)
-                        and (x not in Fuel_list177)
-                        and Counter.count(Counterstring) < maxcounter11
-                    ):
-                        # print(str(str(x) + str(y)))
-                        Assign11.append(0)
-                        Assign11f.append(x)
-                        Assign11t.append(y)
-                        Assign11y.append(z)
-                    Counter.append(Counterstring)
-    df11["Assignment"] = Assign11
-    df11["Assignmentf"] = Assign11f
-    df11["Assignmentt"] = Assign11t
-    df11["Assignmenty"] = Assign11y
-    sum_column = df11["Assignment"] + df11["VALUE"]
-    df11["SUM"] = sum_column
-    df11.drop("VALUE", axis=1, inplace=True)
-    df11.drop("TIMESLICE", axis=1, inplace=True)
-    df11.drop("YEAR", axis=1, inplace=True)
-    df11.drop("FUEL", axis=1, inplace=True)
-    df11.drop("Assignment", axis=1, inplace=True)
-    df11.rename(columns={"SUM": "VALUE"}, inplace=True)
-    df11.rename(columns={"Assignmentf": "FUEL"}, inplace=True)
-    df11.rename(columns={"Assignmentt": "TIMESLICE"}, inplace=True)
-    df11.rename(columns={"Assignmenty": "YEAR"}, inplace=True)
-    df11 = df11[
-        [
-            "PARAM",
-            "VALUE",
-            "REGION",
-            "REGION2",
-            "DAYTYPE",
-            "EMISSION",
-            "FUEL",
-            "DAILYTIMEBRACKET",
-            "SEASON",
-            "TIMESLICE",
-            "STORAGE",
-            "MODE_OF_OPERATION",
-            "TECHNOLOGY",
-            "YEAR",
-        ]
-    ]
-    df11 = df11.reset_index(drop=True)
+        for z in Year_list11d:
+            for u in range(0,len(cols)):
+                Assign11.append(cols[(int(u))])
+                Assign11t.append(u+1)
+                Assign11f.append(Fuel_list177[j])
+                Assign11y.append(z)
+                Assign11r.append(Region)
+                Assign11n.append("SpecifiedDemandProfile")
+    spdfdf = pd.DataFrame()
+    spdfdf["PARAM"] = Assign11n
+    spdfdf["VALUE"] = Assign11
+    spdfdf["REGION"] = Assign11r
+    spdfdf["TIMESLICE"] = Assign11t
+    spdfdf["FUEL"] = Assign11f
+    spdfdf["YEAR"] = Assign11y
+    spdfdf = spdfdf.reindex(columns=["PARAM","VALUE","REGION","REGION2","DAYTYPE","EMISSION","FUEL","DAILYTIMEBRACKET","SEASON","TIMESLICE","STORAGE","MODE_OF_OPERATION","TECHNOLOGY","YEAR"])
     df = df.loc[df["PARAM"] != "SpecifiedDemandProfile"]
-    df = df.reset_index(drop=True)
-    df = df.append(df11, ignore_index=True)
+    df = df.append(spdfdf, ignore_index=True)    
+
+#         b11 = Fuel_list177[j]
+
+#         for x in Fuel_list11d:
+#             for y in TS_list11d:
+#                 for z in Year_list11d:
+#                     Counterstring = str(x)
+#                     if b11 in x:
+#                         Assign11.append(cols[(int(y)) - 1])
+#                         Assign11f.append(x)
+#                         Assign11t.append(y)
+#                         Assign11y.append(z)
+#                     elif (
+#                         (b11 not in x)
+#                         and (x not in Fuel_list177)
+#                         and Counter.count(Counterstring) < maxcounter11
+#                     ):
+#                         # print(str(str(x) + str(y)))
+#                         Assign11.append(0)
+#                         Assign11f.append(x)
+#                         Assign11t.append(y)
+#                         Assign11y.append(z)
+#                     Counter.append(Counterstring)
+
+#     Assign11
+#     len(Assign11)
+#     df11["Assignment"] = Assign11
+#     df11["Assignmentf"] = Assign11f
+#     df11["Assignmentt"] = Assign11t
+#     df11["Assignmenty"] = Assign11y
+#     sum_column = df11["Assignment"] + df11["VALUE"]
+#     df11["SUM"] = sum_column
+#     df11.drop("VALUE", axis=1, inplace=True)
+#     df11.drop("TIMESLICE", axis=1, inplace=True)
+#     df11.drop("YEAR", axis=1, inplace=True)
+#     df11.drop("FUEL", axis=1, inplace=True)
+#     df11.drop("Assignment", axis=1, inplace=True)
+#     df11.rename(columns={"SUM": "VALUE"}, inplace=True)
+#     df11.rename(columns={"Assignmentf": "FUEL"}, inplace=True)
+#     df11.rename(columns={"Assignmentt": "TIMESLICE"}, inplace=True)
+#     df11.rename(columns={"Assignmenty": "YEAR"}, inplace=True)
+#     df11 = df11[
+#         [
+#             "PARAM",
+#             "VALUE",
+#             "REGION",
+#             "REGION2",
+#             "DAYTYPE",
+#             "EMISSION",
+#             "FUEL",
+#             "DAILYTIMEBRACKET",
+#             "SEASON",
+#             "TIMESLICE",
+#             "STORAGE",
+#             "MODE_OF_OPERATION",
+#             "TECHNOLOGY",
+#             "YEAR",
+#         ]
+#     ]
+#     df11 = df11.reset_index(drop=True)
+#     df11
+#     df = df.loc[df["PARAM"] != "SpecifiedDemandProfile"]
+#     df = df.reset_index(drop=True)
+#     df = df.append(df11, ignore_index=True)
 
         # CapacityFactor
     import numpy as np
@@ -1203,7 +1327,7 @@ def prepare_inputs(sets_df, df, input_data):
     # Profile prepearation
 
     df12 = df.loc[df["PARAM"] == "CapacityFactor"]
-
+    Region = df12["REGION"].unique()[0]
     Tech_list12 = df12["TECHNOLOGY"].tolist()
     Tech_list12d = []
 
@@ -1229,16 +1353,16 @@ def prepare_inputs(sets_df, df, input_data):
     Assign12ts = []
     Assign12t = []
     Assign12y = []
-    assign1 = []
-    Counter = []
+    Assign12r = []
+    Assign12n = []
 
     for j in range(0, len(Tech_list177)):
         df2 = pd.DataFrame(df500[str(Tech_list177[j])])
         Timeslice1 = len(sets_df["TIMESLICE"])
         if len(sets_df["TIMESLICE"]) == 12:
-            split1 = Timeslice / 6
+            split1 = Timeslice1 / 6
         else:
-            split1 = Timeslice / 6
+            split1 = Timeslice1 / 6
         Marker1 = 8785 / (split1)
         assign8784 = df2[str(Tech_list177[j])].tolist()
         length = 8784 - len(assign8784)
@@ -1283,68 +1407,89 @@ def prepare_inputs(sets_df, df, input_data):
         cols1 = [table1[col].squeeze() for col in table1]
         cols1 = pd.concat(cols1, ignore_index=True)
 
+        for z in Year_list12d:
+            for u in range(0,len(cols1)):
+                Assign12.append(cols1[(int(u))])
+                Assign12ts.append(u+1)
+                Assign12t.append(Tech_list177[j])
+                Assign12y.append(z)
+                Assign12r.append(Region)
+                Assign12n.append("CapacityFactor")
+    cpfdf = pd.DataFrame()
+    cpfdf["PARAM"] = Assign12n
+    cpfdf["VALUE"] = Assign12
+    cpfdf["REGION"] = Assign12r
+    cpfdf["TIMESLICE"] = Assign12ts
+    cpfdf["TECHNOLOGY"] = Assign12t
+    cpfdf["YEAR"] = Assign12y
+    cpfdf = cpfdf.reindex(columns=["PARAM","VALUE","REGION","REGION2","DAYTYPE","EMISSION","FUEL","DAILYTIMEBRACKET","SEASON","TIMESLICE","STORAGE","MODE_OF_OPERATION","TECHNOLOGY","YEAR"])
+    df = df.loc[df["PARAM"] != "CapacityFactor"]
+    df = df.append(cpfdf, ignore_index=True)
+
         # Writing dataframe
 
-        b12 = str(Tech_list177[j])
-        a12 = -1
+#         b12 = str(Tech_list177[j])
+#         a12 = -1
 
-        for x in Tech_list12d:
-            for y in TS_list12d:
-                for z in Year_list12d:
-                    Counterstring = str(x)
-                    if b12 in x:
-                        Assign12.append(cols1[(int(y)) - 1] + a12)
-                        Assign12t.append(x)
-                        Assign12ts.append(y)
-                        Assign12y.append(z)
-                    elif (
-                        (b12 not in x)
-                        and (x not in Tech_list177)
-                        and Counter.count(Counterstring) < maxcounter12
-                    ):
-                        Assign12.append(0)
-                        Assign12t.append(x)
-                        Assign12ts.append(y)
-                        Assign12y.append(z)
-                    Counter.append(Counterstring)
-    df12["Assignment"] = Assign12
-    df12["Assignmentt"] = Assign12t
-    df12["Assignmentts"] = Assign12ts
-    df12["Assignmenty"] = Assign12y
-    sum_column = df12["Assignment"] + df12["VALUE"]
-    df12["SUM"] = sum_column
-    df12.drop("VALUE", axis=1, inplace=True)
-    df12.drop("TIMESLICE", axis=1, inplace=True)
-    df12.drop("TECHNOLOGY", axis=1, inplace=True)
-    df12.drop("YEAR", axis=1, inplace=True)
-    df12.drop("Assignment", axis=1, inplace=True)
-    df12.rename(columns={"SUM": "VALUE"}, inplace=True)
-    df12.rename(columns={"Assignmentt": "TECHNOLOGY"}, inplace=True)
-    df12.rename(columns={"Assignmentts": "TIMESLICE"}, inplace=True)
-    df12.rename(columns={"Assignmenty": "YEAR"}, inplace=True)
-    df12 = df12[
-        [
-            "PARAM",
-            "VALUE",
-            "REGION",
-            "REGION2",
-            "DAYTYPE",
-            "EMISSION",
-            "FUEL",
-            "DAILYTIMEBRACKET",
-            "SEASON",
-            "TIMESLICE",
-            "STORAGE",
-            "MODE_OF_OPERATION",
-            "TECHNOLOGY",
-            "YEAR",
-        ]
-    ]
-    df12 = df12.reset_index(drop=True)
-    df12
-    df = df.loc[df["PARAM"] != "CapacityFactor"]
-    df = df.reset_index(drop=True)
-    df = df.append(df12, ignore_index=True)
+#         for x in Tech_list12d:
+#             for y in TS_list12d:
+#                 for z in Year_list12d:
+#                     Counterstring = str(x)
+#                     if b12 in x:
+#                         Assign12.append(cols1[(int(y)) - 1] + a12)
+#                         Assign12t.append(x)
+#                         Assign12ts.append(y)
+#                         Assign12y.append(z)
+#                     elif (
+#                         (b12 not in x)
+#                         and (x not in Tech_list177)
+#                         and Counter.count(Counterstring) < maxcounter12
+#                     ):
+#                         Assign12.append(0)
+#                         Assign12t.append(x)
+#                         Assign12ts.append(y)
+#                         Assign12y.append(z)
+#                     Counter.append(Counterstring)
+#     Assign12
+#     len(df12)
+#     df12["Assignment"] = Assign12
+#     df12["Assignmentt"] = Assign12t
+#     df12["Assignmentts"] = Assign12ts
+#     df12["Assignmenty"] = Assign12y
+#     sum_column = df12["Assignment"] + df12["VALUE"]
+#     df12["SUM"] = sum_column
+#     df12.drop("VALUE", axis=1, inplace=True)
+#     df12.drop("TIMESLICE", axis=1, inplace=True)
+#     df12.drop("TECHNOLOGY", axis=1, inplace=True)
+#     df12.drop("YEAR", axis=1, inplace=True)
+#     df12.drop("Assignment", axis=1, inplace=True)
+#     df12.rename(columns={"SUM": "VALUE"}, inplace=True)
+#     df12.rename(columns={"Assignmentt": "TECHNOLOGY"}, inplace=True)
+#     df12.rename(columns={"Assignmentts": "TIMESLICE"}, inplace=True)
+#     df12.rename(columns={"Assignmenty": "YEAR"}, inplace=True)
+#     df12 = df12[
+#         [
+#             "PARAM",
+#             "VALUE",
+#             "REGION",
+#             "REGION2",
+#             "DAYTYPE",
+#             "EMISSION",
+#             "FUEL",
+#             "DAILYTIMEBRACKET",
+#             "SEASON",
+#             "TIMESLICE",
+#             "STORAGE",
+#             "MODE_OF_OPERATION",
+#             "TECHNOLOGY",
+#             "YEAR",
+#         ]
+#     ]
+#     df12 = df12.reset_index(drop=True)
+#     df12
+#     df = df.loc[df["PARAM"] != "CapacityFactor"]
+#     df = df.reset_index(drop=True)
+#     df = df.append(df12, ignore_index=True)
 
     # PLATFORMAVAILABILITYFACTOR
     df472 = platform_technologies

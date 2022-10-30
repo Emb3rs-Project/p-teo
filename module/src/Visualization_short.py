@@ -67,9 +67,14 @@ def Reportshort(Results, sets_df, names):
                 elif x.endswith(','.join(["sou%d" % i ])) is True:
                     Assignt1.append('stream')
             if "sou" or "sink" in x:
+                res = re.findall('(\d+|[A-Za-z]+)', str(x))
                 for i in streamidlistd:
-                    if(','.join(["str%d" % i ])) in x:
-                        Assign4.append(','.join(["Stream%d" % i ]))
+                        if len(res) > 1 and res[0] != 'str':
+                            if(','.join(["%d" % i ])) == str(res[3]):
+                                Assign4.append(','.join(["Stream%d" % i ]))
+                        elif len(res) > 1 and res[0] == 'str':
+                            if(','.join(["%d" % i ])) == str(res[1]):
+                                Assign4.append(','.join(["Stream%d" % i ]))
             else:
                 Assign4.append('')
             for i in streamidlistd:
@@ -222,8 +227,9 @@ def Reportshort(Results, sets_df, names):
 
     for x in Techlist:
         for i in names:
-            if names[str(i)] in x:
+            if str(str(names[str(i)])+ ' ') in x:
                     Assign5.append(names[str(i)])          
+
     AccumulatedNewCapacitySource['Classification'] = Assign5
     ancsou = []    
     for i in names:
@@ -271,7 +277,7 @@ def Reportshort(Results, sets_df, names):
     Assign7 = []
     for x in Techlist:
         for i in names:
-            if names[str(i)] in x:
+            if str(str(names[str(i)])+ ' ') in x:
                 Assign7.append(names[str(i)]) 
     AccumulatedNewCapacitySink['Classification'] = Assign7
 
@@ -396,9 +402,14 @@ def Reportshort(Results, sets_df, names):
                 elif x.endswith(','.join(["sou%d" % i ])) is True:
                     Assignemt1.append('stream')
             if "sou" or "sink" in x:
+                res = re.findall('(\d+|[A-Za-z]+)', str(x))
                 for i in streamidlistd:
-                    if(','.join(["str%d" % i ])) in x:
-                        Assignem4.append(','.join(["Stream%d" % i ]))
+                        if len(res) > 1 and res[0] != 'str':
+                            if(','.join(["%d" % i ])) == str(res[3]):
+                                Assignem4.append(','.join(["Stream%d" % i ]))
+                        elif len(res) > 1 and res[0] == 'str':
+                            if(','.join(["%d" % i ])) == str(res[1]):
+                                Assignem4.append(','.join(["Stream%d" % i ]))
             else:
                 Assignem4.append('')
             
@@ -541,7 +552,7 @@ def Reportshort(Results, sets_df, names):
     Assignem5 = []
     for x in Techlist:
         for i in names:
-                if names[str(i)] in x:
+                if str(str(names[str(i)])+ ' ') in x:
                     Assignem5.append(names[str(i)]) 
 
     AnnualTechnologyEmissionSource['Classification'] = Assignem5
@@ -592,7 +603,7 @@ def Reportshort(Results, sets_df, names):
 
     for x in Techlist:
         for i in names:
-                if names[str(i)] in x:
+                if str(str(names[str(i)])+ ' ') in x:
                     Assign7em.append(names[str(i)])
 
     AnnualTechnologyEmissionSink['Classification'] = Assign7em
@@ -689,9 +700,14 @@ def Reportshort(Results, sets_df, names):
                 elif x.endswith(','.join(["sou%d" % i ])) is True:
                     AssignCIt1.append('stream')
             if "sou" or "sink" in x:
+                res = re.findall('(\d+|[A-Za-z]+)', str(x))
                 for i in streamidlistd:
-                    if(','.join(["str%d" % i ])) in x:
-                        AssignCI4.append(','.join(["Stream%d" % i ]))
+                        if len(res) > 1 and res[0] != 'str':
+                            if(','.join(["%d" % i ])) == str(res[3]):
+                                AssignCI4.append(','.join(["Stream%d" % i ]))
+                        elif len(res) > 1 and res[0] == 'str':
+                            if(','.join(["%d" % i ])) == str(res[1]):
+                                AssignCI4.append(','.join(["Stream%d" % i ]))
             else:
                 AssignCI4.append('')
             for i in streamidlistd:
@@ -831,7 +847,7 @@ def Reportshort(Results, sets_df, names):
 
     for x in Techlist:
         for i in names:
-                if names[str(i)] in x:
+                if str(str(names[str(i)])+ ' ') in x:
                     AssignCI5.append(names[str(i)])
     CapitalInvestmentSource['Classification'] = AssignCI5
 
@@ -874,7 +890,7 @@ def Reportshort(Results, sets_df, names):
 
     for x in Techlist:
         for i in names:
-                if names[str(i)] in x:
+                if str(str(names[str(i)])+ ' ') in x:
                     Assign7CIsi.append(names[str(i)])
     CapitalInvestmentSink['Classification'] = Assign7CIsi
 
@@ -959,9 +975,14 @@ def Reportshort(Results, sets_df, names):
                     elif x.endswith(','.join(["sou%d" % i ])) is True:
                         AssignOC1t.append('stream')
             if "sou" or "sink" in x:
+                res = re.findall('(\d+|[A-Za-z]+)', str(x))
                 for i in streamidlistd:
-                    if(','.join(["str%d" % i ])) in x:
-                        AssignOC4.append(','.join(["Stream%d" % i ]))
+                        if len(res) > 1 and res[0] != 'str':
+                            if(','.join(["%d" % i ])) == str(res[3]):
+                                AssignOC4.append(','.join(["Stream%d" % i ]))
+                        elif len(res) > 1 and res[0] == 'str':
+                            if(','.join(["%d" % i ])) == str(res[1]):
+                                AssignOC4.append(','.join(["Stream%d" % i ]))
             else:
                 AssignOC4.append('')
 
@@ -1098,7 +1119,7 @@ def Reportshort(Results, sets_df, names):
 
     for x in Techlist:
         for i in names:
-            if names[str(i)] in x:
+            if str(str(names[str(i)])+ ' ') in x:
                 AssignOC5.append(names[str(i)])
     OperatingCostSource['Classification'] = AssignOC5
 
@@ -1142,7 +1163,7 @@ def Reportshort(Results, sets_df, names):
 
     for x in Techlist:
         for i in names:
-            if names[str(i)] in x:
+            if str(str(names[str(i)])+ ' ') in x:
                 Assign7OCsi.append(names[str(i)])
     OperatingCostSink['Classification'] = Assign7OCsi
 
@@ -1207,9 +1228,14 @@ def Reportshort(Results, sets_df, names):
                 elif x.endswith(','.join(["sou%d" % i ])) is True:
                     AssignPA1t.append('stream')
             if "sou" or "sink" in x:
+                res = re.findall('(\d+|[A-Za-z]+)', str(x))
                 for i in streamidlistd:
-                    if(','.join(["str%d" % i ])) in x:
-                        AssignPA4.append(','.join(["Stream%d" % i ]))
+                        if len(res) > 1 and res[0] != 'str':
+                            if(','.join(["%d" % i ])) == str(res[3]):
+                                AssignPA4.append(','.join(["Stream%d" % i ]))
+                        elif len(res) > 1 and res[0] == 'str':
+                            if(','.join(["%d" % i ])) == str(res[1]):
+                                AssignPA4.append(','.join(["Stream%d" % i ]))
             else:
                 AssignPA4.append('')
             for i in streamidlistd:
@@ -1398,7 +1424,7 @@ def Reportshort(Results, sets_df, names):
     for i in names:
         eachsouPAlist = ['']
         for x in list4PAplotsource:
-            if ((names[i])) in x:
+            if str(str(names[str(i)])+ ' ') in x:
                 eachsouPAlist.append(x)  
         if len(eachsouPAlist) > 1:
             productionannualeachsourceplot = productionannualsourceplot[eachsouPAlist]
@@ -1429,7 +1455,7 @@ def Reportshort(Results, sets_df, names):
     for i in names:
         eachsinkPAlist = ['']
         for x in list4PAplotsink:
-            if (names[i]) in x:
+            if str(str(names[str(i)])+ ' ') in x:
                 eachsinkPAlist.append(x)  
         if len(eachsinkPAlist) > 1:
             productionannualeachsinkplot = productionannualsinkplot[eachsinkPAlist]
@@ -1497,7 +1523,16 @@ def Reportshort(Results, sets_df, names):
     productionannualsourcepieplot = pd.DataFrame()
     productionannualsourcepieplot['Total Production'] =  pievalflatlistsource
     productionannualsourcepieplot['Sources'] =  piecollistsource
-    productionannualsourcepieplot
+    pienamelist = []
+    for x in productionannualsourcepieplot['Sources']:
+        for j in names:
+            i = int(j)
+            if (','.join(["Source%d " % i ])) == str(str(x) + ' '):
+                pienamelist.append(names[j])
+    productionannualsourcepieplot['Sourcesnew'] = pienamelist
+    del productionannualsourcepieplot['Sources']
+    productionannualsourcepieplot.rename(columns={"Sourcesnew": "Sources"}, inplace=True)
+    productionannualsourcepieplot.rename(columns={"Sourcesnew": "Sources"}, inplace=True)
     figpiesource = px.pie(productionannualsourcepieplot, values='Total Production', names='Sources', title='Share of excess heat generation')
 
     productionannualsinkpie = productionannualpie.loc[productionannualpie['Class'] == 'Sink']
@@ -1518,9 +1553,17 @@ def Reportshort(Results, sets_df, names):
             pievalflatlistsink.append(item)
     productionannualsinkpieplot = pd.DataFrame()
     productionannualsinkpieplot['Total Production'] =  pievalflatlistsink
-    productionannualsinkpieplot['Sources'] =  piecollistsink
-    productionannualsinkpieplot
-    figpiesink = px.pie(productionannualsinkpieplot, values='Total Production', names='Sources', title='Share of excess heat consumption')    
+    productionannualsinkpieplot['Sinks'] =  piecollistsink
+    pienamelist = []
+    for x in productionannualsinkpieplot['Sinks']:
+        for j in names:
+            i = int(j)
+            if (','.join(["Sink%d " % i ])) == str(str(x) + ' '):
+                pienamelist.append(names[j])
+    productionannualsinkpieplot['Sinksnew'] = pienamelist
+    del productionannualsinkpieplot['Sinks']
+    productionannualsinkpieplot.rename(columns={"Sinksnew": "Sinks"}, inplace=True)
+    figpiesink = px.pie(productionannualsinkpieplot, values='Total Production', names='Sinks', title='Share of excess heat consumption')
 
         # Accumulated new capacity table
 
