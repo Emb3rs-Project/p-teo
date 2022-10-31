@@ -1235,8 +1235,8 @@ def prepare_inputs(sets_df, df, input_data):
 
         cols = [table[col].squeeze() for col in table]
         cols = pd.concat(cols, ignore_index=True)
-        for z in Year_list11d:
-            for u in range(0,len(cols)):
+        for u in range(0,len(cols)):
+            for z in Year_list11d:
                 Assign11.append(cols[(int(u))])
                 Assign11t.append(u+1)
                 Assign11f.append(Fuel_list177[j])
