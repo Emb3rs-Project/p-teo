@@ -1653,7 +1653,13 @@ def Reportshort(Results, sets_df, names):
     productionannualsourceplot = productionannualsourceplot.rename_axis(None, axis=1)
     productionannualsourceplot = productionannualsourceplot.round(decimals=2)
     productionannualsourceplot.rename(columns={"": "YEAR"}, inplace=True)
-    productionannualsourceplotdf1 =  productionannualsourceplot.to_html(index=False, col_space= 100, justify='center')
+    productionannualsourceplot1 = productionannualsourceplot.transpose()
+    productionannualsourceplot1.columns = productionannualsourceplot1.iloc[0]
+    productionannualsourceplot1.reset_index(inplace=True)
+    productionannualsourceplot1 = productionannualsourceplot1.rename(columns = {'index':'Technology'})
+    productionannualsourceplot1 = productionannualsourceplot1.drop(0)
+    productionannualsourceplot1 = productionannualsourceplot1.rename_axis(None, axis=1)
+    productionannualsourceplotdf1 =  productionannualsourceplot1.to_html(index=False, col_space= 100, justify='center')
     productionannualsourcetable = productionannualsourceplotdf1.replace('<tr>', '<tr align="center">')
 
     # Production annual sinks table
@@ -1662,16 +1668,24 @@ def Reportshort(Results, sets_df, names):
     productionannualsinkplot = productionannualsinkplot.rename_axis(None, axis=1)
     productionannualsinkplot = productionannualsinkplot.round(decimals=2)
     productionannualsinkplot.rename(columns={"": "YEAR"}, inplace=True)
-    productionannualsinkplotdf1 =  productionannualsinkplot.to_html(index=False, col_space= 100, justify='center')
+    productionannualsinkplot1 = productionannualsinkplot.transpose()
+    productionannualsinkplot1.columns = productionannualsinkplot1.iloc[0]
+    productionannualsinkplot1.reset_index(inplace=True)
+    productionannualsinkplot1 = productionannualsinkplot1.rename(columns = {'index':'Technology'})
+    productionannualsinkplot1 = productionannualsinkplot1.drop(0)
+    productionannualsinkplot1 = productionannualsinkplot1.rename_axis(None, axis=1)
+    productionannualsinkplotdf1 =  productionannualsinkplot1.to_html(index=False, col_space= 100, justify='center')
     productionannualsinkplottable = productionannualsinkplotdf1.replace('<tr>', '<tr align="center">')
 
     #Total excess heat production
 
-    productionannualsourcepie.reset_index(drop=True)
-    productionannualsourcepie.reset_index(drop=True, inplace=True)
-    productionannualsourcepie = productionannualsourcepie.rename_axis(None, axis=1)
-    productionannualsourcepie = productionannualsourcepie.round(decimals=2)
-    productionannualsourcepiedf1 =  productionannualsourcepie.to_html(index=False, col_space= 100, justify='center')
+    productionannualsourcepieplot.reset_index(drop=True)
+    productionannualsourcepieplot.reset_index(drop=True, inplace=True)
+    productionannualsourcepieplot = productionannualsourcepieplot.rename_axis(None, axis=1)
+    productionannualsourcepieplot = productionannualsourcepieplot.round(decimals=2)
+    productionannualsourcepieplot.rename(columns={"Total Production": "Total production in kWh"}, inplace=True)
+    productionannualsourcepieplot.rename(columns={"Sources": "Source"}, inplace=True)
+    productionannualsourcepiedf1 =  productionannualsourcepieplot.to_html(index=False, col_space= 100, justify='center')
     productionannualsourcepietable = productionannualsourcepiedf1.replace('<tr>', '<tr align="center">')
 
 
@@ -1682,6 +1696,7 @@ def Reportshort(Results, sets_df, names):
     productionannualsinkpieplot = productionannualsinkpieplot.rename_axis(None, axis=1)
     productionannualsinkpieplot = productionannualsinkpieplot.round(decimals=2)
     productionannualsinkpieplot.rename(columns={"Total Production": "Total Consumption in kWh"}, inplace=True)
+    productionannualsinkpieplot.rename(columns={"Sinks": "Sink"}, inplace=True)
     productionannualsinkpieplotdf1 =  productionannualsinkpieplot.to_html(index=False, col_space= 100, justify='center')
     productionannualsinkpieplottable = productionannualsinkpieplotdf1.replace('<tr>', '<tr align="center">')
     
