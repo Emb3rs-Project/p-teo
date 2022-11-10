@@ -12,9 +12,9 @@ from .kb import kb
 
 def run_build_model(input_data):
 
-    sets_df, df, default_df, names = _prepare_inputs(input_data)
+    sets_df, df, default_df, names, solver = _prepare_inputs(input_data)
 
-    model_output = buildmodel(sets_df, df, default_df, None, 0, names)
+    model_output = buildmodel(sets_df, df, default_df, None, 0, names, solver)
 
     return model_output
 
@@ -25,6 +25,7 @@ def _prepare_inputs(input_data):
     cf_module = input_data["cf-module"]
     platform = input_data["platform"]
     names = gis_module["names"]
+    solver = platform['solver']
 
     default_df = create_parameters_default_dataframe(kb["parameters_default"])
     jsset = platform["platform_sets"]
@@ -37,7 +38,7 @@ def _prepare_inputs(input_data):
 
     df = prepare_inputs(sets_df, df, input_data)
 
-    return sets_df, df, default_df, names
+    return sets_df, df, default_df, names, solver
 
 
 def _prepare_outputs(output_data):

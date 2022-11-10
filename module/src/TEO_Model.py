@@ -11,10 +11,19 @@ from .Visualization import *
 from .Visualization_short import *
 import gurobipy as gp
 
-def buildmodel(sets_df, df, defaults_df, mcs_df, n, names):
+def buildmodel(sets_df, df, defaults_df, mcs_df, n, names, solver):
 
     modelName = "teo_model"
 
+    # ----------------------------------------------------------------------------------------------------------------------
+    #    SOLVER
+    # ----------------------------------------------------------------------------------------------------------------------
+    path_to_scip = r'C:\Program Files\SCIPOptSuite 8.0.2\bin\scip.exe' #needs to be updated
+    
+    if solver=='SCIP':
+        modelsolver = pulp.SCIP_CMD(path=path_to_scip)
+    else:
+        modelsolver = pulp.GUROBI()
     # ----------------------------------------------------------------------------------------------------------------------
     #    SETS (CHANGED FOR NEW FORMAT)
     # ----------------------------------------------------------------------------------------------------------------------
