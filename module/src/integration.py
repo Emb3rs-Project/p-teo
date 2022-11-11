@@ -25,7 +25,7 @@ def _prepare_inputs(input_data):
     cf_module = input_data["cf-module"]
     platform = input_data["platform"]
     names = gis_module["names"]
-    solver = platform['solver']
+    solver = platform.get("solver")
 
     default_df = create_parameters_default_dataframe(kb["parameters_default"])
     jsset = platform["platform_sets"]
