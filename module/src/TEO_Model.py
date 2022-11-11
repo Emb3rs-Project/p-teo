@@ -1,4 +1,5 @@
 import os
+import sys
 import datetime as dt
 import logging
 import numpy as np
@@ -11,23 +12,22 @@ from .Visualization import *
 from .Visualization_short import *
 import gurobipy as gp
 
-def buildmodel(sets_df, df, defaults_df, mcs_df, n, names, solver):
 
+def buildmodel(sets_df, df, defaults_df, mcs_df, n, names, solver):
     modelName = "teo_model"
 
     # ----------------------------------------------------------------------------------------------------------------------
     #    SOLVER
     # ----------------------------------------------------------------------------------------------------------------------
-    path_to_scip = r'C:\Program Files\SCIPOptSuite 8.0.2\bin\scip.exe' #needs to be updated
-    
-    if solver=='SCIP':
-        modelsolver = pulp.SCIP_CMD(path=path_to_scip)
+    if solver == 'SCIP':
+        # executable = r'C:\Program Files\SCIPOptSuite 8.0.2\bin\scip.exe'
+        executable = f"{os.path.dirname(sys.executable)}/scip"
+        solver = pulp.SCIP_CMD(path=executable)
     else:
-        modelsolver = pulp.GUROBI()
+        solver = pulp.GUROBI()
     # ----------------------------------------------------------------------------------------------------------------------
     #    SETS (CHANGED FOR NEW FORMAT)
     # ----------------------------------------------------------------------------------------------------------------------
-    solver = pulp.GUROBI()
     YEAR = createTuple(sets_df["YEAR"], "YEAR")
     TECHNOLOGY = createTuple(sets_df["TECHNOLOGY"], "TECHNOLOGY")
     TIMESLICE = createTuple(sets_df["TIMESLICE"], "TIMESLICE")
