@@ -22,7 +22,7 @@ dependencies:
   - pip:
     - amply==0.1.4
     - docutils==0.17.1
-    - pulp==2.4
+    - pulp==2.6.0
     - pyparsing==2.4.7
     - Jinja2==3.0.3
     - json5==0.9.6
