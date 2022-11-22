@@ -118,7 +118,11 @@ def prepare_inputs(sets_df, df, input_data):
     Assign1 = []
 
     for i in range(0, len(region_list2233)):
-        a = budget_list199[i]
+        if input_gis['cost_in_kw'] > 100000:
+        
+            a = budget_list199[i] * 100000
+        else:
+            a = budget_list199[i]
         b = -9999999999 + a
         if  a != 0:
             Assign1.append(b)
