@@ -688,8 +688,18 @@ def CreateResults(res_df, sets_df):
     
     ProductionByTechnologyMM = {'ProductionByTechnologyMM' : ProductionByTechnologyMM1}
 
+    StorageLosses = res_df[res_df['NAME'] == str('StorageLosses')]
+    StorageLosses1 = StorageLosses.dropna(axis=1, how='all')
+    StorageLossestable = pd.pivot_table(StorageLosses1,index=['STORAGE'],columns=['YEAR'],values=['VALUE'],aggfunc=np.average)
+    StorageLossestable.columns = StorageLossestable.columns.droplevel(level = 0)
+    StorageLossestable = StorageLossestable.reset_index()
+    for i in StorageLossestable.columns:
+        if i != 'STORAGE':
+            StorageLossestable[str(i)] = (StorageLossestable[str(i)]/(8784/len(sets_df['TIMESLICE']['TIMESLICE']))).round(2)
+    StorageLossestable = StorageLossestable.rename_axis(None, axis = 1)
+    StorageLosses =  {'StorageLosses' : StorageLossestable}
     Output = {}
-    Output = {**TEO_Results_NZ, **TEO_Results_Z, **ex_capacities, **ProductionByTechnologyMM}
+    Output = {**TEO_Results_NZ, **TEO_Results_Z, **ex_capacities, **ProductionByTechnologyMM, **StorageLosses}
 
 
     TEO_Results = {}
