@@ -19,12 +19,15 @@ dependencies:
   - setuptools=52.0.0
   - wheel=0.36.2
   - xlrd=2.0.1
+  - pyscipopt=4.2.0
   - pip:
     - amply==0.1.4
     - docutils==0.17.1
-    - pulp==2.6.0
+#    - pulp==2.6.0
+    - git+https://github.com/coin-or/pulp
     - pyparsing==2.4.7
     - Jinja2==3.0.3
     - json5==0.9.6
     - gurobipy==9.5.1
     - pydantic==1.9.0
+    - highspy

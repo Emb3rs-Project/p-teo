@@ -19,10 +19,14 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n, names, solver):
     # ----------------------------------------------------------------------------------------------------------------------
     #    SOLVER
     # ----------------------------------------------------------------------------------------------------------------------
+    executable_path = os.path.dirname(sys.executable)
     if solver == 'SCIP':
         # executable = r'C:\Program Files\SCIPOptSuite 8.0.2\bin\scip.exe'
-        executable = f"{os.path.dirname(sys.executable)}/scip"
+        executable = f"{executable_path}/scip"
         solver = pulp.SCIP_CMD(path=executable)
+    elif solver == 'HIGHS':
+        executable = f"{executable_path}/highs"
+        solver = pulp.HiGHS_CMD(path=executable)
     else:
         solver = pulp.GUROBI()
     # ----------------------------------------------------------------------------------------------------------------------
