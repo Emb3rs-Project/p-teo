@@ -927,11 +927,11 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n, names, solver):
         del model  # Delete model
 
         i += 1
-        if len(TIMESLICE) < 366:
+        if len(TIMESLICE) < 367:
             template_content = Report(Results, sets_df, names)
         else:
             template_content = Reportshort(Results, sets_df, names)
         
         Results['report'] = template_content
         
-        return Results
+        return Resultss
