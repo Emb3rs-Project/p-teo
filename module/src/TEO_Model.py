@@ -901,7 +901,7 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n, names, solver):
         
         Results = {}
 
-        if str(pulp.LpStatus[model.status]) == "Optimal":
+        if str(pulp.LpStatus[model.status]) != "Infeasible":
             logging.info(f"\t{dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\t"
                          f"The optimal solution found a cost value of "
                          f"{round(model.objective.value(), 2)}")
