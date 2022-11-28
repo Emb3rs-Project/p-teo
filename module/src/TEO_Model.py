@@ -934,4 +934,4 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n, names, solver):
         
         Results['report'] = template_content
         
-        return Resultss
+        return Results
