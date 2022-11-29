@@ -1991,7 +1991,6 @@ def Report(Results, sets_df, names):
     AccumulatedNewCapacitydf = AccumulatedNewCapacitydf.transpose()
     AccumulatedNewCapacitydf = AccumulatedNewCapacitydf.round(decimals=2)
     AccumulatedNewCapacitydf.reset_index(inplace=True)
-    AccumulatedNewCapacitydf = AccumulatedNewCapacitydf.drop(0)
     AccumulatedNewCapacitydf1 = AccumulatedNewCapacitydf.to_html(index=False, col_space= 100, justify='center')
     AccumulatedNewCapacitytable = AccumulatedNewCapacitydf1.replace('<tr>', '<tr align="center">')
 
