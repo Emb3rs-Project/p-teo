@@ -447,7 +447,7 @@ def create_market_results(ProductionByTechnology, sets_df):
 
     return (ProductionByTechnologyMM)
 
-def CreateResults(res_df, sets_df):
+def CreateResults(res_df, sets_df, df):
      
     sets_df = sets_df
     Names_z1 = ['DiscountedCapitalInvestmentByTechnology', 'DiscountedCapitalInvestmentByStorage', 'DiscountedSalvageValueByTechnology', 'DiscountedSalvageValueByStorage', 'VariableOMCost', 'TotalDiscountedFixedOperatingCost', 'StorageLevelTimesliceStart']
@@ -700,10 +700,21 @@ def CreateResults(res_df, sets_df):
     else:
         StorageLossestable = pd.DataFrame()
     StorageLosses =  {'StorageLosses' : StorageLossestable}
+
+    fixeddf = df.loc[df["PARAM"] == "FixedCost"]
+    fixeddf = fixeddf[["PARAM", "VALUE", "TECHNOLOGY"]]
+    nameslistfixed = []
+    for i in range(0, len(fixeddf)):
+        nameslistfixed.append('FixedOMCost')
+    del fixeddf['PARAM']
+    fixeddf['NAME'] = nameslistfixed
+    fixeddf = fixeddf[["NAME", "TECHNOLOGY", "VALUE"]]
+    fixeddfdict = {'FixedOMCost' : fixeddf}    
+
     Output = {}
-    Output = {**TEO_Results_NZ, **TEO_Results_Z, **ex_capacities, **ProductionByTechnologyMM, **StorageLosses}
+    Output = {**TEO_Results_NZ, **TEO_Results_Z, **ex_capacities, **ProductionByTechnologyMM, **StorageLosses, **fixeddfdict}
 
-
+    
     TEO_Results = {}
 
     for key in Output.keys():
