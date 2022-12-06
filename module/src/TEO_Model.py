@@ -914,7 +914,7 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n, names, solver):
             logging.info(f"\t{dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\t"
                          f"Results are saved temporarily.")
             
-            Results = CreateResults(res_df, sets_df)
+            Results = CreateResults(res_df, sets_df, df)
         else:
             raise Exception (ModuleRuntimeException(
               code= '1',                      # HELP MD
