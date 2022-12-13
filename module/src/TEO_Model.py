@@ -11,6 +11,12 @@ from .error_handling.module_runtime_exception import ModuleRuntimeException
 from .Visualization import *
 from .Visualization_short import *
 import gurobipy as gp
+try:
+    from copt_pulp import *
+    COPT_INSTALLED = True
+except ModuleNotFoundError:
+    COPT_INSTALLED = False
+    print("COPT not installed in this environment")
 
 
 def buildmodel(sets_df, df, defaults_df, mcs_df, n, names, solver):
@@ -27,6 +33,8 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n, names, solver):
     elif solver == 'HIGHS':
         executable = f"{executable_path}/highs"
         solver = pulp.HiGHS_CMD(path=executable)
+    elif solver == 'COPT' and COPT_INSTALLED:
+        solver = COPT_CMD()
     else:
         solver = pulp.GUROBI()
     # ----------------------------------------------------------------------------------------------------------------------
