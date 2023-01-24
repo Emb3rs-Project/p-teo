@@ -326,77 +326,87 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_
     append_df2.insert(0, 'number', ID)
     append_df2.insert(0, 'classification_type', classification)
     append_df2.insert(0, 'source_sink', '')
-
-    dfsink = append_df2.loc[append_df2['classification_type'] == 'sink']
-    dfsource = append_df2.loc[append_df2['classification_type'] == 'source']
-
-    sinklist = dfsink.columns.tolist()
-    sinklist.remove('number')
-    sinklist.remove('classification_type')
-    sinklist.remove('source_sink')
-    sourcelist = dfsource.columns.tolist()
-    sourcelist.remove('number')
-    sourcelist.remove('classification_type')
-    sourcelist.remove('source_sink')
-    sinksumlist = []
-    sourcesumlist = []
-    for i in sinklist:
-        sinksumlist.append(dfsink[i].sum())
-    for i in sourcelist:
-        sourcesumlist.append(dfsource[i].sum())
-    sourcesumlist
-
-    difflist = []
-
-    for i in range(0,len(sinksumlist)):
-        difflist.append(sourcesumlist[i] - sinksumlist[i])
-    difflist
-
-    chargelist = []
-    dischargelist = []
-
-    for i in difflist:
-        if i >= 0:
-            chargelist.append(i)
-            dischargelist.append(0)
-        elif i < 0: 
-            dischargelist.append((i) * -1)
-            chargelist.append(0)
-    dfcharge = pd.DataFrame(chargelist)
-    dfdischarge = pd.DataFrame(dischargelist)
-
-    dfcharge = dfcharge.transpose()
-    dfdischarge = dfdischarge.transpose()
-    chargeID = [-1]
-    dischargeID = [-2]
-    chargeclass = ['sink']
-    dischargeclass = ['source']
-
-    dfcharge.insert(0, 'number', chargeID)
-    dfcharge.insert(0, 'classification_type', chargeclass)
-    dfcharge.insert(0, 'source_sink', None)
-   
-    dfdischarge.insert(0, 'number', dischargeID)
-    dfdischarge.insert(0, 'classification_type', dischargeclass)
-    dfdischarge.insert(0, 'source_sink', None)
     
+    if len(sets_df['STORAGE']['STORAGE']) > 0: 
 
-    dfnew = dfcharge.append(dfdischarge)
-    
-    headerlist = append_df2.columns.tolist()
-    dfnew.columns = headerlist
+        dfsink = append_df2.loc[append_df2['classification_type'] == 'sink']
+        dfsource = append_df2.loc[append_df2['classification_type'] == 'source']
 
-    append_df2 = append_df2.append(dfnew)
+        sinklist = dfsink.columns.tolist()
+        sinklist.remove('number')
+        sinklist.remove('classification_type')
+        sinklist.remove('source_sink')
+        sourcelist = dfsource.columns.tolist()
+        sourcelist.remove('number')
+        sourcelist.remove('classification_type')
+        sourcelist.remove('source_sink')
+        sinksumlist = []
+        sourcesumlist = []
+        for i in sinklist:
+            sinksumlist.append(dfsink[i].sum())
+        for i in sourcelist:
+            sourcesumlist.append(dfsource[i].sum())
+        sourcesumlist
 
-    dfsink1 = append_df2.loc[append_df2['classification_type'] == 'sink']
-    dfsource1 = append_df2.loc[append_df2['classification_type'] == 'source']
+        difflist = []
 
-    append_df2 = dfsink1.append(dfsource1)
-    
-    append_df2 = append_df2.fillna(0)
-    append_df2["source_sink"] = None
-    append_df2["number"] = append_df2["number"].apply(int)
-    
+        for i in range(0,len(sinksumlist)):
+            difflist.append(sourcesumlist[i] - sinksumlist[i])
+        difflist
+
+        chargelist = []
+        dischargelist = []
+
+        for i in difflist:
+            if i >= 0:
+                chargelist.append(i)
+                dischargelist.append(0)
+            elif i < 0: 
+                dischargelist.append((i) * -1)
+                chargelist.append(0)
+        dfcharge = pd.DataFrame(chargelist)
+        dfdischarge = pd.DataFrame(dischargelist)
+
+        dfcharge = dfcharge.transpose()
+        dfdischarge = dfdischarge.transpose()
+        chargeID = [-1]
+        dischargeID = [-2]
+        chargeclass = ['sink']
+        dischargeclass = ['source']
+
+        dfcharge.insert(0, 'number', chargeID)
+        dfcharge.insert(0, 'classification_type', chargeclass)
+        dfcharge.insert(0, 'source_sink', None)
+
+        dfdischarge.insert(0, 'number', dischargeID)
+        dfdischarge.insert(0, 'classification_type', dischargeclass)
+        dfdischarge.insert(0, 'source_sink', None)
+
+
+        dfnew = dfcharge.append(dfdischarge)
+
+        headerlist = append_df2.columns.tolist()
+        dfnew.columns = headerlist
+
+        append_df2 = append_df2.append(dfnew)
+
+        dfsink1 = append_df2.loc[append_df2['classification_type'] == 'sink']
+        dfsource1 = append_df2.loc[append_df2['classification_type'] == 'source']
+
+        append_df2 = dfsink1.append(dfsource1)
+
+        append_df2 = append_df2.fillna(0)
+        append_df2["source_sink"] = None
+        append_df2["number"] = append_df2["number"].apply(int)
+    timesteps = append_df2.columns[3:,]
+    for ts in timesteps:
+        source_list = list(append_df2[append_df2.classification_type=="source"].number)
+        tot_source_cap = append_df2[append_df2.classification_type=="source"][ts].sum()
+        if append_df2[append_df2.classification_type == "source"][ts].sum() > append_df2[append_df2.classification_type == "sink"][ts].sum():
+            dif = append_df2[append_df2.classification_type == "source"][ts].sum() - append_df2[append_df2.classification_type == "sink"][ts].sum()
+            for s in source_list:
+                share = append_df2.loc[append_df2.number==s, ts] / tot_source_cap
+                append_df2.loc[append_df2.number==s, ts] = append_df2.loc[append_df2.number==s, ts] - (share * dif)
     return(append_df2)
 
 def create_market_results(ProductionByTechnology, sets_df):
