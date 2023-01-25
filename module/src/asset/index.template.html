@@ -29,11 +29,11 @@
     
   <p align="justify"> Welcome to the module simulation report of the Techno-economic optimization (TEO) module in the EMB3RS platform. The TEO module determines the cost optimal matching of sinks and the sources. The optimal capacity of the technologies and storages, and their optimal operation is determined while considering several constraints.</p>
       
-    <p> The Techno-economic optimisation mdoule considers several technologies for each source and sink based on the temperature level of the source. For high temperature sources, heat recovery technologies such as heat exchangers are considered. Whereas, for low temperature sources, temperature boosting technologies such as heat pumps, boilers, Combined heat and power, solar thermal etc. are considered to supplement the heat provided by the source. Similarly for the sinks which fucntion at the grid temperature, a heat exchanger is used to transfer heat. While for heat sinks with a higher demand temperature than the grid temperature, the temperature boosting technologies specified before are used.</p>
+    <p> The Techno-economic optimisation module considers several technologies for each source and sink based on the temperature level of the source. For high temperature sources, heat recovery technologies such as heat exchangers are considered. Whereas, for low temperature sources, temperature boosting technologies such as heat pumps, boilers, Combined heat and power, solar thermal etc. are considered to supplement the heat provided by the source. Similarly for the sinks which function at the grid temperature, a heat exchanger is used to transfer heat. While for heat sinks with a higher demand temperature than the grid temperature, the temperature boosting technologies specified before are used.</p>
       
-<p>Back up technologies called as grid specific technologies are used in cases when the heat supply from the sources is not enough to meet the heat deamdns in the sink. </p>
+<p>Back up technologies called as grid specific technologies are used in cases when the heat supply from the sources is not enough to meet the heat demands in the sink. </p>
       
-<p>The techno-economic optimisation considers an intra annual timestep based optimisaiom, i.e. the neergy balance between the sources and the sinks is considered for each timestep within the year.</p>
+<p>The techno-economic optimisation considers an intra annual timestep based optimisation, i.e. the energy balance between the sources and the sinks is considered for each timestep within the year.</p>
     
 <p>The techno-economic optimization of your case has been succesfully completed. The results of the analysis are presented in this report. The report contains several sections. Each of them will present tables, plots and some text describing the main results of your case. For a detailed analysis of the results, you can download the results of the TEO module from the platform. This report contains the following sections</p>
     
@@ -61,13 +61,13 @@
     
     <h4><p><u> The installed capacity of technologies for all sources and sinks</u></p></h4>
     
-    <p> The installed capacity of technologies for all sources and sinks are visualized in the graph below. <p>
+    <p> The installed capacity of technologies for all sources and sinks are visualised in the graph below. <p>
     
     <center> {{ANCAC|safe}}   </center>
     
     <h4><p><u>The installed capacity of technologies for each source</u></p></h4>
         
-    <p> The installed capacity of technologies for each source are visualized in the graphs below. It can be exapnded by clicking on the button. <p>
+    <p> The installed capacity of technologies for each source are visualised in the graphs below. It can be exapnded by clicking on the button. <p>
     <button
         class="btn btn-dark"
         type="button"
@@ -83,7 +83,7 @@
     <!-- Collapsed content -->
     <div class="collapse" id="ID1" style="padding: 15px 0px 0px 0px">
     <div class="tips">
-    <p> The installed capacity of technologies for each source are visualized in the graphs below. <p>
+    <p> The installed capacity of technologies for each source are visualised in the graphs below. <p>
         
   {% for source in ANCSOU %}
     
@@ -97,7 +97,7 @@
     
     <h4><p><u>The installed capacity of technologies for each sink </u></p></h4>
         
-        <p> The installed capacity of technologies for each sink are visualized in the graphs below. It can be exapnded by clicking on the button. <p>
+        <p> The installed capacity of technologies for each sink are visualised in the graphs below. It can be expanded by clicking on the button. <p>
     <button
         class="btn btn-dark"
         type="button"
@@ -110,7 +110,7 @@
     </button>
     <div class="collapse" id="ID2" style="padding: 15px 0px 0px 0px">
     <div class="tips">
-    <p> The installed capacity of technologies for each sink are visualized in the graphs below. <p>
+    <p> The installed capacity of technologies for each sink are visualised in the graphs below. <p>
   
   {% for sink in ANCSI %}
     
@@ -128,7 +128,7 @@
     
   {% if ANCGS|length %}
     
-    <p>The installed capacity of technologies for all grid specific technologies is visualized in the graph below.</p>
+    <p>The installed capacity of technologies for all grid specific technologies is visualised in the graph below.</p>
     
        <center> {{ANCGS|safe}}   </center>  
         
@@ -151,7 +151,7 @@
         </div>
         <p>
 
-        <p>The installed capacity of storages for the final year in the analyis period is visualized in the graph below.</p>
+        <p>The installed capacity of storages for the final year in the analyis period is visualised in the graph below.</p>
 
         <center> {{ACSTO|safe}}   </center>
             
@@ -164,9 +164,9 @@
         
     <h3><p><u>3. Annual Heat generation</u></p></h3>
     
-    <p>The annual heat and cold generation from all the technologies for all the sources and sinks is pressnetd in this section. The heat generation can be used to analyse which technologies are chosen by the TEO to generate and recover excess heat for each sink and source. </p>
+    <p>The annual heat and cold generation from all the technologies for all the sources and sinks is presented in this section. The heat generation can be used to analyse which technologies are chosen by the TEO to generate and recover excess heat for each sink and source. </p>
     
-    <p> The annual heat geenration from the sources is shown in the table below. <p>
+    <p> The annual heat generation from the sources is shown in the table below. <p>
     
     <h5><p><u><center> Annual Source Heat Generation in kWh</center></u></p></h5>
     
@@ -177,12 +177,12 @@
     <p>
         
         
-    <p> The annual heat generation for the sources is visualized in the graph below. <p>
+    <p> The annual heat generation for the sources is visualised in the graph below. <p>
         
             <center> {{PASOU|safe}}   </center>          
     
     
-    <p> The annual heat generation for each source is visualized in the graphs below. It can be exapnded by clicking on the button. <p>
+    <p> The annual heat generation for each source is visualised in the graphs below. It can be expanded by clicking on the button. <p>
         
     <button
         class="btn btn-dark"
@@ -218,12 +218,12 @@
     </div>
     <p>
  
-    <p> The annual heat/cold consumption for the sinks is visualized in the graph below. <p>
+    <p> The annual heat/cold consumption for the sinks is visualised in the graph below. <p>
         
             <center> {{PASI|safe}}   </center>           
     
  
-    <p> The annual consumption for each sink is visualized in the graphs below. It can be expanded by clicking on the button <p> 
+    <p> The annual consumption for each sink is visualised in the graphs below. It can be expanded by clicking on the button <p> 
 
     <button
         class="btn btn-dark"
@@ -250,18 +250,18 @@
 
   <h3><p><u>4. Intra Annual Heat and Cold Generation</u></p></h3>
 
-  <p align="justify"> The intra annual heat and cold generation provides insights about the heat generation from each technology in each timestep. The length of the intrannual timestep is defined by the user. This result can be used to identify the base and peak load technologies for each sink and source. Furthermore, it also highlights the hourly variation of the demand profiles and the supply dispatch needed to meet it.<p>
+  <p align="justify"> The intra annual heat and cold generation provides insights about the heat generation from each technology in each timestep. The length of the intrannual timestep is defined by the user. This result can be used to identify the base and peak load technologies for each sink and source. Furthermore, it also highlights the variation of the demand profiles and the supply dispatch needed to meet it.<p>
     
     
     <h4><p><u> Intra Annual Heat Generation for all Sources</u></p></h4>
     
-    <p> Intra annual heat generation for all sources is visualized in the graph below. <p>
+    <p> Intra annual heat generation for all sources is visualised in the graph below. <p>
         
             <center> {{PBTSOU|safe}}   </center>             
     
     <h4><p><u>Intra Annual Heat Generation for each Source</u></p></h4>
     
-     <p> Intra annual heat generation for each source is visualized in the graphs below. It can be expanded by clicking on the button <p> 
+     <p> Intra annual heat generation for each source is visualised in the graphs below. It can be expanded by clicking on the button <p> 
 
     <button
         class="btn btn-dark"
@@ -288,12 +288,12 @@
     
     <h4><p><u>Intra Annual Heat and Cold Consmuption for all Sinks </u></p></h4>
         
-    <p> Intra annual heat and cold consmuption for all sinks is visualized in the graph below. <p>
+    <p> Intra annual heat and cold consumuption for all sinks is visualised in the graph below. <p>
             <center> {{PBTSI|safe}}   </center>       
     
     <h4><p><u>Intra Annual Heat and Cold consumption for each Sink</u></p></h4>
     
-    <p> Intra annual heat and cold consumption for each sink is visualized in the graphs below. It can be expanded by clicking on the button <p> 
+    <p> Intra annual heat and cold consumption for each sink is visualised in the graphs below. It can be expanded by clicking on the button <p> 
 
     <button
         class="btn btn-dark"
@@ -338,11 +338,11 @@
     </div>
     <p>
     
-    <p> The share of excess heat and cold generation from each source is visualized in the pie below. <p>
+    <p> The share of excess heat and cold generation from each source is visualised in the pie below. <p>
     
             <center> {{PIESOU|safe}}   </center>         
 
-    <p> The share of excess heat and cold consumption by each sink is visualized in the pie below. <p>
+    <p> The share of excess heat and cold consumption by each sink is visualised in the pie below. <p>
     
             <center> {{PEISI|safe}}   </center>         
   <h3><p><u> 6. Emissions</u></p></h3>
@@ -358,11 +358,11 @@
     </div>
     <p>    
         
-    <p> The emissions from all technologies is visualized in the graph below.<p>
+    <p> The emissions from all technologies is visualised in the graph below.<p>
     
             <center> {{EMALLCOMB|safe}}   </center>      
     
-    <p> The emissions from each source is visualized in the graphs below. It can be expanded by clicking on the button <p> 
+    <p> The emissions from each source is visualised in the graphs below. It can be expanded by clicking on the button <p> 
 
     <button
         class="btn btn-dark"
@@ -387,7 +387,7 @@
     </div>
     </div>
     
-    <p> The emissions from each sink is visualized in the graphs below. It can be expanded by clicking on the button <p> 
+    <p> The emissions from each sink is visualised in the graphs below. It can be expanded by clicking on the button <p> 
 
     <button
         class="btn btn-dark"
@@ -413,7 +413,7 @@
     </div>
 
    {% if EMGRIDSPEC|length %}
-      <p> The emissions from the grid specific technologies is visualized in the graphs below.<p>        
+      <p> The emissions from the grid specific technologies is visualised in the graphs below.<p>        
         
             <center> {{EMGRIDSPEC|safe}}   </center> 
     
@@ -426,7 +426,7 @@
 
   <h3><p><u> 7. Costs</u></p></h3>
     
-  <p> The techno-economic optimization from the TEO determines a cost optimal solution for matching sources and sinks. Hence, the costs are an important result from the TEO. The costs are split into    Capital costs and operational costs. These are further presented in the next subsections.<p>    
+  <p> The techno-economic optimization from the TEO determines a cost optimal solution for matching sources and sinks. Hence, the costs are an important result from the TEO. The costs are split into Capital costs and operational costs. These are further presented in the next subsections.<p>    
     
   <h4><p><u>7.1 Capital Costs</u></p></h4>
     
@@ -440,12 +440,12 @@
     </div>
     <p>    
         
-    <p> The capital costs of all technologies are visualized in the graph below. <p>
+    <p> The capital costs of all technologies are visualised in the graph below. <p>
         
             <center> {{CIAC|safe}}   </center>              
     
 
-    <p> The capital costs of each source are visualized in the graphs below. It can be expanded by clicking on the button <p> 
+    <p> The capital costs of each source are visualised in the graphs below. It can be expanded by clicking on the button <p> 
 
     <button
         class="btn btn-dark"
@@ -469,7 +469,7 @@
                 
    </div>
    </div>  
-    <p> The capital costs for each sink are visualized in the graphs below. It can be expanded by clicking on the button <p> 
+    <p> The capital costs for each sink are visualised in the graphs below. It can be expanded by clicking on the button <p> 
 
     <button
         class="btn btn-dark"
@@ -504,7 +504,7 @@
     </div>
     <p>   
          
-    <p> The capital costs of each storage are visualized in the graph below. It can be expanded by clicking on the button <p> 
+    <p> The capital costs of each storage are visualised in the graph below. It can be expanded by clicking on the button <p> 
 
     <button
         class="btn btn-dark"
@@ -537,12 +537,12 @@
     </div>
     <p>        
         
-    <p> The operational costs of all technologies are visualized in the graph below. <p>
+    <p> The operational costs of all technologies are visualised in the graph below. <p>
         
         
             <center> {{CIOC|safe}}   </center>         
     
-     <p> The operational costs of each source are visualized in the graphs below. It can be expanded by clicking on the button <p> 
+     <p> The operational costs of each source are visualised in the graphs below. It can be expanded by clicking on the button <p> 
 
     <button
         class="btn btn-dark"
@@ -567,7 +567,7 @@
    </div>
    </div>
     
-     <p> The operationalcosts of each sink are visualized in the graphs below. It can be expanded by clicking on the button <p> 
+     <p> The operationalcosts of each sink are visualised in the graphs below. It can be expanded by clicking on the button <p> 
 
     <button
         class="btn btn-dark"
@@ -596,9 +596,9 @@
         
    {% if ACSTO|length %}
     
-    <p align="justify"> The techno-economic optimization considers heat storage while determining the optimal matching of sources and sinks.The annual cpacities of the heat storage have been presented befpore. However, the intra annual operation of the storage is necessary to analyze the dispatch of the systems and how the variability of excess heat vailability is balanced out in the system.<p>    
+    <p align="justify"> The techno-economic optimization considers heat storage while determining the optimal matching of sources and sinks.The annual cpacities of the heat storage have been presented before. However, the intra annual operation of the storage is necessary to analyze the dispatch of the systems and how the variability of excess heat availability is balanced out in the system.<p>    
 
-         <p align="justify"> The intrannual storage level of each storage are visualized in the graphs below. This shows the stored energy in the storage in every timestep. <p>
+         <p align="justify"> The intrannual storage level of each storage are visualised in the graphs below. This shows the stored energy in the storage in every timestep. <p>
 
       {% for storage in STOL %}
 
@@ -607,7 +607,7 @@
       {% endfor %}      
 
 
-         <p align="justify"> The intrannual storage charge and discharge, i.e. the cycling of each storage are visualized in the graphs below. The negative values indicate discharging and the positive values indicate charging. This shows the actual operation of the storage in every timestep. <p>    
+         <p align="justify"> The intrannual storage charge and discharge, i.e. the cycling of each storage are visualised in the graphs below. The negative values indicate discharging and the positive values indicate charging. This shows the actual operation of the storage in every timestep. <p>    
 
       {% for storage in STOCD %}
 

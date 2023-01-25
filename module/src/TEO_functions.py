@@ -400,13 +400,13 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_
         append_df2["number"] = append_df2["number"].apply(int)
     timesteps = append_df2.columns[3:,]
     for ts in timesteps:
-        source_list = list(append_df2[append_df2.classification_type=="source"].number)
-        tot_source_cap = append_df2[append_df2.classification_type=="source"][ts].sum()
+        sink_list = list(append_df2[append_df2.classification_type=="sink"].number)
+        tot_sink_cap = append_df2[append_df2.classification_type=="sink"][ts].sum()
         if append_df2[append_df2.classification_type == "source"][ts].sum() > append_df2[append_df2.classification_type == "sink"][ts].sum():
             dif = append_df2[append_df2.classification_type == "source"][ts].sum() - append_df2[append_df2.classification_type == "sink"][ts].sum()
-            for s in source_list:
-                share = append_df2.loc[append_df2.number==s, ts] / tot_source_cap
-                append_df2.loc[append_df2.number==s, ts] = append_df2.loc[append_df2.number==s, ts] - (share * dif)
+            for s in sink_list:
+                share = append_df2.loc[append_df2.number==s, ts] / tot_sink_cap
+                append_df2.loc[append_df2.number==s, ts] = append_df2.loc[append_df2.number==s, ts] + (share * dif)
     return(append_df2)
 
 def create_market_results(ProductionByTechnology, sets_df):
