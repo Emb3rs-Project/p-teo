@@ -66,8 +66,21 @@ def create_parameters_dataframe(sets_df, default_df):
     ]
 
     df = pd.DataFrame(columns=default_columns)
+    default_df2 = pd.DataFrame()
+    dellist = ["AccumulatedAnnualDemand","AnnualExogenousEmission","CapacityOfOneTechnologyUnit","Conversionld","Conversionlh","Conversionls","DaysInDayType","DaySplit","DepreciationMethod","REMinProductionTarget","ReserveMargin","ReserveMarginTagFuel","ReserveMarginTagTechnology","RETagFuel","RETagTechnology","TechWithCapacityNeededToMeetPeakTS","TradeRoute"]
+    fulllist = default_df['PARAM'].to_list()
+    sublist = []
+    for i in fulllist:
+        if i not in dellist:
+            sublist.append(i)
+    for i in sublist:
+        appendata = default_df.loc[default_df["PARAM"] == i]
+        if len(default_df2) == 0:
+            default_df2 = appendata
+        else:
+            default_df2 = pd.concat([default_df2, appendata], ignore_index=True, sort=False)
 
-    for index, row in default_df.iterrows():
+    for index, row in default_df2.iterrows():
         value_default = row["VALUE"]
         param = row["PARAM"]
 
