@@ -310,7 +310,7 @@ def GIS_ExchangeCapacities(UseByTechnology, ProductionByTechnology, tsmax, sets_
     for x in list4:
         for i in sourcesinkidlistd:
             if (','.join(["x%ds" % i ])) in x:
-                list5.append(','.join(["%d" % i ]))
+                list5.append(int(','.join(["%d" % i ])))
 
     ID = pd.Series(list5)
     append_df2.insert(loc=0, column='ID', value=ID)
