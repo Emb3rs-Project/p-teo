@@ -83,6 +83,8 @@ def Report(Results, sets_df, names):
 
         if ("gridspecificngboiler") in x:
             Assign2.append("Grid Specific Natural gas Boiler")
+        elif ("gridspecificelboiler") in x:
+            Assign2.append("Grid Specific Electric Boiler")
         elif ("gridspecificoilboiler") in x:
             Assign2.append("Grid Specific Oil Boiler")
         elif ("gridspecificbioboiler") in x:
@@ -422,6 +424,8 @@ def Report(Results, sets_df, names):
 
         if ("gridspecificngboiler") in x:
             Assignem2.append("Grid Specific Natural gas Boiler")
+        elif ("gridspecificelboiler") in x:
+            Assign2.append("Grid Specific Electric Boiler")
         elif ("gridspecificoilboiler") in x:
             Assignem2.append("Grid Specific Oil Boiler")
         elif ("gridspecificbioboiler") in x:
@@ -720,6 +724,8 @@ def Report(Results, sets_df, names):
 
         if ("gridspecificngboiler") in x:
             AssignCI2.append("Grid Specific Natural gas Boiler")
+        elif ("gridspecificelboiler") in x:
+            Assign2.append("Grid Specific Electric Boiler")
         elif ("gridspecificoilboiler") in x:
             AssignCI2.append("Grid Specific Oil Boiler")
         elif ("gridspecificbioboiler") in x:
@@ -995,6 +1001,8 @@ def Report(Results, sets_df, names):
 
         if ("gridspecificngboiler") in x:
             AssignOC2.append("Grid Specific Natural gas Boiler")
+        elif ("gridspecificelboiler") in x:
+            Assign2.append("Grid Specific Electric Boiler")
         elif ("gridspecificoilboiler") in x:
             AssignOC2.append("Grid Specific Oil Boiler")
         elif ("gridspecificbioboiler") in x:
@@ -1318,6 +1326,8 @@ def Report(Results, sets_df, names):
 
         if ("gridspecificngboiler") in x:
             AssignPBT2.append("Grid Specific Natural gas Boiler")
+        elif ("gridspecificelboiler") in x:
+            Assign2.append("Grid Specific Electric Boiler")
         elif ("gridspecificoilboiler") in x:
             AssignPBT2.append("Grid Specific Oil Boiler")
         elif ("gridspecificbioboiler") in x:
@@ -1662,6 +1672,8 @@ def Report(Results, sets_df, names):
 
         if ("gridspecificngboiler") in x:
             AssignPA2.append("Grid Specific Natural gas Boiler")
+        elif ("gridspecificelboiler") in x:
+            Assign2.append("Grid Specific Electric Boiler")
         elif ("gridspecificoilboiler") in x:
             AssignPA2.append("Grid Specific Oil Boiler")
         elif ("gridspecificbioboiler") in x:
