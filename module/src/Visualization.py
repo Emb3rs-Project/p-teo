@@ -8,7 +8,7 @@ from jinja2 import Environment, FileSystemLoader, PackageLoader, select_autoesca
 import pandas as pd
 import re
 import os
-def Report(Results, sets_df, names):
+def Report(Results, sets_df, names, reference_system_df):
     
     #creating source, sink and stream IDs
     reslist = []
@@ -2129,7 +2129,76 @@ def Report(Results, sets_df, names):
     productionannualsinkpieplotdf1 =  productionannualsinkpieplot.to_html(index=False, col_space= 100, justify='center')
     productionannualsinkpieplottable = productionannualsinkpieplotdf1.replace('<tr>', '<tr align="center">')
     
+#Reference System
+    reference_assign_name = []
+    reference_assign_streamid = []
+    for x in reference_system_df['name']:
+        for i in names:
+                if str('sink'+ str(str(i))+ 'str') in x:
+                    reference_assign_name.append(names[str(i)])
+        for i in streamidlistd:
+                    if(','.join(["str%d " % i ])) in str(str(x) + ' '):
+                        reference_assign_streamid.append(','.join(["Stream%d" % i ]))
+    reference_assign_name_2 = []
+
+    for i in range(0, len(reference_assign_name)):
+        reference_assign_name_2.append(str(str(reference_assign_name[i]) + ' ' + str(reference_assign_streamid[i])))
+    reference_system_df['Sink Name'] = reference_assign_name_2
+    reference_system_df = reference_system_df[['Sink Name', 'Cost (Euros)', 'Emissions (Kg CO2)']]
+
+    reference_system_df.reset_index(drop=True)
+    reference_system_df.reset_index(drop=True, inplace=True)
+    reference_system_df = reference_system_df.rename_axis(None, axis=1)
+    reference_system_df = reference_system_df.round(decimals=2)
+    reference_system_df1 =  reference_system_df.to_html(index=False, col_space= 100, justify='center')
+    reference_system_dftable = reference_system_df1.replace('<tr>', '<tr align="center">')
+
+     #Savings
+    Savings_df = pd.DataFrame()
+    OperatingCostTableS = OperatingCostTable1
+
+    TechlistCS = OperatingCostTableS['Technology']
+    ValuelistCS = OperatingCostTableS['Operating costs (Euros)']
+
+    for i in range(0,len(TechlistCS)):
+        if 'Grid Specific'in TechlistCS[i]:
+            del(TechlistCS[i])
+            del(ValuelistCS[i])
+    OperatingCostTableS['Technology'] = TechlistCS
+    OperatingCostTableS['Operating costs (Euros)'] = ValuelistCS
+    CostSavings = reference_system_df['Cost (Euros)'].sum() - OperatingCostTable1['Operating costs (Euros)'].sum()
+
+    if CostSavings >=0:
+        Savings_df['Cost Savings (Euros)'] = [CostSavings]
+    else:
+        Savings_df['Cost Increase (Euros)'] = [CostSavings * -1]
+
+    AnnualTechnologyEmissiondfS = AnnualTechnologyEmissiondf
+
+    TechlistCS = AnnualTechnologyEmissiondfS['Technology']
+    ValuelistCS = AnnualTechnologyEmissiondfS['Emissions (kg CO2)']
+
+    for i in range(0,len(TechlistCS)):
+        if 'Grid Specific'in TechlistCS[i]:
+            del(TechlistCS[i])
+            del(ValuelistCS[i])
+    AnnualTechnologyEmissiondfS['Technology'] = TechlistCS
+    AnnualTechnologyEmissiondfS['Emissions (kg CO2)'] = ValuelistCS
     
+    EmissionSavings = reference_system_df['Emissions (Kg CO2)'].sum() - AnnualTechnologyEmissiondf['Emissions (kg CO2)'].sum()
+
+    if EmissionSavings >=0:
+        Savings_df['Emission Savings (kg CO2)'] = [EmissionSavings]
+    else:
+        Savings_df['Emission Increase (kg CO2)'] = [EmissionSavings * -1]
+
+    Savings_df.reset_index(drop=True)
+    Savings_df.reset_index(drop=True, inplace=True)
+    Savings_df = Savings_df.rename_axis(None, axis=1)
+    Savings_df = Savings_df.round(decimals=2)
+    Savings_df1 =  Savings_df.to_html(index=False, col_space= 100, justify='center')
+    Savings_dftable = Savings_df1.replace('<tr>', '<tr align="center">')
+        
 
     combinedaccnewcap = plotly.io.to_html(fig, full_html=False,include_plotlyjs=False)
     if "Grid Specific" in Assign8:
@@ -2169,7 +2238,7 @@ def Report(Results, sets_df, names):
     )
 
     template = env.get_template('index.template.html')
-    template_content = template.render(ANCT_df=AccumulatedNewCapacitytable,PIESOU=piesou, ANCSOU=ancsou, ANCSI=ancsi, EMSO=emso, EMSI=emsi, CISO=ciso, CICI=cisi, OCSO=ocso, OCSI=ocsi, STOL=stol, STOCD=stocd, PBTGSO=pbtso, PBTGSI=pbtsin, PEISI=piesi, PAGSO=pagso, PAGSI=pagsi, PASOU=pasou, ANCAC=combinedaccnewcap,PASI=pasi, PBTSI=pbtsi, CIOC=cioc, PBTSOU=pbtsor, ACSTO=accsto,CISTO=cisto, EMALLCOMB=emallcomb, EMGRIDSPEC=emgridspec,CIAC=ciac, ANCGS=gridaccnewcap, ANST_df=AccumulatedNewStorageCapacitytable, AHTSO_df=productionannualsourcetable, AHTSI_df=productionannualsinkplottable, TOTSO_df=productionannualsourcepietable, TOTSI_df=productionannualsinkpieplottable, CISTO_df=CapitalInvestmentstotable, TOTEM_df=AnnualTechnologyEmissiondtable, CI_df=CapitalInvestmenttable, OC_df=OperatingCosttable)
+    template_content = template.render(ANCT_df=AccumulatedNewCapacitytable,PIESOU=piesou, ANCSOU=ancsou, ANCSI=ancsi, EMSO=emso, EMSI=emsi, CISO=ciso, CICI=cisi, OCSO=ocso, OCSI=ocsi, STOL=stol, STOCD=stocd, PBTGSO=pbtso, PBTGSI=pbtsin, PEISI=piesi, PAGSO=pagso, PAGSI=pagsi, PASOU=pasou, ANCAC=combinedaccnewcap,PASI=pasi, PBTSI=pbtsi, CIOC=cioc, PBTSOU=pbtsor, ACSTO=accsto,CISTO=cisto, EMALLCOMB=emallcomb, EMGRIDSPEC=emgridspec,CIAC=ciac, ANCGS=gridaccnewcap, ANST_df=AccumulatedNewStorageCapacitytable, AHTSO_df=productionannualsourcetable, AHTSI_df=productionannualsinkplottable, TOTSO_df=productionannualsourcepietable, TOTSI_df=productionannualsinkpieplottable, CISTO_df=CapitalInvestmentstotable, TOTEM_df=AnnualTechnologyEmissiondtable, CI_df=CapitalInvestmenttable, OC_df=OperatingCosttable, Ref_df = reference_system_dftable, Sav_df=Savings_dftable)
 
     
     return(template_content)

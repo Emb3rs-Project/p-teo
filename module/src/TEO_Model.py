@@ -19,7 +19,7 @@ except ModuleNotFoundError:
     print("COPT not installed in this environment")
 
 
-def buildmodel(sets_df, df, defaults_df, mcs_df, n, names, solver):
+def buildmodel(sets_df, df, defaults_df, mcs_df, n, names, solver, reference_system):
     modelName = "teo_model"
 
     # ----------------------------------------------------------------------------------------------------------------------
@@ -935,10 +935,11 @@ def buildmodel(sets_df, df, defaults_df, mcs_df, n, names, solver):
         del model  # Delete model
 
         i += 1
+        reference_system_df = ReferenceSystem(reference_system)
         if len(TIMESLICE) < 367:
-            template_content = Report(Results, sets_df, names)
+            template_content = Report(Results, sets_df, names, reference_system_df)
         else:
-            template_content = Reportshort(Results, sets_df, names)
+            template_content = Reportshort(Results, sets_df, names, reference_system_df)
         
         Results['report'] = template_content
         

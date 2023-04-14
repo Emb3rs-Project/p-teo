@@ -732,3 +732,10 @@ def CreateResults(res_df, sets_df, df):
   
     
     return TEO_Results
+
+def ReferenceSystem(reference_system):
+    reference_system_df = pd.DataFrame(reference_system)
+    reference_system_df['Cost (Euros)'] = (reference_system_df['ref_fuel_price'] * reference_system_df['Annual_demand']) / reference_system_df['ref_eff_equipment']
+    reference_system_df['Emissions (Kg CO2)'] = (reference_system_df['ref_fuel_emissions'] * reference_system_df['Annual_demand']) / reference_system_df['ref_eff_equipment']
+
+    return reference_system_df

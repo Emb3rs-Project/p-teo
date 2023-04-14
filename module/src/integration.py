@@ -12,9 +12,9 @@ from .kb import kb
 
 def run_build_model(input_data):
 
-    sets_df, df, default_df, names, solver = _prepare_inputs(input_data)
+    sets_df, df, default_df, names, solver, reference_system = _prepare_inputs(input_data)
 
-    model_output = buildmodel(sets_df, df, default_df, None, 0, names, solver)
+    model_output = buildmodel(sets_df, df, default_df, None, 0, names, solver, reference_system)
 
     return model_output
 
@@ -36,9 +36,9 @@ def _prepare_inputs(input_data):
 
     df = create_parameters_dataframe(sets_df, default_df)
 
-    df = prepare_inputs(sets_df, df, input_data)
+    df, reference_system = prepare_inputs(sets_df, df, input_data)
 
-    return sets_df, df, default_df, names, solver
+    return sets_df, df, default_df, names, solver, reference_system
 
 
 def _prepare_outputs(output_data):
