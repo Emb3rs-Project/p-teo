@@ -15,10 +15,10 @@ def prepare_inputs(sets_df, df, input_data):
     import pandas as pd
     sets_df = sets_df
     df = df
-    reference_system = input_data["cf_module"]["reference"]
+    reference_system = input_cf["reference"]
     for i in range(0, len(reference_system)):
-        if str(str(reference_system[i]['name']) + 'dem') == input_data["cf_module"]['specified_annual_demand_cf'][i]['fuel']:
-            reference_system[i]['Annual_demand'] = input_data["cf_module"]['specified_annual_demand_cf'][i]['value']
+        if str(str(reference_system[i]['name']) + 'dem') == input_cf['specified_annual_demand_cf'][i]['fuel']:
+            reference_system[i]['Annual_demand'] = input_cf['specified_annual_demand_cf'][i]['value']
 
     technologies_cf = pd.DataFrame(input_cf['technologies_cf'])
     specified_annual_demand_cf = pd.DataFrame(input_cf['specified_annual_demand_cf'])
