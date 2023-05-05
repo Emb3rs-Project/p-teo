@@ -28,8 +28,8 @@ If you have a great idea for how the TEO could be improved, or to suggest a usef
 ## Git Workflow
 To work with the TEO code bases, please follow the forking workflow recommended for contributing to open-source projects. The steps below assume you have a Github account.
 
-Fork the repository to which you wish to contribute by clicking the grey fork button or visiting https://github.com/EMB3RS-TEO-Module/fork
-Clone your fork of the repository git clone http://github.com/<user>/EMB3RS-TEO-Module
+Fork the repository to which you wish to contribute by clicking the grey fork button or visiting https://github.com/Emb3rs-Project/p-teo/forkrk
+Clone your fork of the repository git clone http://github.com/<user>/Emb3rs-Project/p-teo
 Create a new branch on which you will commit your changes git checkout -b <branchname>
 Do the work and stage and commit your changes: git add ..., git commit -m "A nice descriptive message"
 Push the changes to your fork git push -u <branchname> origin/<branchname>
