@@ -1208,7 +1208,7 @@ def prepare_inputs(sets_df, df, input_data):
         if len(sets_df["TIMESLICE"]) == 12:
             split = Timeslice / 6
         else:
-            split = Timeslice / 6
+            split = Timeslice / 24
         Marker = 8785 / (split)
         assign99 = []
 
